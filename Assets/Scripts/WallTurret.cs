@@ -24,7 +24,7 @@ public class WallTurret : MonoBehaviour
     void Awake()
     {
         //initialize values
-        //isFiring = true;
+        isFiring = true;
 
         //find barrel in children
         _turretBarrel = transform.GetChild(1).gameObject;
