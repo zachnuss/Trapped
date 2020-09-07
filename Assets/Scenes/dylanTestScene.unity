@@ -155,9 +155,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c577c5be8c302924d833f1f22e520ca1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerFaceStatus: 5
+  playerFaceStatus: 1
   movementSpeed: 5
   playerCam: {fileID: 0}
+  rotationProcessActive: 0
 --- !u!65 &50497827
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -226,7 +227,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 50497825}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -13.6, y: 0.5, z: -0.63}
+  m_LocalPosition: {x: -2.2, y: 10.58, z: -0.63}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -447,13 +448,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -29.3, y: 0.02, z: 0.4}
+  m_LocalRotation: {x: 0.1976219, y: 0.62881356, z: -0.18997794, w: 0.7276315}
+  m_LocalPosition: {x: -20.1726, y: 21.5355, z: -4.0792}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 31.770002, y: 81.131004, z: -1.8830001}
 --- !u!1 &1354016498
 GameObject:
   m_ObjectHideFlags: 0
@@ -468,7 +469,7 @@ GameObject:
   - component: {fileID: 1354016499}
   m_Layer: 0
   m_Name: BaseBody
-  m_TagString: Untagged
+  m_TagString: Cube
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
