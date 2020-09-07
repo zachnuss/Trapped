@@ -32,7 +32,9 @@ public class WallTurret : MonoBehaviour
 
         //get max bullet distance
         RaycastHit measure;
-        if (Physics.Raycast(transform.position, _fireDirection, out measure))
+        //start point in front of object (otherwise raycast will detect itself)
+        Vector3 raycastOrigin = transform.position + _fireDirection;
+        if (Physics.Raycast(raycastOrigin, _fireDirection, out measure))
         {
             //calculate distance between
             _maxBulletDistance = Vector3.Distance(measure.point, transform.position);

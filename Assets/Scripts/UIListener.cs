@@ -16,7 +16,8 @@ public class UIListener : MonoBehaviour
     void Awake()
     {
         //initialize values
-        _playerVals = GameObject.FindGameObjectWithTag("Player").GetComponent<ProtoPlayerMove>();
+        _playerVals = GameObject.FindGameObjectWithTag("Player")
+                        .GetComponent<ProtoPlayerMove>();
     }
 
     void Update()

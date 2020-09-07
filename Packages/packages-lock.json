@@ -24,13 +24,12 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.vscode": {
-      "version": "1.2.1",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {},
-      "url": "https://packages.unity.com"
+        "version": "1.2.1",
+        "depth": 0,
+        "source": "registry",
+        "dependencies": {},
+        "url": "https://packages.unity.com"
     },
-<<<<<<< HEAD
     "com.unity.inputsystem": {
       "version": "1.0.0",
       "depth": 0,
@@ -38,8 +37,6 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
-=======
->>>>>>> 56dce43... Initial commit for Sprint 1
     "com.unity.test-framework": {
       "version": "1.1.14",
       "depth": 0,
