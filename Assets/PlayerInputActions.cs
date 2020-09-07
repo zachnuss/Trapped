@@ -104,17 +104,6 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""1436550c-2bcc-48f5-b9a1-dcb7e002a22d"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""820dd8e6-4d0a-4ec8-8b27-928113c17f5a"",
                     ""path"": """",
                     ""interactions"": """",

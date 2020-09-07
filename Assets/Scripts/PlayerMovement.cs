@@ -31,15 +31,15 @@ public enum faceStatus
 
 public class PlayerMovement : MonoBehaviour
 {
-    PlayerInputActions controls;
-
+    //PlayerInputActions controls;
+    Vector3 _playerAngle;
 
     //tells current face player is resting on
     public faceStatus playerFaceStatus;
     //current player position
-    public Vector3 playerPos;
+    //public Vector3 playerPos;
     //current player velocity
-    public Vector3 playerVelocity;
+    //public Vector3 playerVelocity;
 
     public float movementSpeed = 1.0f;
     Vector2 movementInput;
@@ -54,13 +54,15 @@ public class PlayerMovement : MonoBehaviour
     //awake
     private void Awake()
     {
-        controls = new PlayerInputActions();
+        //controls = new PlayerInputActions();
+        Vector3 _playerAngle = Vector3.zero;
+       // _playerAngle.x = 90;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        playerFaceStatus = faceStatus.face1;
+        //playerFaceStatus = faceStatus.face1;
     }
 
     // Used for physics 
@@ -126,13 +128,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// NOTE: NEEDS PACKAGE
-    /// </summary>
-    /// <returns></returns>
-
-
-
     //movement
 
     private void OnMove(InputValue value)
@@ -143,19 +138,17 @@ public class PlayerMovement : MonoBehaviour
     //joysticks
     public float JoystickH()
     {
-        float r = 0.0f;
+        //float r = 0.0f;
         float h = movementInput.x;
-        r += Mathf.Round((h * 100f) / 100f);
-        return Mathf.Clamp(r, -1.0f, 1.0f);
+        //r += Mathf.Round(h);
+        return Mathf.Clamp(h, -1.0f, 1.0f);
     }
     public float JoystickV()
     {
-
-        float r = 0.0f;
+        //float r = 0.0f;
         float v = movementInput.y;
-        r += Mathf.Round((v * 100f) / 100f);
-        //r -= 1;
-        return Mathf.Clamp(r, -1.0f, 1.0f);
+        //r += Mathf.Round(v);
+        return Mathf.Clamp(v, -1.0f, 1.0f);
     }
 
     public Vector3 MainJoystick()
@@ -165,19 +158,68 @@ public class PlayerMovement : MonoBehaviour
 
     void RotateMovement(Vector3 movement)
     {
+        //convert joystick movements to angles that we can apply to player rotation
         _angle = Mathf.Atan2(movement.x, movement.z);
         _angle = Mathf.Rad2Deg * _angle;
+        //Debug.Log(_angle);
 
-        targetRotation = Quaternion.Euler(0, _angle, 0);
+        switch (playerFaceStatus)
+        {
+            case faceStatus.none:
+                break;
+            case faceStatus.face1:
+                //rotates based on what side we are on
+                //0, angle, 0
+                targetRotation = Quaternion.Euler(0, _angle, 0);
+                break;
+            case faceStatus.face2:
+                //90, 0, angle
+                //angle - 90, - 90, 90
+                //cam = 0, 180, 0
+                targetRotation = Quaternion.Euler(_angle - 90, -90, 90);
+                break;
+            case faceStatus.face3:
+                //-90, 0, angle
+                //angle - 90, 270, 90
+                //cam = 0, 0, 0
+                targetRotation = Quaternion.Euler(_angle - 90, -270, 90);
+                break;
+            case faceStatus.face4:
+                //angle, 0, -90
+                //angle - 90, 0, -90
+                //cam = 0, -90, 0
+                targetRotation = Quaternion.Euler(_angle - 90, 0, -90);
+                break;
+            case faceStatus.face5:
+                //angle, 0, 90
+                //-angle - 90, 0, 90
+                //cam = 0, 90, 0
+                targetRotation = Quaternion.Euler(-_angle - 90, 0, 90);
+                break;
+            case faceStatus.face6:
+                //0, angle, -180
+                //cam = -90, 0, 0
+                targetRotation = Quaternion.Euler(0, -_angle - 180, -180);
+                break;
+            default:
+                break;
+        }
+        
+
+        //Debug.Log(targetRotation);
         transform.rotation = targetRotation;
-
-        this.GetComponent<Rigidbody>().MovePosition(transform.position + (transform.forward * movementSpeed * Time.deltaTime));
+        //player is always moving forward, player is just adjsuting which way they move forward (always local forward so we can have player move consistentaly forward on each side)
+        //this.GetComponent<Rigidbody>().MovePosition(transform.position + (transform.forward * movementSpeed * Time.deltaTime));
+        transform.position += transform.forward * movementSpeed * Time.deltaTime;
     }
 
     void Movement()
     {
         Vector3 movement = MainJoystick();
-        RotateMovement(movement);
+        //Debug.Log(movement);
+        //only move if player gives input
+        if(movement != Vector3.zero)
+            RotateMovement(movement);
     }
 
 
@@ -188,5 +230,137 @@ public class PlayerMovement : MonoBehaviour
         //rotation is just as important as position, whatever direction player is facing that is their forward
         transform.position = newPos.position;
         transform.rotation = newPos.rotation;
+
+        //keep track of current rotation with _playerAngle
+
+        //sets new player angle based on newStatus
+        switch (playerFaceStatus)
+        {
+            //each face has 4 possible directions
+            case faceStatus.none:
+                break;
+            case faceStatus.face1:
+                //S2, S3, S4, S5
+                switch (newFaceStatus)
+                {
+                    case faceStatus.face2:
+                        _playerAngle.x += 90;
+                        break;
+                    case faceStatus.face3:
+                        _playerAngle.x -= 90;
+                        break;
+                    case faceStatus.face4:
+                        _playerAngle.z -= 90;
+                        break;
+                    case faceStatus.face5:
+                        _playerAngle.z += 90;
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case faceStatus.face2:
+                //S1, S4, S5, S6
+                switch (newFaceStatus)
+                {
+                    case faceStatus.face1:
+                        _playerAngle.x -= 90;
+                        break;
+                    case faceStatus.face4:
+                        _playerAngle.z -= 90;
+                        break;
+                    case faceStatus.face5:
+                        _playerAngle.z += 90;
+                        break;
+                    case faceStatus.face6:
+                        _playerAngle.x += 90;
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case faceStatus.face3:
+                //S1, S4, S5, S6
+                switch (newFaceStatus)
+                {
+                    case faceStatus.face1:
+                        _playerAngle.x += 90;
+                        break;
+                    case faceStatus.face4:
+                        _playerAngle.z -= 90;
+                        break;
+                    case faceStatus.face5:
+                        _playerAngle.z += 90;
+                        break;
+                    case faceStatus.face6:
+                        _playerAngle.x += 90;
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case faceStatus.face4:
+                //S1, S2, S3, S6
+                switch (newFaceStatus)
+                {
+                    case faceStatus.face1:
+                        _playerAngle.x += 90;
+                        break;
+                    case faceStatus.face2:
+                        _playerAngle.y -= 90;
+                        break;
+                    case faceStatus.face3:
+                        _playerAngle.y += 90;
+                        break;
+                    case faceStatus.face6:
+                        _playerAngle.x += 90;
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case faceStatus.face5:
+                //S1, S2, S3, S6
+                switch (newFaceStatus)
+                {
+                    case faceStatus.face1:
+                        _playerAngle.x -= 90;
+                        break;
+                    case faceStatus.face2:
+                        _playerAngle.y += 90;
+                        break;
+                    case faceStatus.face3:
+                        _playerAngle.y -= 90;
+                        break;
+                    case faceStatus.face6:
+                        _playerAngle.x += 90;
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case faceStatus.face6:
+                //S2, S3, S4, S5
+                switch (newFaceStatus)
+                {
+                    case faceStatus.face4:
+                        _playerAngle.z += 90;
+                        break;
+                    case faceStatus.face2:
+                        _playerAngle.x -= 90;
+                        break;
+                    case faceStatus.face3:
+                        _playerAngle.x += 90;
+                        break;
+                    case faceStatus.face5:
+                        _playerAngle.z -= 90;
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            default:
+                break;
+        }
     }
 }
