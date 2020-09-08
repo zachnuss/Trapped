@@ -3,9 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - Bullet
-  - Collectable
+  tags: [Cube, Bullet, Collectable]
   layers:
   - Default
   - TransparentFX
