@@ -26,7 +26,8 @@ public class UISceneTransition : MonoBehaviour
     //Ends the game
     public void endGame()
     {
-
+        Debug.Log("The Game is Quiting");
+        UnityEditor.EditorApplication.isPlaying = false;
     }
 }
 
