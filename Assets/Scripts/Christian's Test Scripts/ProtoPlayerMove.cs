@@ -70,6 +70,7 @@ public class ProtoPlayerMove : MonoBehaviour
             //call SceneManager to get the GameOverScene
             int gameOverInt = UnityEngine.SceneManagement.SceneManager.sceneCountInBuildSettings - 1;
             UnityEngine.SceneManagement.SceneManager.LoadScene(gameOverInt);
+            DontDestroyOnLoad(GameObject.Find("ScriptManager"));
         }
     }
 

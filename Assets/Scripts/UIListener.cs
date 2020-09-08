@@ -28,7 +28,7 @@ public class UIListener : MonoBehaviour
         if (_isGameOver)
         {
             Text finalScore = GameObject.Find("EndGameScoreText").GetComponent<Text>();
-            finalScore.text = "Final Score:\n" + _scoreUI;
+            finalScore.text = "Final Score:\n" + ProtoPlayerMove.score;
         }
     }
 
