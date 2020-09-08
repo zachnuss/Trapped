@@ -17,6 +17,7 @@ using UnityEngine;
 /// - regardless which way player is faceing, w is forward, s is back, a is left and d is right
 /// </summary>
 
+    //not in use
 public enum faceStatus
 {
     none,
@@ -31,15 +32,13 @@ public enum faceStatus
 
 public class PlayerMovement : MonoBehaviour
 {
+    public GameObject parent;
+
     //PlayerInputActions controls;
     Vector3 _playerAngle;
 
     //tells current face player is resting on
     public faceStatus playerFaceStatus;
-    //current player position
-    //public Vector3 playerPos;
-    //current player velocity
-    //public Vector3 playerVelocity;
 
     public float movementSpeed = 1.0f;
     Vector2 movementInput;
@@ -55,6 +54,36 @@ public class PlayerMovement : MonoBehaviour
     bool _rotating = false;
     bool _first = true;
     public bool rotationProcessActive = false;
+    bool onDoor = false;
+
+    //when we hit a door the player rotates and moves to this transform taken from the door prefab
+    public Transform _rotationTrans;
+
+    /// <summary>
+    /// Interpolation with sin easing, most of these will be private
+    /// </summary>
+    private Transform c0, c1, c2, c3;
+    private float timeDuration = 1f;
+    public bool checkToCalculate = false;
+
+    private Vector3 p01;
+    //public Color c01;
+    private Quaternion r01;
+    //public Vector3 s01;
+
+    private bool moving = false;
+    private float timeStart;
+
+    //extrapolation
+    private float uMin = 0f;
+    private float uMax = 1;
+
+    //extrapolation lecture vars
+    private float easingMod = 2f;
+    private bool loopMove = true;
+
+    private float u;
+
     //awake
     private void Awake()
     {
@@ -72,24 +101,132 @@ public class PlayerMovement : MonoBehaviour
     // Used for physics 
     void FixedUpdate()
     {
-        Movement();
+        //cant move if we are rotating
+        if(!rotationProcessActive)
+            Movement();
     }
 
     // used for updating values and variables
     private void Update()
     {
-        //GetPlayerInput();
-        // if (_rotating)
-        //    RotatePlayer(this.transform.localRotation, );
+
         if (DetectEdge())
         {
             rotationProcessActive = true;
             //Debug.Log("yes");
         }
-        else
-            rotationProcessActive = false;
+        //else
+            //rotationProcessActive = false;
+ 
+        if(rotationProcessActive && _rotationTrans != null)
+        {
+            Interpolation();
+
+        }
+
+        //Interpolation stuff, for rotation onto next side
 
 
+
+        if (rotationProcessActive && onDoor && !checkToCalculate)
+        {
+            Debug.Log("got trans, start interpolation");
+            //if we hit the door and are off the cube
+
+            //rotationProcessActive = true;
+            //checkToCalculate = true;
+            //_beginRotation = true;
+        }
+    }
+
+    void Interpolation()
+    {
+        if (checkToCalculate)
+        {
+            Debug.Log("Moving to next side YEET");
+            c0 = this.transform;
+            c1 = _rotationTrans;
+            checkToCalculate = false;
+            moving = true;
+            timeStart = Time.time;
+        }
+
+        if (moving)
+        {
+            u = (Time.time - timeStart) / timeDuration;
+
+            if(u >= 1)
+            {
+                //when we reach new pos
+                parent.transform.rotation = _rotationTrans.transform.rotation;
+                u = 1;
+                moving = false;
+                _rotationTrans = null;
+               rotationProcessActive = false;
+                Debug.Log("IT REACHED THE END HOLY CRAP IT WORKED IMMA SLEEP NOW GGS");
+            }
+
+
+          //  if (loopMove)
+          // // {
+          //      timeStart = Time.time;
+          //  }
+          //  else
+          //  {
+          //      moving = false;
+          //  }
+
+            //adjsut u value to the ranger from uMin to uMax
+            //different types of eases to avoid snaps and rigidness
+            //u = u + easingMod * Mathf.Sin(2 * Mathf.PI * u);
+            //interpolation equation (with min and max)
+            //u = ((1 - u) * uMin) + (u * uMax);
+
+            //standard linear inter
+            //position
+            p01 = (1 - u) * c0.position + u * c1.position;
+
+            //quaternions are different
+            //use unities built in spherical linear interpolation
+            //SLERP
+            r01 = Quaternion.Slerp(c0.rotation, c1.rotation, u);
+
+            //apply those new values
+            transform.position = p01;
+            transform.rotation = r01;
+        }
+    }
+
+    void Bezier()
+    {
+        if (checkToCalculate)
+        {
+            checkToCalculate = false;
+            moving = true;
+            timeStart = Time.time;
+        }
+
+        if (moving)
+        {
+            u = (Time.time - timeStart) / timeDuration;
+            if (u > 1)
+            {
+                u = 1;
+                moving = false;
+            }
+
+            Vector3 p01, p12, p23, p012, p123, p0123;
+            p01 = (1 - u) * c0.position + u * c1.position;
+            p12 = (1 - u) * c1.position + u * c2.position;
+            p23 = (1 - u) * c2.position + u * c3.position;
+
+            p012 = (1 - u) * p01 + u * p12;
+            p123 = (1 - u) * p12 + u * p23;
+
+            p0123 = (1 - u) * p012 + u * p123;
+
+            transform.position = p0123;
+        }
     }
 
     //players moves with WASD
@@ -144,12 +281,10 @@ public class PlayerMovement : MonoBehaviour
     }
 
     //movement
-
-    private void OnMove(InputValue value)
+    private void OnMove1(InputValue value)
     {
         movementInput = value.Get<Vector2>();
     }
-
     //joysticks
     public float JoystickH()
     {
@@ -165,22 +300,29 @@ public class PlayerMovement : MonoBehaviour
         //r += Mathf.Round(v);
         return Mathf.Clamp(v, -1.0f, 1.0f);
     }
-
     public Vector3 MainJoystick()
     {
         return new Vector3(JoystickH(), 0, JoystickV());
     }
-
     void RotateMovement(Vector3 movement)
     {
         //convert joystick movements to angles that we can apply to player rotation
         _angle = Mathf.Atan2(movement.x, movement.z);
         _angle = Mathf.Rad2Deg * _angle;
-        //Debug.Log(_angle);
 
-        transform.localRotation = Quaternion.Euler(transform.localEulerAngles.x, _angle, transform.localEulerAngles.z); //targetRotation;
+        //local angles are used since its a child, the player parent is set to keep track of the global rotation
+        transform.localRotation = Quaternion.Euler( transform.localEulerAngles.x , _angle, transform.localEulerAngles.z );
+
+
+        // Debug.Log(transform.localEulerAngles.x + _angle + transform.localEulerAngles.z);
+
+        //transform.localRotation = Quaternion.Euler(transform.localEulerAngles.x, transform.localEulerAngles.y, _angle);
+
+        //transform.localRotation.SetEulerAngles(transform.localEulerAngles.x, _angle, transform.localEulerAngles.z);
+        //transform.eulerAngles.y = _angle;
+        //transform.rotation = Quaternion.Euler(0, -_angle, 0);
+        //Debug.Log(transform.localRotation);
         //player is always moving forward, player is just adjsuting which way they move forward (always local forward so we can have player move consistentaly forward on each side)
-        //this.GetComponent<Rigidbody>().MovePosition(transform.position + (transform.forward * movementSpeed * Time.deltaTime));
         transform.position += transform.forward * movementSpeed * Time.deltaTime;
     }
 
@@ -217,11 +359,35 @@ public class PlayerMovement : MonoBehaviour
         return noFloor;
     }
 
-    //when player rotates, they must land on proper edge
-    //if player leaves edge at a werid angle, it must be corrected
-    void RotatePlayerWithAngles()
+    /// <summary>
+    /// ATTACK CODE GOES HERE
+    /// </summary>
+    void OnAttack()
     {
+        //runs everytime our char attacks
 
+
+
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Door")
+        {
+            onDoor = true;
+            _rotationTrans = other.gameObject.GetComponent<DoorTrigger>().moveLocation;
+            other.gameObject.GetComponent<DoorTrigger>().SwitchDirection();
+            checkToCalculate = true;
+        }
+
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if(other.gameObject.tag == "Door")
+        {
+            onDoor = false;
+        }
     }
 
     //when raycast detects nothing under player, rotates 90 degrees forward
@@ -239,6 +405,7 @@ public class PlayerMovement : MonoBehaviour
             //_first = true;
 
             //we have rotates, we can start checking again for missing floor
+            _rotationTrans = null;
         }
 
         Vector3 p1;
