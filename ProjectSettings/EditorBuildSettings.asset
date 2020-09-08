@@ -4,7 +4,13 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/ChristianTestScene.unity
+    guid: 74ad1a5eba92110419de3f107170eac0
+  - enabled: 1
+    path: Assets/Scenes/GameOverScene.unity
+    guid: d0911380c386a624ab1d68d8eeafbda0
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: ab12bf5febbda454185e54288127989c,
       type: 2}

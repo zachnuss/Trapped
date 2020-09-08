@@ -7,12 +7,12 @@ public class ProtoPlayerMove : MonoBehaviour
     ///public
     public float moveSpeed = 2.5f;
     //getters
-    public int health { get { return _health; } }
-    public int score { get { return _score; } }
+    public static int health { get { return _health; } }
+    public static int score { get { return _score; } }
 
     ///private
-    private int _health;
-    private int _score;
+    private static int _health;
+    private static int _score;
 
 
     void Awake()
@@ -42,7 +42,7 @@ public class ProtoPlayerMove : MonoBehaviour
             //destroy object
             Destroy(other.transform.gameObject);
             //decrement health
-            takeDamage(5);
+            takeDamage(25);
             Debug.Log("Current health: " + health);
         }
 
@@ -66,7 +66,10 @@ public class ProtoPlayerMove : MonoBehaviour
         {
             _health = 0; //because negative health looks bad
             //send to GameOver Screen
-            Debug.LogError("GAME OVER");
+            Debug.Log("GAME OVER");
+            //call SceneManager to get the GameOverScene
+            int gameOverInt = UnityEngine.SceneManagement.SceneManager.sceneCountInBuildSettings - 1;
+            UnityEngine.SceneManagement.SceneManager.LoadScene(gameOverInt);
         }
     }
 
