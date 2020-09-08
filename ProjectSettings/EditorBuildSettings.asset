@@ -4,7 +4,13 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Alex's Test Scenes/Main Menu.unity
+    guid: f713ffc67db6db94b86bc06135f1882e
+  - enabled: 1
+    path: Assets/Scenes/Alex's Test Scenes/Game.unity
+    guid: f4b55da3c7731164d84bb6e43ca07bf5
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: ab12bf5febbda454185e54288127989c,
       type: 2}

@@ -1,0 +1,94 @@
+{
+    "name": "Controller",
+    "maps": [
+        {
+            "name": "UI",
+            "id": "d1e5839e-7abb-40c5-9b7d-3fdc27e4e18d",
+            "actions": [
+                {
+                    "name": "Selection",
+                    "type": "Button",
+                    "id": "8aa5eb23-a2d9-4bb8-bfea-9a31d02c37f8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Return",
+                    "type": "Button",
+                    "id": "98f918dd-d987-4830-9bae-fec1b89b03b4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Move",
+                    "type": "Value",
+                    "id": "6a9a21a4-89ab-42f3-9c67-3a0b30f23a6a",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "0315b729-1e72-4da5-90d6-5cd3ed8812f4",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "Controller UI",
+                    "action": "Selection",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9b2b7510-b216-4547-8ec6-1f2efd0dd342",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "Controller UI",
+                    "action": "Return",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1f643aab-1022-49d6-9724-8a8b28ccb54c",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller UI",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bed6ebfa-ae25-489b-bbfe-1508e64da6cf",
+                    "path": "<Gamepad>/dpad",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "Controller UI",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "Controller UI",
+            "bindingGroup": "Controller UI",
+            "devices": [
+                {
+                    "devicePath": "<Gamepad>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
+}
