@@ -31,15 +31,15 @@ public enum faceStatus
 
 public class PlayerMovement : MonoBehaviour
 {
-    PlayerInputActions controls;
-
+    //PlayerInputActions controls;
+    Vector3 _playerAngle;
 
     //tells current face player is resting on
     public faceStatus playerFaceStatus;
     //current player position
-    public Vector3 playerPos;
+    //public Vector3 playerPos;
     //current player velocity
-    public Vector3 playerVelocity;
+    //public Vector3 playerVelocity;
 
     public float movementSpeed = 1.0f;
     Vector2 movementInput;
@@ -51,16 +51,22 @@ public class PlayerMovement : MonoBehaviour
     //Camera
     public Camera playerCam;
 
+    //when we have successfully rotated
+    bool _rotating = false;
+    bool _first = true;
+    public bool rotationProcessActive = false;
     //awake
     private void Awake()
     {
-        controls = new PlayerInputActions();
+        //controls = new PlayerInputActions();
+        Vector3 _playerAngle = Vector3.zero;
+        // _playerAngle.x = 90;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        playerFaceStatus = faceStatus.face1;
+        //playerFaceStatus = faceStatus.face1;
     }
 
     // Used for physics 
@@ -73,6 +79,17 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         //GetPlayerInput();
+        // if (_rotating)
+        //    RotatePlayer(this.transform.localRotation, );
+        if (DetectEdge())
+        {
+            rotationProcessActive = true;
+            //Debug.Log("yes");
+        }
+        else
+            rotationProcessActive = false;
+
+
     }
 
     //players moves with WASD
@@ -83,17 +100,17 @@ public class PlayerMovement : MonoBehaviour
             transform.position += transform.forward * movementSpeed * Time.deltaTime;
 
         }
-        if(Input.GetKey(KeyCode.S))
+        if (Input.GetKey(KeyCode.S))
         {
             transform.position += (-transform.forward) * movementSpeed * Time.deltaTime;
 
         }
-        if(Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.A))
         {
             transform.position += (-transform.right) * movementSpeed * Time.deltaTime;
 
         }
-        if(Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.D))
         {
             transform.position += transform.right * movementSpeed * Time.deltaTime;
 
@@ -101,7 +118,7 @@ public class PlayerMovement : MonoBehaviour
 
         switch (playerFaceStatus)
         {
-             //top face
+            //top face
             case faceStatus.face1:
                 //gravity is down the y axis
                 break;
@@ -117,7 +134,7 @@ public class PlayerMovement : MonoBehaviour
             case faceStatus.face5:
                 //gravity is down the x axis (reverse from face4)
                 break;
-                //bottom face
+            //bottom face
             case faceStatus.face6:
                 //gravity is up the y axis (reverse from face1)
                 break;
@@ -125,13 +142,6 @@ public class PlayerMovement : MonoBehaviour
                 break;
         }
     }
-
-    /// <summary>
-    /// NOTE: NEEDS PACKAGE
-    /// </summary>
-    /// <returns></returns>
-
-
 
     //movement
 
@@ -143,19 +153,17 @@ public class PlayerMovement : MonoBehaviour
     //joysticks
     public float JoystickH()
     {
-        float r = 0.0f;
+        //float r = 0.0f;
         float h = movementInput.x;
-        r += Mathf.Round((h * 100f) / 100f);
-        return Mathf.Clamp(r, -1.0f, 1.0f);
+        //r += Mathf.Round(h);
+        return Mathf.Clamp(h, -1.0f, 1.0f);
     }
     public float JoystickV()
     {
-
-        float r = 0.0f;
+        //float r = 0.0f;
         float v = movementInput.y;
-        r += Mathf.Round((v * 100f) / 100f);
-        //r -= 1;
-        return Mathf.Clamp(r, -1.0f, 1.0f);
+        //r += Mathf.Round(v);
+        return Mathf.Clamp(v, -1.0f, 1.0f);
     }
 
     public Vector3 MainJoystick()
@@ -165,21 +173,78 @@ public class PlayerMovement : MonoBehaviour
 
     void RotateMovement(Vector3 movement)
     {
+        //convert joystick movements to angles that we can apply to player rotation
         _angle = Mathf.Atan2(movement.x, movement.z);
         _angle = Mathf.Rad2Deg * _angle;
+        //Debug.Log(_angle);
 
-        targetRotation = Quaternion.Euler(0, _angle, 0);
-        transform.rotation = targetRotation;
-
-        this.GetComponent<Rigidbody>().MovePosition(transform.position + (transform.forward * movementSpeed * Time.deltaTime));
+        transform.localRotation = Quaternion.Euler(transform.localEulerAngles.x, _angle, transform.localEulerAngles.z); //targetRotation;
+        //player is always moving forward, player is just adjsuting which way they move forward (always local forward so we can have player move consistentaly forward on each side)
+        //this.GetComponent<Rigidbody>().MovePosition(transform.position + (transform.forward * movementSpeed * Time.deltaTime));
+        transform.position += transform.forward * movementSpeed * Time.deltaTime;
     }
 
     void Movement()
     {
         Vector3 movement = MainJoystick();
-        RotateMovement(movement);
+        //Debug.Log(movement);
+        //only move if player gives input
+        if (movement != Vector3.zero)
+            RotateMovement(movement);
     }
 
+    //when player gets to edge
+    bool DetectEdge()
+    {
+        bool noFloor = false;
+        RaycastHit hit;
+
+        Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down), Color.green);
+
+        int layerMask = 1 << 8;
+        //everything but 8
+        layerMask = ~layerMask;
+
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down) * 6, out hit, Mathf.Infinity, layerMask))
+        {
+            //if we dont hit anything, char is hanging over edge
+            //if(hit.collider.tag != "Cube")
+            noFloor = false;
+        }
+        else
+            noFloor = true;
+
+        return noFloor;
+    }
+
+    //when player rotates, they must land on proper edge
+    //if player leaves edge at a werid angle, it must be corrected
+    void RotatePlayerWithAngles()
+    {
+
+    }
+
+    //when raycast detects nothing under player, rotates 90 degrees forward
+    //instead of v3 use rotation
+    //slerp equation
+    //NOT IN USE
+    void RotatePlayer(ref Vector3 rotatingObj, Vector3 _endPoint, float timeModifier, float timeStart)
+    {
+        float u = (Time.time - timeStart) / timeModifier;
+
+        if(u >= 1)
+        {
+            u = 1;
+            _rotating = false;
+            //_first = true;
+
+            //we have rotates, we can start checking again for missing floor
+        }
+
+        Vector3 p1;
+        p1 = (1 - u) * rotatingObj + u * _endPoint;
+        rotatingObj = p1;
+    }
 
     //when player moves to next side, outside script calls this
     void ChangePlayerFaceStatus(faceStatus newFaceStatus, Transform newPos)
@@ -188,5 +253,9 @@ public class PlayerMovement : MonoBehaviour
         //rotation is just as important as position, whatever direction player is facing that is their forward
         transform.position = newPos.position;
         transform.rotation = newPos.rotation;
+
+        //keep track of current rotation with _playerAngle
+
+        
     }
 }
