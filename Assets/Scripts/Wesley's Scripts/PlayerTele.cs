@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 public class PlayerTele : MonoBehaviour
 {
     public GameObject teleporterTracker;//Assign before load, set to private if unneeded
-    public string nextScene;
+    public string nextScene; 
 
     private void Start()
     {
