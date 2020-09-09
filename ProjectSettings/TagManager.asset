@@ -3,7 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: [Cube, Bullet, Collectable]
+  tags:
+  - Cube
+  - Bullet
+  - Door
+  - Bullet
+  - Collectable
   layers:
   - Default
   - TransparentFX
@@ -13,7 +18,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - DetectEdgeLayerIgnore
   - 
   - 
   - 
