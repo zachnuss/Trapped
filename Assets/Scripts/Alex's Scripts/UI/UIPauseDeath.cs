@@ -65,7 +65,7 @@ public class UIPauseDeath : MonoBehaviour
             PauseMenuUI.SetActive(true); //Sets the Pause menu to active to display it
 
             //Stops all background actions while the pause menu is active
-            Time.timeScale = 0;
+            Time.timeScale = 0f;
 
             //Clear the Resume Button to reselect it after and highlight it
             //EventSystem.current.SetSelectedGameObject(null); //Clears selected gameobject
@@ -78,7 +78,7 @@ public class UIPauseDeath : MonoBehaviour
             PauseMenuUI.SetActive(false); //Sets the Pause menu to not active to hide it
 
             //Resumes all background actions
-            Time.timeScale = 1;
+            Time.timeScale = 1f;
         }
     }
 
