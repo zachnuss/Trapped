@@ -53,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
     //when we have successfully rotated
     bool _rotating = false;
     bool _first = true;
-    public bool rotationProcessActive = false;
+    public bool overTheEdge = false;
     bool onDoor = false;
 
     //when we hit a door the player rotates and moves to this transform taken from the door prefab
@@ -102,7 +102,7 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
         //cant move if we are rotating
-        if(!rotationProcessActive)
+        if(!overTheEdge)
             Movement();
     }
 
@@ -112,30 +112,23 @@ public class PlayerMovement : MonoBehaviour
 
         if (DetectEdge())
         {
-            rotationProcessActive = true;
-            //Debug.Log("yes");
+            overTheEdge = true;
         }
-        //else
-            //rotationProcessActive = false;
  
-        if(rotationProcessActive && _rotationTrans != null)
+        if(_rotationTrans != null)
         {
             Interpolation();
-
         }
 
         //Interpolation stuff, for rotation onto next side
 
 
 
-        if (rotationProcessActive && onDoor && !checkToCalculate)
+        if (overTheEdge && onDoor && !checkToCalculate && !moving)
         {
             Debug.Log("got trans, start interpolation");
             //if we hit the door and are off the cube
-
-            //rotationProcessActive = true;
-            //checkToCalculate = true;
-            //_beginRotation = true;
+            checkToCalculate = true;
         }
     }
 
@@ -153,6 +146,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (moving)
         {
+            Debug.Log("moving");
             u = (Time.time - timeStart) / timeDuration;
 
             if(u >= 1)
@@ -162,7 +156,7 @@ public class PlayerMovement : MonoBehaviour
                 u = 1;
                 moving = false;
                 _rotationTrans = null;
-               rotationProcessActive = false;
+               overTheEdge = false;
                 Debug.Log("IT REACHED THE END HOLY CRAP IT WORKED IMMA SLEEP NOW GGS");
             }
 
@@ -377,7 +371,7 @@ public class PlayerMovement : MonoBehaviour
             onDoor = true;
             _rotationTrans = other.gameObject.GetComponent<DoorTrigger>().moveLocation;
             other.gameObject.GetComponent<DoorTrigger>().SwitchDirection();
-            checkToCalculate = true;
+            //checkToCalculate = true;
         }
 
     }
@@ -412,7 +406,6 @@ public class PlayerMovement : MonoBehaviour
         p1 = (1 - u) * rotatingObj + u * _endPoint;
         rotatingObj = p1;
     }
-
     //when player moves to next side, outside script calls this
     void ChangePlayerFaceStatus(faceStatus newFaceStatus, Transform newPos)
     {
