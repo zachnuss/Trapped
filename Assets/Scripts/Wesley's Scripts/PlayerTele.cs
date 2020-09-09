@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 public class PlayerTele : MonoBehaviour
 {
     public GameObject teleporterTracker;//Assign before load, set to private if unneeded
+    public string nextScene;
 
     private void Start()
     {
@@ -24,8 +25,7 @@ public class PlayerTele : MonoBehaviour
             other.GetComponent<TeleBool>().active = true;
             if (teleporterTracker.GetComponent<TeleporterScript>().GoalCheck(teleporterTracker.GetComponent<TeleporterScript>().teleporters))
             {
-                int currentScene = SceneManager.GetActiveScene().buildIndex;
-                SceneManager.LoadScene(currentScene + 1);
+                SceneManager.LoadScene(nextScene);
             }
         }
     }
