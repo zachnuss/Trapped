@@ -63,22 +63,22 @@ public class BaseEnemy : MonoBehaviour
     }
 
     ///protected
-    protected IEnumerator changeBehavior(Behavior changingTo)
-    {
-        switch (changingTo)
-        {
-            case Behavior.Idle:
-                break;
-            case Behavior.ChangeDirection:
-                break;
-            case Behavior.GoForward:
-                break;
-            case Behavior.TrackPlayer:
-                break;
-            case Behavior.AttackPlayer:
-                break;
-        }
-    }
+    //protected IEnumerator changeBehavior(Behavior changingTo)
+    //{
+    //    switch (changingTo)
+    //    {
+    //        case Behavior.Idle:
+    //            break;
+    //        case Behavior.ChangeDirection:
+    //            break;
+    //        case Behavior.GoForward:
+    //            break;
+    //        case Behavior.TrackPlayer:
+    //            break;
+    //        case Behavior.AttackPlayer:
+    //            break;
+    //    }
+    //}
     //this function will act like onDeath but it doesn't need to be called manually
     protected void OnDestroy()
     {
@@ -86,10 +86,10 @@ public class BaseEnemy : MonoBehaviour
     }
 
     ///private
-    private Direction getRandomDirection()
-    {
+    //private Direction getRandomDirection()
+    //{
         
-    }
+    //}
 
 
 }
