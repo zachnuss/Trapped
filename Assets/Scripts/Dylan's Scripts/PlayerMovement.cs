@@ -63,6 +63,9 @@ public class PlayerMovement : MonoBehaviour
     private float timeStart;
     private float u;
 
+    //Shoot Code Variable
+    public GameObject Player_Bullet; //Bullet prefab
+
     //awake
     private void Awake()
     {
@@ -263,7 +266,8 @@ public class PlayerMovement : MonoBehaviour
     void OnAttack()
     {
         //runs everytime our char attacks
-
+        //Wesley-Code
+        Object.Instantiate(Player_Bullet, transform.position, transform.rotation);
 
 
     }
