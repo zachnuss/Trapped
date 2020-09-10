@@ -140,11 +140,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parent: {fileID: 1789486803160384882}
-  playerFaceStatus: 0
   movementSpeed: 5
   playerCam: {fileID: 0}
-  rotationProcessActive: 0
-  _rotationTrans: {fileID: 0}
+  overTheEdge: 0
+  Player_Bullet: {fileID: 4863383300861185225, guid: 6b6051a2accefa44580d0c03760a3626,
+    type: 3}
 --- !u!54 &1789486803454147031
 Rigidbody:
   m_ObjectHideFlags: 0
