@@ -36,6 +36,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Press"
+                },
+                {
+                    "name": "TempDeathButton",
+                    "type": "Button",
+                    "id": "04e105ef-8821-436c-9130-15595a0bf1a1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press"
                 }
             ],
             "bindings": [
@@ -91,6 +99,17 @@
                     "processors": "",
                     "groups": "Controller UI",
                     "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ec947179-43e4-4e23-b292-4074eb98939a",
+                    "path": "<Gamepad>/select",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller UI",
+                    "action": "TempDeathButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
