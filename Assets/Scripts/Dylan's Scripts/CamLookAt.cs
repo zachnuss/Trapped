@@ -7,6 +7,7 @@ public class CamLookAt : MonoBehaviour
     //basic camera looking at player (will be updated later)
 
 
+
     public GameObject target;
 
     public float heightY, offsetZ;

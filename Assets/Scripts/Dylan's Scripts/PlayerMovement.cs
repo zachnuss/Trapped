@@ -10,78 +10,57 @@ using UnityEngine;
 /// Basic movement system
 /// 
 /// Notes:
-/// - 6 has 6 faces, each face will therefore incorperate different downward pull on player
-/// - each side therefore has different axis for movement
-/// - will keep track of current face with enum
-/// 
-/// - regardless which way player is faceing, w is forward, s is back, a is left and d is right
+/// - Player rotates on local axis so it depends on which way player is rotated
+/// - Will incorate a shoot function
+/// - Movement is based on joystick orientation
+/// - shooting i buttom button
 /// </summary>
-
-    //not in use
-public enum faceStatus
-{
-    none,
-    face1,
-    face2,
-    face3,
-    face4,
-    face5,
-    face6
-}
 
 
 public class PlayerMovement : MonoBehaviour
 {
+    //set up for rotation and new rotation orientation
+    [Header("Parent object of this player obj")]
     public GameObject parent;
-
+    //new rotation orientation player moves to
+    Quaternion targetRotation;
     //PlayerInputActions controls;
     Vector3 _playerAngle;
-
-    //tells current face player is resting on
-    public faceStatus playerFaceStatus;
-
+    [Header("Player movement speed")]
     public float movementSpeed = 1.0f;
     Vector2 movementInput;
     //rotation
     float _turnSpeed = 20f;
     float _angle;
-    Quaternion targetRotation;
+    
 
     //Camera
     public Camera playerCam;
+    //level setup script
 
     //when we have successfully rotated
     bool _rotating = false;
     bool _first = true;
+    [Header("Shows if player is off the edge")]
     public bool overTheEdge = false;
     bool onDoor = false;
 
     //when we hit a door the player rotates and moves to this transform taken from the door prefab
-    public Transform _rotationTrans;
+    private Transform _rotationTrans;
 
     /// <summary>
     /// Interpolation with sin easing, most of these will be private
+    /// may use c2 and c3 for bezier or multiple interpolation points in future
     /// </summary>
-    private Transform c0, c1, c2, c3;
+    private Transform c0, c1;
     private float timeDuration = 1f;
-    public bool checkToCalculate = false;
-
+    private bool checkToCalculate = false;
     private Vector3 p01;
     //public Color c01;
     private Quaternion r01;
     //public Vector3 s01;
-
     private bool moving = false;
     private float timeStart;
-
-    //extrapolation
-    private float uMin = 0f;
-    private float uMax = 1;
-
-    //extrapolation lecture vars
-    private float easingMod = 2f;
-    private bool loopMove = true;
-
     private float u;
 
     //awake
@@ -109,33 +88,35 @@ public class PlayerMovement : MonoBehaviour
     // used for updating values and variables
     private void Update()
     {
-
+        //movement
+        //detects if player is over an edge
         if (DetectEdge())
         {
             overTheEdge = true;
         }
- 
+        //moves player to next side of cube
         if(_rotationTrans != null)
         {
             Interpolation();
         }
-
         //Interpolation stuff, for rotation onto next side
-
-
-
         if (overTheEdge && onDoor && !checkToCalculate && !moving)
         {
-            Debug.Log("got trans, start interpolation");
+            //Debug.Log("got trans, start interpolation");
             //if we hit the door and are off the cube
             checkToCalculate = true;
         }
+
+
     }
 
+    //moves player based on equation
+    //may need to update to bezier for smoother rotation
     void Interpolation()
     {
         if (checkToCalculate)
         {
+            OnPlayerRotation();
             Debug.Log("Moving to next side YEET");
             c0 = this.transform;
             c1 = _rotationTrans;
@@ -190,90 +171,7 @@ public class PlayerMovement : MonoBehaviour
             transform.rotation = r01;
         }
     }
-
-    void Bezier()
-    {
-        if (checkToCalculate)
-        {
-            checkToCalculate = false;
-            moving = true;
-            timeStart = Time.time;
-        }
-
-        if (moving)
-        {
-            u = (Time.time - timeStart) / timeDuration;
-            if (u > 1)
-            {
-                u = 1;
-                moving = false;
-            }
-
-            Vector3 p01, p12, p23, p012, p123, p0123;
-            p01 = (1 - u) * c0.position + u * c1.position;
-            p12 = (1 - u) * c1.position + u * c2.position;
-            p23 = (1 - u) * c2.position + u * c3.position;
-
-            p012 = (1 - u) * p01 + u * p12;
-            p123 = (1 - u) * p12 + u * p23;
-
-            p0123 = (1 - u) * p012 + u * p123;
-
-            transform.position = p0123;
-        }
-    }
-
-    //players moves with WASD
-    void GetPlayerInput()
-    {
-        if (Input.GetKey(KeyCode.W))
-        {
-            transform.position += transform.forward * movementSpeed * Time.deltaTime;
-
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            transform.position += (-transform.forward) * movementSpeed * Time.deltaTime;
-
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            transform.position += (-transform.right) * movementSpeed * Time.deltaTime;
-
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            transform.position += transform.right * movementSpeed * Time.deltaTime;
-
-        }
-
-        switch (playerFaceStatus)
-        {
-            //top face
-            case faceStatus.face1:
-                //gravity is down the y axis
-                break;
-            case faceStatus.face2:
-                //gravity is up the z axis
-                break;
-            case faceStatus.face3:
-                // gravity is down the z axis (reverse from face2)
-                break;
-            case faceStatus.face4:
-                //gravity is up the x axis 
-                break;
-            case faceStatus.face5:
-                //gravity is down the x axis (reverse from face4)
-                break;
-            //bottom face
-            case faceStatus.face6:
-                //gravity is up the y axis (reverse from face1)
-                break;
-            default:
-                break;
-        }
-    }
-
+   
     //movement
     private void OnMove1(InputValue value)
     {
@@ -329,6 +227,12 @@ public class PlayerMovement : MonoBehaviour
             RotateMovement(movement);
     }
 
+    void OnPlayerRotation()
+    {
+        //runs when player moves to next cube (runs only once)
+        //camera rotation
+    }
+
     //when player gets to edge
     bool DetectEdge()
     {
@@ -354,7 +258,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     /// <summary>
-    /// ATTACK CODE GOES HERE
+    /// ATTACK CODE GOES HERE, WHESLEY'S SHOOTING GOES HERE
     /// </summary>
     void OnAttack()
     {
@@ -363,6 +267,14 @@ public class PlayerMovement : MonoBehaviour
 
 
     }
+
+    /// <summary>
+    /// Attack code goes here
+    /// 
+    /// </summary>
+    /// <param name="other"></param>
+    
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -384,38 +296,86 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+
+
+
+
+
+
+
+
+
+    //NOT IN USE
     //when raycast detects nothing under player, rotates 90 degrees forward
     //instead of v3 use rotation
     //slerp equation
+    //when player moves to next side, outside script calls this
+    //void ChangePlayerFaceStatus(faceStatus newFaceStatus, Transform newPos)
+    //{
+    //playerFaceStatus = newFaceStatus;
+    //rotation is just as important as position, whatever direction player is facing that is their forward
+    //transform.position = newPos.position;
+    //transform.rotation = newPos.rotation;
+    //keep track of current rotation with _playerAngle
+    //}
+
+    //players moves with WASD
     //NOT IN USE
-    void RotatePlayer(ref Vector3 rotatingObj, Vector3 _endPoint, float timeModifier, float timeStart)
+    void GetPlayerInput()
     {
-        float u = (Time.time - timeStart) / timeModifier;
-
-        if(u >= 1)
+        if (Input.GetKey(KeyCode.W))
         {
-            u = 1;
-            _rotating = false;
-            //_first = true;
+            transform.position += transform.forward * movementSpeed * Time.deltaTime;
 
-            //we have rotates, we can start checking again for missing floor
-            _rotationTrans = null;
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            transform.position += (-transform.forward) * movementSpeed * Time.deltaTime;
+
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            transform.position += (-transform.right) * movementSpeed * Time.deltaTime;
+
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            transform.position += transform.right * movementSpeed * Time.deltaTime;
+
         }
 
-        Vector3 p1;
-        p1 = (1 - u) * rotatingObj + u * _endPoint;
-        rotatingObj = p1;
+
     }
-    //when player moves to next side, outside script calls this
-    void ChangePlayerFaceStatus(faceStatus newFaceStatus, Transform newPos)
+    //NOT IN USE
+    void Bezier()
     {
-        playerFaceStatus = newFaceStatus;
-        //rotation is just as important as position, whatever direction player is facing that is their forward
-        transform.position = newPos.position;
-        transform.rotation = newPos.rotation;
+        if (checkToCalculate)
+        {
+            checkToCalculate = false;
+            moving = true;
+            timeStart = Time.time;
+        }
 
-        //keep track of current rotation with _playerAngle
+        if (moving)
+        {
+            u = (Time.time - timeStart) / timeDuration;
+            if (u > 1)
+            {
+                u = 1;
+                moving = false;
+            }
 
-        
+            //Vector3 p01, p12, p23, p012, p123, p0123;
+            //p01 = (1 - u) * c0.position + u * c1.position;
+            //p12 = (1 - u) * c1.position + u * c2.position;
+            //p23 = (1 - u) * c2.position + u * c3.position;
+
+            //p012 = (1 - u) * p01 + u * p12;
+           // p123 = (1 - u) * p12 + u * p23;
+
+            //p0123 = (1 - u) * p012 + u * p123;
+
+            //transform.position = p0123;
+        }
     }
 }
