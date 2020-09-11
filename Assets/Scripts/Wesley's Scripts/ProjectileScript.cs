@@ -19,12 +19,13 @@ public class ProjectileScript : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        Move_Forward();
+        //Debug.Log(transform.localEulerAngles);
+        //Move_Forward();
     }
 
 
     void Move_Forward() //Moves projectile along axis (may later be modified to towards Target)
     {
-        transform.Translate(transform.forward * speed * Time.deltaTime);
+        transform.Translate(this.transform.forward * speed * Time.deltaTime);
     }
 }

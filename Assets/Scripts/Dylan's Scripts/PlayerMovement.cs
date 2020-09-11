@@ -267,7 +267,10 @@ public class PlayerMovement : MonoBehaviour
     {
         //runs everytime our char attacks
         //Wesley-Code
-        Object.Instantiate(Player_Bullet, transform.position, transform.rotation);
+        GameObject bullet = Object.Instantiate(Player_Bullet, transform.position, transform.rotation);
+        Rigidbody rb = bullet.GetComponent<Rigidbody>();
+        rb.AddForce(bullet.transform.forward * 1000);
+
 
 
     }
