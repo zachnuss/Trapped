@@ -38,8 +38,14 @@ public class ProjectileScript : MonoBehaviour
             other.GetComponent<BaseEnemy>().health -= damage; //This is normal damage
             if(Random.Range(0f,10f)< 1) //This is a crit
             {
+                Debug.Log("I hit a crit!");
                 other.GetComponent<BaseEnemy>().health -= damage;
             }
+            Destroy(this.gameObject);
+        }
+        if(other.tag == "Wall")
+        {
+            Destroy(this.gameObject);
         }
     }
 }
