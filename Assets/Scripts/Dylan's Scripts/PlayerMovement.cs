@@ -35,7 +35,7 @@ public class PlayerMovement : MonoBehaviour
     
 
     //Camera
-    public Camera playerCam;
+    public CamLookAt playerCam;
     //level setup script
 
     //when we have successfully rotated
@@ -52,13 +52,11 @@ public class PlayerMovement : MonoBehaviour
     /// Interpolation with sin easing, most of these will be private
     /// may use c2 and c3 for bezier or multiple interpolation points in future
     /// </summary>
-    private Transform c0, c1;
+    private Transform c0, c1, c2;
     private float timeDuration = 1f;
     private bool checkToCalculate = false;
     private Vector3 p01;
-    //public Color c01;
     private Quaternion r01;
-    //public Vector3 s01;
     private bool moving = false;
     private float timeStart;
     private float u;
@@ -101,6 +99,7 @@ public class PlayerMovement : MonoBehaviour
         if(_rotationTrans != null)
         {
             Interpolation();
+            //Bezier();
         }
         //Interpolation stuff, for rotation onto next side
         if (overTheEdge && onDoor && !checkToCalculate && !moving)
@@ -119,29 +118,31 @@ public class PlayerMovement : MonoBehaviour
     {
         if (checkToCalculate)
         {
-            OnPlayerRotation();
-            Debug.Log("Moving to next side YEET");
+            
+            //Debug.Log("Moving to next side YEET");
             c0 = this.transform;
             c1 = _rotationTrans;
             checkToCalculate = false;
             moving = true;
             timeStart = Time.time;
+            OnPlayerRotation();
         }
 
         if (moving)
         {
-            Debug.Log("moving");
+            //Debug.Log("moving");
             u = (Time.time - timeStart) / timeDuration;
 
             if(u >= 1)
             {
                 //when we reach new pos
                 parent.transform.rotation = _rotationTrans.transform.rotation;
+                
                 u = 1;
                 moving = false;
                 _rotationTrans = null;
                overTheEdge = false;
-                Debug.Log("IT REACHED THE END HOLY CRAP IT WORKED IMMA SLEEP NOW GGS");
+                //Debug.Log("IT REACHED THE END HOLY CRAP IT WORKED IMMA SLEEP NOW GGS");
             }
 
 
@@ -234,6 +235,11 @@ public class PlayerMovement : MonoBehaviour
     {
         //runs when player moves to next cube (runs only once)
         //camera rotation
+        Transform newCameraTrans = _rotationTrans;
+        //newCameraTrans.transform.position = transform.TransformPoint(_rotationTrans.position.x, _rotationTrans.position.y + 7f, _rotationTrans.position.z);
+        //playerCam.BeginSideTransversal(newCameraTrans);
+        
+
     }
 
     //when player gets to edge
@@ -289,7 +295,9 @@ public class PlayerMovement : MonoBehaviour
         {
             onDoor = true;
             _rotationTrans = other.gameObject.GetComponent<DoorTrigger>().moveLocation;
+            c2 = other.gameObject.GetComponent<DoorTrigger>().moveMid;
             other.gameObject.GetComponent<DoorTrigger>().SwitchDirection();
+
             //checkToCalculate = true;
         }
 
@@ -358,9 +366,12 @@ public class PlayerMovement : MonoBehaviour
     {
         if (checkToCalculate)
         {
+            c0 = this.transform;
+            c1 = _rotationTrans;
             checkToCalculate = false;
             moving = true;
             timeStart = Time.time;
+            OnPlayerRotation();
         }
 
         if (moving)
@@ -368,21 +379,27 @@ public class PlayerMovement : MonoBehaviour
             u = (Time.time - timeStart) / timeDuration;
             if (u > 1)
             {
+                parent.transform.rotation = _rotationTrans.transform.rotation;
                 u = 1;
                 moving = false;
+                _rotationTrans = null;
+                overTheEdge = false;
+
             }
 
-            //Vector3 p01, p12, p23, p012, p123, p0123;
-            //p01 = (1 - u) * c0.position + u * c1.position;
-            //p12 = (1 - u) * c1.position + u * c2.position;
+            Vector3 p01, p12, p012;
+            p01 = (1 - u) * c0.position + u * c1.position;
+            p12 = (1 - u) * c1.position + u * c2.position;
             //p23 = (1 - u) * c2.position + u * c3.position;
 
-            //p012 = (1 - u) * p01 + u * p12;
-           // p123 = (1 - u) * p12 + u * p23;
+            p012 = (1 - u) * p01 + u * p12;
+            //p123 = (1 - u) * p12 + u * p23;
 
             //p0123 = (1 - u) * p012 + u * p123;
+            r01 = Quaternion.Slerp(c0.rotation, c1.rotation, u);
 
-            //transform.position = p0123;
+            transform.rotation = r01;
+            transform.position = p012;
         }
     }
 }

@@ -21,7 +21,6 @@ public class ProjectileScript : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        //Debug.Log(transform.localEulerAngles);
         //Move_Forward();
     }
 
