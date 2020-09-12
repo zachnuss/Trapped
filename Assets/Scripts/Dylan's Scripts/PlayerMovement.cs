@@ -53,14 +53,21 @@ public class PlayerMovement : MonoBehaviour
     /// may use c2 and c3 for bezier or multiple interpolation points in future
     /// </summary>
     private Transform c0, c1, c2;
+    private Quaternion r01;
     private float timeDuration = 1f;
+    float timeDurationCamera = 1.5f;
     private bool checkToCalculate = false;
     private Vector3 p01;
-    private Quaternion r01;
-    private bool moving = false;
-    private float timeStart;
-    private float u;
 
+    //for smooth parent rotation
+    private Quaternion par01;
+    private Transform pc1, pc0;
+
+    public EasingType easingTypeC = EasingType.linear;
+    private bool moving = false;
+    private float timeStart, timeStart2;
+    private float u, u2;
+    float easingMod = 2f;
     //Shoot Code Variable
     public GameObject Player_Bullet; //Bullet prefab
 
@@ -82,7 +89,7 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
         //cant move if we are rotating
-        if(!overTheEdge)
+        if(!overTheEdge && !moving)
             Movement();
     }
 
@@ -122,9 +129,15 @@ public class PlayerMovement : MonoBehaviour
             //Debug.Log("Moving to next side YEET");
             c0 = this.transform;
             c1 = _rotationTrans;
+
+            //smooth parent movement (for camera)
+            pc0 = parent.transform;
+            pc1 = _rotationTrans;
+            
             checkToCalculate = false;
             moving = true;
             timeStart = Time.time;
+            timeStart2 = Time.time;
             OnPlayerRotation();
         }
 
@@ -132,32 +145,35 @@ public class PlayerMovement : MonoBehaviour
         {
             //Debug.Log("moving");
             u = (Time.time - timeStart) / timeDuration;
+            u2 = (Time.time - timeStart2) / timeDurationCamera;
 
-            if(u >= 1)
+            if (u >= 1)
             {
                 //when we reach new pos
                 parent.transform.rotation = _rotationTrans.transform.rotation;
-                
+
                 u = 1;
                 moving = false;
                 _rotationTrans = null;
-               overTheEdge = false;
+                overTheEdge = false;
                 //Debug.Log("IT REACHED THE END HOLY CRAP IT WORKED IMMA SLEEP NOW GGS");
             }
+            else
+                timeStart = Time.deltaTime;
 
 
-          //  if (loopMove)
-          // // {
-          //      timeStart = Time.time;
-          //  }
-          //  else
-          //  {
-          //      moving = false;
-          //  }
+            //  if (loopMove)
+            // // {
+            //      timeStart = Time.time;
+            //  }
+            //  else
+            //  {
+            //      moving = false;
+            //  }
 
             //adjsut u value to the ranger from uMin to uMax
             //different types of eases to avoid snaps and rigidness
-            //u = u + easingMod * Mathf.Sin(2 * Mathf.PI * u);
+            u2 = EaseU(u2, easingTypeC, easingMod);
             //interpolation equation (with min and max)
             //u = ((1 - u) * uMin) + (u * uMax);
 
@@ -170,9 +186,13 @@ public class PlayerMovement : MonoBehaviour
             //SLERP
             r01 = Quaternion.Slerp(c0.rotation, c1.rotation, u);
 
+            par01 = Quaternion.Slerp(pc0.rotation, pc1.rotation, u2);
+
             //apply those new values
             transform.position = p01;
             transform.rotation = r01;
+
+            parent.transform.rotation = par01;
         }
     }
    
@@ -311,6 +331,47 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+
+    //easing types
+    public float EaseU(float u, EasingType eType, float eMod)
+    {
+        float u2 = u;
+        switch (eType)
+        {
+            case EasingType.linear:
+                u2 = u;
+                break;
+            case EasingType.easeIn:
+                u2 = Mathf.Pow(u, eMod);
+                break;
+            case EasingType.easeOut:
+                u2 = 1 - Mathf.Pow(1 - u, eMod);
+                break;
+            case EasingType.easeInOut:
+                if (u <= 0.5f)
+                {
+                    u2 = 0.5f * Mathf.Pow(u * 2, eMod);
+                }
+                else
+                {
+                    u2 = 0.5f + 0.5f * (1 - Mathf.Pow(1 - (2 * (u - 0.5f)), eMod));
+                }
+                break;
+            case EasingType.sin:
+                u2 = u + eMod * Mathf.Sin(2 * Mathf.PI * u);
+                break;
+            case EasingType.sinIn:
+                u2 = 1 - Mathf.Cos(u * Mathf.PI * 0.5f);
+                break;
+            case EasingType.sinOut:
+                u2 = Mathf.Sin(u * Mathf.PI * 0.5f);
+                break;
+            default:
+                break;
+        }
+
+        return (u2);
+    }
 
 
 

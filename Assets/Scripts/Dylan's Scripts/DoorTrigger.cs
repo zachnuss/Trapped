@@ -15,6 +15,8 @@ public class DoorTrigger : MonoBehaviour
     public Transform mid1;
     public Transform mid2;
 
+    //future idea: add one way doors that players have to manually turn on and off or switch which direcitons they can go
+
     private void Update()
     {
         if (direction)
