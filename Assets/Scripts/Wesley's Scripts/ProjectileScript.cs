@@ -47,4 +47,14 @@ public class ProjectileScript : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+
+    //ADDED BY ZACHARY just to destroy projectiles
+    public IEnumerator destroyProjectile()
+    {
+
+        yield return new WaitForSeconds(5f);
+        Destroy(this.gameObject);
+    }
+
+
 }
