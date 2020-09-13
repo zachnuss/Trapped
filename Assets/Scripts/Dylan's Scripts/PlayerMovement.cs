@@ -71,6 +71,8 @@ public class PlayerMovement : MonoBehaviour
     //Shoot Code Variable
     public GameObject Player_Bullet; //Bullet prefab
 
+    bool sideTransversalMovementCooldown = false;
+
     //awake
     private void Awake()
     {
@@ -89,7 +91,7 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
         //cant move if we are rotating
-        if(!overTheEdge && !moving)
+        if(!overTheEdge && !moving && !sideTransversalMovementCooldown)
             Movement();
     }
 
@@ -258,8 +260,8 @@ public class PlayerMovement : MonoBehaviour
         Transform newCameraTrans = _rotationTrans;
         //newCameraTrans.transform.position = transform.TransformPoint(_rotationTrans.position.x, _rotationTrans.position.y + 7f, _rotationTrans.position.z);
         //playerCam.BeginSideTransversal(newCameraTrans);
-        
 
+        StartCoroutine(SideTransversalCoolDownCO());
     }
 
     //when player gets to edge
@@ -307,7 +309,12 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     /// <param name="other"></param>
     
-
+    IEnumerator SideTransversalCoolDownCO()
+    {
+        sideTransversalMovementCooldown = true;
+        yield return new WaitForSeconds(1.0f);
+        sideTransversalMovementCooldown = false;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
