@@ -17,20 +17,27 @@ public class PlayerData : ScriptableObject
     public int currency;
 
     [Header("Player Currency")]
-    public Scene[] levelNames;
+    public Scene[] levels;
 
+    public Scene nextLevel;
+    public Scene prevLevel;
 
+    public Scene endScreenScene;
+    public Scene storeScene;
 
     //called when level beat
     public void BeatLevel()
     {
+        prevLevel = levels[OnLevel];
         OnLevel++;
+        nextLevel = levels[OnLevel];
 
+        //load store scene?
     }
 
     public void LoadNextLevel()
     {
-        Debug.Log("Loading Next Level: " + levelNames[OnLevel].name);
-        SceneManager.LoadScene(levelNames[OnLevel].name);
+        Debug.Log("Loading Next Level: " + levels[OnLevel].name);
+        SceneManager.LoadScene(nextLevel.name);
     }
 }
