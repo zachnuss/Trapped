@@ -6,6 +6,16 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Data", menuName = "ScritableObjects/PlayerData", order = 1)]
 public class PlayerData : ScriptableObject
 {
+    [Header("Player Stats")]
+    public int healthUpgrade;
+    public int damageUpgrade;
+    public int speedUpgrade;
+
+
+    private int totalHealth;
+    private int totalSpeed;
+    private int totalDamage;
+
     [Header("Current level player is on: ZERO INDEXED")]
     public int OnLevel = 0;
     //0 = level 1 and so on
@@ -35,9 +45,46 @@ public class PlayerData : ScriptableObject
         //load store scene?
     }
 
+    //load next level
     public void LoadNextLevel()
     {
         Debug.Log("Loading Next Level: " + levels[OnLevel].name);
         SceneManager.LoadScene(nextLevel.name);
     }
+
+    //adds score
+    public void AddScore(int addition)
+    {
+        score += addition;
+    }
+
+    //adds currency
+    public void AddCurrency(int addition)
+    {
+        currency += addition;
+        //curency adds score as well
+        score += addition;
+    }
+
+    /// <summary>
+    /// Upgrades are bought in the store scene, they call these 
+    /// 
+    /// </summary>
+    /// <param name="addition"></param>
+
+    public void UpgradeHealth()
+    {
+        healthUpgrade++;
+    }
+
+    public void UpgradeDamage()
+    {
+        damageUpgrade++;
+    }
+
+    public void UpgradeSpeed()
+    {
+        speedUpgrade++;
+    }
+
 }
