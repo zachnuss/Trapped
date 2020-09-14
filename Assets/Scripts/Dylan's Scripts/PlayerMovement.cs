@@ -43,7 +43,7 @@ public class PlayerMovement : MonoBehaviour
     bool _first = true;
     [Header("Shows if player is off the edge")]
     public bool overTheEdge = false;
-    bool onDoor = false;
+    public bool onDoor = false;
 
     //when we hit a door the player rotates and moves to this transform taken from the door prefab
     private Transform _rotationTrans;
@@ -54,9 +54,10 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     private Transform c0, c1, c2;
     private Quaternion r01;
-    private float timeDuration = 1f;
-    float timeDurationCamera = 1.5f;
-    private bool checkToCalculate = false;
+    private float timeDuration = 3f;
+    float timeDurationCamera = 3f;
+    public bool checkToCalculate = false;
+    private bool checkToCalculate2 = false;
     private Vector3 p01;
 
     //for smooth parent rotation
@@ -64,7 +65,8 @@ public class PlayerMovement : MonoBehaviour
     private Transform pc1, pc0;
 
     public EasingType easingTypeC = EasingType.linear;
-    private bool moving = false;
+    public bool moving = false;
+    private bool moving2 = false;
     private float timeStart, timeStart2;
     private float u, u2;
     float easingMod = 2f;
@@ -108,14 +110,22 @@ public class PlayerMovement : MonoBehaviour
         if(_rotationTrans != null)
         {
             Interpolation();
+           // CamInterpolation();
+            
             //Bezier();
         }
+
+        if (checkToCalculate2 || moving2)
+            CamInterpolation();
+
+
         //Interpolation stuff, for rotation onto next side
         if (overTheEdge && onDoor && !checkToCalculate && !moving)
         {
             //Debug.Log("got trans, start interpolation");
             //if we hit the door and are off the cube
             checkToCalculate = true;
+            //checkToCalculate2 = true;
         }
 
 
@@ -175,6 +185,7 @@ public class PlayerMovement : MonoBehaviour
 
             //adjsut u value to the ranger from uMin to uMax
             //different types of eases to avoid snaps and rigidness
+            u = EaseU(u, easingTypeC, easingMod);
             u2 = EaseU(u2, easingTypeC, easingMod);
             //interpolation equation (with min and max)
             //u = ((1 - u) * uMin) + (u * uMax);
@@ -193,6 +204,57 @@ public class PlayerMovement : MonoBehaviour
             //apply those new values
             transform.position = p01;
             transform.rotation = r01;
+
+            parent.transform.rotation = par01;
+        }
+    }
+
+    void CamInterpolation()
+    {
+        if (checkToCalculate2)
+        {
+            Debug.Log("moving cam");
+
+            //smooth parent movement (for camera)
+            pc0 = parent.transform;
+            pc1 = _rotationTrans;
+
+            checkToCalculate2 = false;
+            moving2 = true;
+            timeStart2 = Time.time;
+        }
+
+        if (moving2)
+        {
+            Debug.Log("moving2");
+            
+            u2 = (Time.time - timeStart2) / timeDurationCamera;
+
+            if (u2 >= 1)
+            {
+                Debug.Log("(parent) camera moved");
+                //when we reach new pos
+                parent.transform.rotation = _rotationTrans.transform.rotation;
+
+                u2 = 1;
+                moving = false;
+
+                //Debug.Log("IT REACHED THE END HOLY CRAP IT WORKED IMMA SLEEP NOW GGS");
+            }
+            else
+                timeStart = Time.deltaTime;
+
+
+            //adjsut u value to the ranger from uMin to uMax
+            //different types of eases to avoid snaps and rigidness
+            u2 = EaseU(u2, easingTypeC, easingMod);
+            //interpolation equation (with min and max)
+            //u = ((1 - u) * uMin) + (u * uMax);
+
+           
+
+            par01 = Quaternion.Slerp(pc0.rotation, pc1.rotation, u2);
+
 
             parent.transform.rotation = par01;
         }
@@ -309,10 +371,11 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     /// <param name="other"></param>
     
+        //to avoid accidentataly movement back
     IEnumerator SideTransversalCoolDownCO()
     {
         sideTransversalMovementCooldown = true;
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(2.0f);
         sideTransversalMovementCooldown = false;
     }
 
