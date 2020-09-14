@@ -19,6 +19,11 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("Local Player Stats")]
+    public int health;
+    public int damage;
+    public int speed;
+
     //set up for rotation and new rotation orientation
     [Header("Parent object of this player obj")]
     public GameObject parent;
@@ -26,6 +31,8 @@ public class PlayerMovement : MonoBehaviour
     Quaternion targetRotation;
     //PlayerInputActions controls;
     Vector3 _playerAngle;
+
+    //speed upgrades affect speed var differently (not 1:1)
     [Header("Player movement speed")]
     public float movementSpeed = 1.0f;
     Vector2 movementInput;
@@ -43,7 +50,7 @@ public class PlayerMovement : MonoBehaviour
     bool _first = true;
     [Header("Shows if player is off the edge")]
     public bool overTheEdge = false;
-    public bool onDoor = false;
+    private bool onDoor = false;
 
     //when we hit a door the player rotates and moves to this transform taken from the door prefab
     private Transform _rotationTrans;
@@ -56,7 +63,7 @@ public class PlayerMovement : MonoBehaviour
     private Quaternion r01;
     private float timeDuration = 3f;
     float timeDurationCamera = 3f;
-    public bool checkToCalculate = false;
+    private bool checkToCalculate = false;
     private bool checkToCalculate2 = false;
     private Vector3 p01;
 
@@ -87,6 +94,8 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         //playerFaceStatus = faceStatus.face1;
+
+        //set health, speed and damage based on what is on scriptable object
     }
 
     // Used for physics 
