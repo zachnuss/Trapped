@@ -7,10 +7,12 @@ using UnityEngine.SceneManagement;
 public class UIPauseDeath : MonoBehaviour
 {
     //Variable Initialization to access the parts of the scene for UI
+    public GameObject StandardUI; //Creates a gameobject for the standard UI to be paused when the other screens are up.
     public GameObject PauseMenuUI; //Creates a slot for the pause menu
     public GameObject DeathScreenUI; //Creates a gameobject for the death screen to control when it appears
 
-    public GameObject deathFirstButton; //Creates a gameobject to help track what button should be selected on that screen
+    public GameObject pauseFirstButton; //Creates a gameobject to help track what button should be selected first on the pause screen
+    public GameObject deathFirstButton; //Creates a gameobject to help track what button should be selected first on the death screen
     //Will add the optionsFirstButton, optionsClosedButton later
     
     public bool isPaused = false; //Creates a boolean to track if the pause menu should be on or off / displayed or not
@@ -31,7 +33,35 @@ public class UIPauseDeath : MonoBehaviour
         //Will unpause the game if it is paused already
         else
             isPaused = false;
-        
+
+
+        //If function to make sure that the game only pauses when the death screen is not turned on
+        if (hasDied == false)
+        {
+            //Checks for the pause button to be pressed
+            if (isPaused == true)
+            {
+                StandardUI.SetActive(false); //Sets standard UI to not be displayed
+                PauseMenuUI.SetActive(true); //Sets the Pause menu to active to display it
+
+                //Stops all background actions while the pause menu is active
+                Time.timeScale = 0f;
+
+                //Use the event system to set the appropriate button for the UI
+                EventSystem.current.SetSelectedGameObject(null); //Clears the selected Obj
+                EventSystem.current.SetSelectedGameObject(pauseFirstButton); //Sets the selected obj
+            }
+
+            //If the player selects to continue the game/resume
+            else
+            {
+                PauseMenuUI.SetActive(false); //Sets the Pause menu to not active to hide it
+                StandardUI.SetActive(true); //Sets standard UI to be displayed
+
+                //Resumes all background actions
+                Time.timeScale = 1f;
+            }
+        }
     }
 
     //Resumes the game if the back button (button East) is pressed or the resume button is selected
@@ -39,12 +69,34 @@ public class UIPauseDeath : MonoBehaviour
     {
         //If statement to make sure this function only works on the pause screen
         if(isPaused == true)
-            isPaused = false; 
+        {
+            isPaused = false;
+
+            //If function to make sure that the game only pauses when the death screen is not turned on
+            if (hasDied == false)
+            {
+                PauseMenuUI.SetActive(false); //Sets the Pause menu to not active to hide it
+                StandardUI.SetActive(true); //Sets standard UI to be displayed
+
+                //Resumes all background actions
+                Time.timeScale = 1f;
+            }
+        } 
     }
     
     public void ResumeGame()
     {
         isPaused = false;
+
+        //If function to make sure that the game only pauses when the death screen is not turned on
+        if (hasDied == false)
+        {
+            PauseMenuUI.SetActive(false); //Sets the Pause menu to not active to hide it
+            StandardUI.SetActive(true); //Sets standard UI to be displayed
+
+            //Resumes all background actions
+            Time.timeScale = 1f;
+        }
     }
 
     //Options menu pops up when the button is selected
@@ -73,6 +125,7 @@ public class UIPauseDeath : MonoBehaviour
     {
         hasDied = true;
 
+        StandardUI.SetActive(false); //Sets standard UI to not be displayed
         DeathScreenUI.SetActive(true); //Sets the Death menu to active to display it
 
         //Stops all background actions while the pause menu is active
@@ -83,33 +136,6 @@ public class UIPauseDeath : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(deathFirstButton); //Sets the selected obj
     }
 
-    //Function to keep track of an if else statment to pause or unpause the game
-    public void PauseGame()
-    {
-        //If function to make sure that the game only pauses when the death screen is not turned on
-        if(hasDied == false)
-        {
-            //Checks for the pause button to be pressed
-            if (isPaused == true)
-            {
-                PauseMenuUI.SetActive(true); //Sets the Pause menu to active to display it
-
-                //Stops all background actions while the pause menu is active
-                Time.timeScale = 0f;
-            }
-
-            //If the player selects to continue the game/resume
-            else
-            {
-                PauseMenuUI.SetActive(false); //Sets the Pause menu to not active to hide it
-
-                //Resumes all background actions
-                Time.timeScale = 1f;
-            }
-        }
-    }
-
-
     //MAIN CODE BELOW!
 
     //Awake is called when the script instance is being loaded
@@ -118,12 +144,11 @@ public class UIPauseDeath : MonoBehaviour
         //When the scene starts up the pause menu and death screen will be hidden
         PauseMenuUI.SetActive(false);
         DeathScreenUI.SetActive(false);
+        StandardUI.SetActive(true); 
     }
 
-    // Update is called once per frame
+    /*// Update is called once per frame
     void Update()
     {
-        //Calls the PauseGame function to see if the game needs to be paused or not
-        PauseGame();
-    }
+    }*/
 }
