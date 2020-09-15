@@ -66,10 +66,12 @@ public class PlayerMovement : MonoBehaviour
 
     public EasingType easingTypeC = EasingType.linear;
     private bool moving = false;
-    private float timeStart, timeStart2;
+    private float timeStart;
     private float u, u2;
     float easingMod = 2f;
+
     //Shoot Code Variable
+    [Header("Player Bullet Var")]
     public GameObject Player_Bullet; //Bullet prefab
 
     //awake
@@ -138,7 +140,7 @@ public class PlayerMovement : MonoBehaviour
             checkToCalculate = false;
             moving = true;
             timeStart = Time.time;
-            timeStart2 = Time.time;
+            //timeStart2 = Time.time;
             OnPlayerRotation();
 
            
@@ -148,7 +150,7 @@ public class PlayerMovement : MonoBehaviour
         {
             //Debug.Log("moving");
             u = (Time.time - timeStart) / timeDuration;
-            //u2 = (Time.time - timeStart2) / timeDurationCamera;
+           // u2 = (Time.time - timeStart2) / timeDurationCamera;
 
             if (u >= 1)
             {
@@ -161,18 +163,6 @@ public class PlayerMovement : MonoBehaviour
                 overTheEdge = false;
                 //Debug.Log("IT REACHED THE END HOLY CRAP IT WORKED IMMA SLEEP NOW GGS");
             }
-            else
-                //timeStart = Time.time;
-
-
-            //  if (loopMove)
-            // // {
-            //      timeStart = Time.time;
-            //  }
-            //  else
-            //  {
-            //      moving = false;
-            //  }
 
             //adjsut u value to the ranger from uMin to uMax
             //different types of eases to avoid snaps and rigidness
@@ -290,9 +280,6 @@ public class PlayerMovement : MonoBehaviour
         return noFloor;
     }
 
-    /// <summary>
-    /// ATTACK CODE GOES HERE, WHESLEY'S SHOOTING GOES HERE
-    /// </summary>
     void OnAttack()
     {
         //runs everytime our char attacks
@@ -307,7 +294,6 @@ public class PlayerMovement : MonoBehaviour
 
 
     }
-
     /// <summary>
     /// Attack code goes here
     /// 
@@ -384,90 +370,4 @@ public class PlayerMovement : MonoBehaviour
 
 
 
-
-
-
-
-    //NOT IN USE
-    //when raycast detects nothing under player, rotates 90 degrees forward
-    //instead of v3 use rotation
-    //slerp equation
-    //when player moves to next side, outside script calls this
-    //void ChangePlayerFaceStatus(faceStatus newFaceStatus, Transform newPos)
-    //{
-    //playerFaceStatus = newFaceStatus;
-    //rotation is just as important as position, whatever direction player is facing that is their forward
-    //transform.position = newPos.position;
-    //transform.rotation = newPos.rotation;
-    //keep track of current rotation with _playerAngle
-    //}
-
-    //players moves with WASD
-    //NOT IN USE
-    void GetPlayerInput()
-    {
-        if (Input.GetKey(KeyCode.W))
-        {
-            transform.position += transform.forward * movementSpeed * Time.deltaTime;
-
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            transform.position += (-transform.forward) * movementSpeed * Time.deltaTime;
-
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            transform.position += (-transform.right) * movementSpeed * Time.deltaTime;
-
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            transform.position += transform.right * movementSpeed * Time.deltaTime;
-
-        }
-
-
-    }
-    //NOT IN USE
-    void Bezier()
-    {
-        if (checkToCalculate)
-        {
-            c0 = this.transform;
-            c1 = _rotationTrans;
-            checkToCalculate = false;
-            moving = true;
-            timeStart = Time.time;
-            OnPlayerRotation();
-        }
-
-        if (moving)
-        {
-            u = (Time.time - timeStart) / timeDuration;
-            if (u > 1)
-            {
-                parent.transform.rotation = _rotationTrans.transform.rotation;
-                u = 1;
-                moving = false;
-                _rotationTrans = null;
-                overTheEdge = false;
-
-            }
-
-            Vector3 p01, p12, p012;
-            p01 = (1 - u) * c0.position + u * c1.position;
-            p12 = (1 - u) * c1.position + u * c2.position;
-            //p23 = (1 - u) * c2.position + u * c3.position;
-
-            p012 = (1 - u) * p01 + u * p12;
-            //p123 = (1 - u) * p12 + u * p23;
-
-            //p0123 = (1 - u) * p012 + u * p123;
-            r01 = Quaternion.Slerp(c0.rotation, c1.rotation, u);
-
-            transform.rotation = r01;
-            transform.position = p012;
-        }
-    }
 }

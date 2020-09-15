@@ -2,6 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Dylan Loe
+/// 
+/// Cam movement system
+/// 
+/// NOT IN USE
+/// </summary>
+
+
 public enum EasingType
 {
     linear,
