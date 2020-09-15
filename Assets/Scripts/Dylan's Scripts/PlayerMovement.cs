@@ -34,7 +34,7 @@ public class PlayerMovement : MonoBehaviour
     float _turnSpeed = 20f;
     float _angle;
 
-    [Header("Player Stats - Set on Scene Start")]
+    [Header("Current Player Stats - Set on Scene Start")]
     public int health;
     public int damage;
     public int speedMultiplier;
