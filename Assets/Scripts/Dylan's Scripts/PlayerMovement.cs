@@ -22,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
     //set up for rotation and new rotation orientation
     [Header("Parent object of this player obj")]
     public GameObject parent;
+    public GameObject follower;
     //new rotation orientation player moves to
     Quaternion targetRotation;
     //PlayerInputActions controls;
@@ -35,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
     
 
     //Camera
-    public CamLookAt playerCam;
+   // public CamLookAt playerCam;
     //level setup script
 
     //when we have successfully rotated
@@ -54,7 +55,7 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     private Transform c0, c1, c2;
     private Quaternion r01;
-    private float timeDuration = 1f;
+    private float timeDuration = 1.2f;
     float timeDurationCamera = 1.5f;
     private bool checkToCalculate = false;
     private Vector3 p01;
@@ -139,19 +140,21 @@ public class PlayerMovement : MonoBehaviour
             timeStart = Time.time;
             timeStart2 = Time.time;
             OnPlayerRotation();
+
+           
         }
 
         if (moving)
         {
             //Debug.Log("moving");
             u = (Time.time - timeStart) / timeDuration;
-            u2 = (Time.time - timeStart2) / timeDurationCamera;
+            //u2 = (Time.time - timeStart2) / timeDurationCamera;
 
             if (u >= 1)
             {
                 //when we reach new pos
                 parent.transform.rotation = _rotationTrans.transform.rotation;
-
+              
                 u = 1;
                 moving = false;
                 _rotationTrans = null;
@@ -159,7 +162,7 @@ public class PlayerMovement : MonoBehaviour
                 //Debug.Log("IT REACHED THE END HOLY CRAP IT WORKED IMMA SLEEP NOW GGS");
             }
             else
-                timeStart = Time.deltaTime;
+                //timeStart = Time.time;
 
 
             //  if (loopMove)
@@ -188,10 +191,11 @@ public class PlayerMovement : MonoBehaviour
 
             par01 = Quaternion.Slerp(pc0.rotation, pc1.rotation, u2);
 
+           // Vector3 tempRot = new Vector3(0, -90, 0);
             //apply those new values
             transform.position = p01;
             transform.rotation = r01;
-
+            follower.transform.rotation = r01;
             parent.transform.rotation = par01;
         }
     }
