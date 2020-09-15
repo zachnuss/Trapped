@@ -38,11 +38,20 @@ public class PlayerData : ScriptableObject
     //called when level beat
     public void BeatLevel()
     {
-        prevLevel = levels[OnLevel];
-        OnLevel++;
-        nextLevel = levels[OnLevel];
+        if (OnLevel <= levels.Length - 1)
+        {
+            prevLevel = levels[OnLevel];
+            OnLevel++;
+            nextLevel = levels[OnLevel];
 
-        //load store scene?
+            //load store scene?
+
+        }
+        else
+        {
+            Debug.Log("You did it you won. Congradulations.");
+
+        }
     }
 
     //load next level
