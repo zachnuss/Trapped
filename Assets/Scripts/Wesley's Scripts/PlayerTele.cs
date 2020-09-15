@@ -9,7 +9,10 @@ using UnityEngine.SceneManagement;
 public class PlayerTele : MonoBehaviour
 {
     public GameObject teleporterTracker;//Assign before load, set to private if unneeded
-    public string nextScene; 
+    public string nextScene;
+
+    //reference to playerdata
+    public PlayerData playerData;
 
     private void Start()
     {
@@ -25,7 +28,9 @@ public class PlayerTele : MonoBehaviour
             other.GetComponent<TeleBool>().active = true;
             if (teleporterTracker.GetComponent<TeleporterScript>().GoalCheck(teleporterTracker.GetComponent<TeleporterScript>().teleporters))
             {
-                SceneManager.LoadScene(nextScene);
+                //SceneManager.LoadScene(nextScene);
+                playerData.BeatLevel();
+                
             }
         }
     }
