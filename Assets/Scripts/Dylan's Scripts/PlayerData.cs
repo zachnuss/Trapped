@@ -6,15 +6,15 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Data", menuName = "ScritableObjects/PlayerData", order = 1)]
 public class PlayerData : ScriptableObject
 {
-    [Header("Player Stats")]
+    [Header("Player Upgrade Stats")]
     public int healthUpgrade;
     public int damageUpgrade;
     public int speedUpgrade;
 
-
-    private int totalHealth;
-    private int totalSpeed;
-    private int totalDamage;
+    [Header("Player base stats")]
+    public int totalHealthBase;
+   // public int totalSpeedBase;
+    public int totalDamageBase;
 
     [Header("Current level player is on: ZERO INDEXED")]
     public int OnLevel = 0;
@@ -96,4 +96,5 @@ public class PlayerData : ScriptableObject
         speedUpgrade++;
     }
 
+    
 }

@@ -33,7 +33,11 @@ public class PlayerMovement : MonoBehaviour
     //rotation
     float _turnSpeed = 20f;
     float _angle;
-    
+
+    [Header("Player Stats - Set on Scene Start")]
+    public int health;
+    public int damage;
+    public int speedMultiplier;
 
     //Camera
    // public CamLookAt playerCam;
@@ -74,18 +78,23 @@ public class PlayerMovement : MonoBehaviour
     [Header("Player Bullet Var")]
     public GameObject Player_Bullet; //Bullet prefab
 
+    //player data scriptable obj
+    [Header("Player Data")]
+    public PlayerData playerData;
+
     //awake
     private void Awake()
     {
-        //controls = new PlayerInputActions();
+  
         Vector3 _playerAngle = Vector3.zero;
-        // _playerAngle.x = 90;
+ 
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        //playerFaceStatus = faceStatus.face1;
+
+        SetPlayerStats();
     }
 
     // Used for physics 
@@ -223,15 +232,9 @@ public class PlayerMovement : MonoBehaviour
         //local angles are used since its a child, the player parent is set to keep track of the global rotation
         transform.localRotation = Quaternion.Euler( transform.localEulerAngles.x , _angle, transform.localEulerAngles.z );
 
+        //base movement is just 1.0
+        movementSpeed = movementSpeed + (movementSpeed * speedMultiplier);
 
-        // Debug.Log(transform.localEulerAngles.x + _angle + transform.localEulerAngles.z);
-
-        //transform.localRotation = Quaternion.Euler(transform.localEulerAngles.x, transform.localEulerAngles.y, _angle);
-
-        //transform.localRotation.SetEulerAngles(transform.localEulerAngles.x, _angle, transform.localEulerAngles.z);
-        //transform.eulerAngles.y = _angle;
-        //transform.rotation = Quaternion.Euler(0, -_angle, 0);
-        //Debug.Log(transform.localRotation);
         //player is always moving forward, player is just adjsuting which way they move forward (always local forward so we can have player move consistentaly forward on each side)
         transform.position += transform.forward * movementSpeed * Time.deltaTime;
     }
@@ -250,8 +253,7 @@ public class PlayerMovement : MonoBehaviour
         //runs when player moves to next cube (runs only once)
         //camera rotation
         Transform newCameraTrans = _rotationTrans;
-        //newCameraTrans.transform.position = transform.TransformPoint(_rotationTrans.position.x, _rotationTrans.position.y + 7f, _rotationTrans.position.z);
-        //playerCam.BeginSideTransversal(newCameraTrans);
+        
         
 
     }
@@ -366,7 +368,16 @@ public class PlayerMovement : MonoBehaviour
         return (u2);
     }
 
+    //setting player stats
+    void SetPlayerStats()
+    {
+        health = playerData.totalHealthBase + playerData.healthUpgrade;
 
+        damage = playerData.totalDamageBase + playerData.damageUpgrade;
+
+        speedMultiplier = (playerData.speedUpgrade)/10;
+
+    }
 
 
 
