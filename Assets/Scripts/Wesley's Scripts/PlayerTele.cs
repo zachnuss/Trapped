@@ -9,10 +9,9 @@ using UnityEngine.SceneManagement;
 public class PlayerTele : MonoBehaviour
 {
     public GameObject teleporterTracker;//Assign before load, set to private if unneeded
-    public string nextScene;
-
-    //reference to playerdata
-    public PlayerData playerData;
+    public string nextScene; //Target Level
+    public Animator transition; //Transition animator
+    public float transitionTime = 1;
 
     private void Start()
     {
@@ -28,13 +27,23 @@ public class PlayerTele : MonoBehaviour
             other.GetComponent<TeleBool>().active = true;
             if (teleporterTracker.GetComponent<TeleporterScript>().GoalCheck(teleporterTracker.GetComponent<TeleporterScript>().teleporters))
             {
-                //SceneManager.LoadScene(nextScene);
-                playerData.BeatLevel();
-                
+                StartCoroutine(LoadTargetLevel());
             }
         }
     }
 
+    /*public void LoadTargetLevel()
+    {
 
+        SceneManager.LoadScene(nextScene);
+    }*/
 
+    IEnumerator LoadTargetLevel()
+    {
+        transition.SetTrigger("Start"); //start animation
+
+        yield return new WaitForSeconds(transitionTime); //Time given for transition animation to play
+
+        SceneManager.LoadScene(nextScene); //Loads target scene
+    }
 }
