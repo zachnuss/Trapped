@@ -371,12 +371,14 @@ public class PlayerMovement : MonoBehaviour
     //setting player stats
     void SetPlayerStats()
     {
+        
         health = playerData.totalHealthBase + playerData.healthUpgrade;
 
         damage = playerData.totalDamageBase + playerData.damageUpgrade;
 
         speedMultiplier = (playerData.speedUpgrade)/10;
 
+        
     }
 
 

@@ -12,8 +12,8 @@ public class DoorTrigger : MonoBehaviour
     public Transform pos1;
     public Transform pos2;
 
-    public Transform mid1;
-    public Transform mid2;
+    //public Transform mid1;
+    //public Transform mid2;
 
     //future idea: add one way doors that players have to manually turn on and off or switch which direcitons they can go
 
@@ -22,12 +22,12 @@ public class DoorTrigger : MonoBehaviour
         if (direction)
         {
             moveLocation = pos1;
-            moveMid = mid1;
+            //moveMid = mid1;
         }
         else
         {
             moveLocation = pos2;
-            moveMid = mid2;
+            //moveMid = mid2;
         }
     }
 

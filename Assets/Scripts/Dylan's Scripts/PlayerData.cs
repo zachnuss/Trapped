@@ -13,7 +13,7 @@ public class PlayerData : ScriptableObject
 
     [Header("Player base stats")]
     public int totalHealthBase;
-   // public int totalSpeedBase;
+    // public int totalSpeedBase;
     public int totalDamageBase;
 
     [Header("Current level player is on: ZERO INDEXED")]
@@ -34,6 +34,11 @@ public class PlayerData : ScriptableObject
 
     public Scene endScreenScene;
     public Scene storeScene;
+
+    public void OnLevel1Load()
+    {
+        ResetUpgrades();
+    }
 
     //called when level beat
     public void BeatLevel()
@@ -73,6 +78,14 @@ public class PlayerData : ScriptableObject
         currency += addition;
         //curency adds score as well
         score += addition;
+    }
+
+    public void ResetUpgrades()
+    {
+        //when player starts at beginning, we reset the upgrades
+        healthUpgrade = 0;
+        damageUpgrade = 0;
+        speedUpgrade = 0;
     }
 
     /// <summary>
