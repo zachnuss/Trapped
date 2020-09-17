@@ -35,15 +35,17 @@ public class BaseEnemy : MonoBehaviour
     public int damage;
     public float speed;
     public int pointValue;
-    [Range(5f, 10f)] public float rateOfBehaviorChange;
+    [Range(2f, 6f)] public float rateOfBehaviorChange;
 
     ///protected
     protected Behavior _myBehavior;
     protected CubemapFace myFace { get { return _myFace; } }
 
     ///private
-    private Vector3 _moveDir; //last direction moved
+    private Vector3 _moveDir;
     private CubemapFace _myFace; //getter
+    private float _wallDetectRay = 1.0f;
+    private bool _hasHitWall = false;
 
     /**
      * CLASS FUNCTIONS
@@ -71,13 +73,14 @@ public class BaseEnemy : MonoBehaviour
     }
 
     ///protected
-    protected IEnumerator _changeBehavior(Behavior changingTo)
+    protected void _changeBehavior()
     {
+        Debug.Log("_changeBehavior: coroutine called");
         //transfer rate of behavior change and get wait time
-        float randWaitTime = Random.Range(1f, rateOfBehaviorChange);
-        Vector3 outputMoveDir;
+        float randWaitTime = Random.Range(0f, rateOfBehaviorChange);
+        Vector3 outputMoveDir = Vector3.zero;
 
-        switch (changingTo)
+        switch (_myBehavior)
         {
             case Behavior.Idle:
                 //zero out Vector3 to prevent any movement
@@ -87,12 +90,15 @@ public class BaseEnemy : MonoBehaviour
                 break;
             case Behavior.ChangeDirection:
                 //get random direction to 
+                Debug.Log("ChangeDirection hit");
+                Direction randDir = _goLeftOrRightDirection();
+                _turnThisDirection(randDir);
                 break;
             case Behavior.GoForward:
                 //get current direction
                 outputMoveDir = _moveDir;
                 break;
-            case Behavior.AttackPlayer:
+            //case Behavior.AttackPlayer:
                 //call attack() function
 
                 //outputMoveDir may need to be slowed down to attack player
@@ -102,14 +108,14 @@ public class BaseEnemy : MonoBehaviour
                 //outPutMoveDir should move towards the player
 
                 break;
+            default: outputMoveDir = Vector3.zero;
+                break;
         }
 
         //edit Vector3 for movement
-        _moveDir = outputMoveDir;
+        //_moveDir = outputMoveDir;
         //randomly change behavior the next time this is called
-        _myBehavior = (Behavior)Random.Range(0, 5); //max limit is exclusive
-
-        yield return new WaitForSeconds(randWaitTime);
+        _myBehavior = (Behavior)Random.Range(0, 3);//5); //max limit is exclusive
     }
 
     //
@@ -121,11 +127,21 @@ public class BaseEnemy : MonoBehaviour
     //move the player in the direction specified
     protected void _move(Vector3 moveDir)
     {
+
         //immediately return if zeroed values
         if (moveDir == Vector3.zero) return;
+        //change direction if I'm gonna hit the wall
+        if (_isEnemyFacingWall())
+        {
+            Direction outputDir = Direction.Backwards;
+            //get rand dir if I've already hit a wall
+            if (_hasHitWall) { outputDir = _goLeftOrRightDirection(); }
 
-        //move enemy
-        if (_isEnemyFacingWall() == true)
+            _turnThisDirection(outputDir);
+            //swap bool
+            _hasHitWall = (_hasHitWall) ? false : true;
+        }
+        //finally move
         transform.position += moveDir * speed * Time.deltaTime;
     }
 
@@ -137,20 +153,22 @@ public class BaseEnemy : MonoBehaviour
 
     ///private
     /*
-     *  REGULAR UPDATE() RESERVED FOR CHILDREN AND START()
-     */ 
-    private void LateUpdate()
-    {
-        //move enemy
-        _move(_moveDir);
-    }
+     *  REGULAR UPDATE() AND AWAKE() RESERVED FOR CHILDREN
+     */
     private void Start()
     {
         //initialize variables
 
+        //get where I'm facing
+        Vector3 childDir = transform.GetChild(0).position;
+        Vector3 initialDir = childDir - transform.position;
+        _moveDir = initialDir.normalized;
+
         /*
          * Determine which face I'm on
          */
+        //assume we're on +Y
+        _myFace = CubemapFace.PositiveY;
         //Raycast to center (assuming map is placed on (0f, 0f, 0f))
         RaycastHit myFloor;
         if (Physics.Raycast(transform.position, -transform.position, out myFloor, 3f))
@@ -167,87 +185,70 @@ public class BaseEnemy : MonoBehaviour
             _myFace = CubemapFace.PositiveY;
         }
 
-        //call coroutine to change behavior
-        StartCoroutine(_changeBehavior(_myBehavior));
+        //loop to change behavior sporatically
+        InvokeRepeating("_changeBehavior", 0.5f, rateOfBehaviorChange);
+    }
+    private void LateUpdate()
+    {
+        //move enemy
+        _move(_moveDir);
     }
     //get random int to cast to Direction enum
-    private Direction getRandomDirection()
+    private Direction _goLeftOrRightDirection()
     {
-        int randInt = Random.Range(0, 5);
+        int randInt = Random.Range(1, 3);//0, 5); //left or right only
         return (Direction)randInt;
     }
     //take a direction, based on 
-    private Vector3 _translateDirectionToSpace(Direction dir)
+    private void _turnThisDirection(Direction dir)
     {
-        Vector3 translated;
-
+        Debug.Log("_turnThisDirection hit: turning " + dir);
+        float yAxisTurn = 0f;
         //using myFace for CubemapFace, alter stuff
         switch (dir)
         {
-            //take initial walking direction
-            case Direction.Forward: translated = _moveDir;
-                break;
-
             case Direction.Right:
-                //get dominate move direction
-                Vector3 dir
-                //iterate to what the relative "right" would be
-
+                yAxisTurn = 90f;
                 break;
-
             case Direction.Left:
-                //get right movement and make negative
+                yAxisTurn = -90f;
                 break;
-
-            //take initial walking direction and subtract it
-            case Direction.Backwards: translated = -_moveDir;
+            case Direction.Backwards:
+                //return positive or negative 180f
+                float posOrNeg = (Random.Range(0, 2) == 0) 
+                                    ? 180 : -180;
+                yAxisTurn = posOrNeg;
                 break;
-
-            case Direction.NULL:
-            default: translated = Vector3.zero;
+           default: //if forward or null, don't do anything
                 break;
         }
-
-        return translated;
+        //turn only if there's a value given
+        if (yAxisTurn != 0f)
+        {
+            Vector3 turningVector = new Vector3(0f, yAxisTurn, 0f);
+            transform.eulerAngles += turningVector;
+            //change facing dir to match rotation
+            _moveDir = (transform.GetChild(0).position - transform.position).normalized;
+        }
     }
 
-    private bool _isEnemyFacingWall(Direction dir)
+    private bool _isEnemyFacingWall()
     {
         //local vars
         bool isFacingWall = false;
-        Vector3 dirToWorldSpace = _translateDirectionToSpace(dir);
         RaycastHit hit;
         //check what's in front using Raycast
-        if (Physics.Raycast(transform.position, dirToWorldSpace, out hit, 1.5f))
+        if (Physics.Raycast(transform.position, _moveDir, out hit, _wallDetectRay))
         {
             //don't change direction if I'm looking at the player
             if (hit.transform.tag != "Player")
                 isFacingWall = true;
+            //am I hitting myself?
+            else if (hit.transform.name == transform.GetChild(0).name)
+                Debug.LogWarning("BaseEnemy: hitting child for raycast");
         }
 
         return isFacingWall;
     }
 
-    //takes in Vector3 and returns a Vector3 that's zeroed out
-    //on every axis except the longest
-    private Vector3 _returnLongestAxis(Vector3 vec)
-    {
-        //local values
-        float longestAxis = 0;
-        int longestIndex = 0;
-        //loop to find longest axis
-        for (int i = 0; i < 3; i++)
-        {
-            if (Mathf.Abs(vec[i]) > longestAxis)
-            {
-                longestAxis = Mathf.Abs(vec[i]);
-                longestIndex = i;
-            }
-        }
-        //create output vector
-        Vector3 outputVector = Vector3.zero;
-        outputVector[longestIndex] = longestAxis;
-
-        return outputVector;
-    }
 }
