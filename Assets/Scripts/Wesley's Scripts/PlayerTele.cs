@@ -8,6 +8,8 @@ using UnityEngine.SceneManagement;
 
 public class PlayerTele : MonoBehaviour
 {
+    public PlayerData playerData;
+
     public GameObject teleporterTracker;//Assign before load, set to private if unneeded
     public string nextScene; //Target Level
     public Animator transition; //Transition animator
@@ -44,6 +46,7 @@ public class PlayerTele : MonoBehaviour
 
         yield return new WaitForSeconds(transitionTime); //Time given for transition animation to play
 
-        SceneManager.LoadScene(nextScene); //Loads target scene
+        //SceneManager.LoadScene(nextScene); //Loads target scene
+        playerData.BeatLevel();
     }
 }

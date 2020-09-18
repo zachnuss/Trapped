@@ -10,6 +10,8 @@ TagManager:
   - Bullet
   - Collectable
   - Enemy
+  - GoalCheck
+  - Goal
   layers:
   - Default
   - TransparentFX
