@@ -4,5 +4,20 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Alex's Test Scenes/Main Menu.unity
+    guid: f713ffc67db6db94b86bc06135f1882e
+  - enabled: 1
+    path: Assets/Scenes/StoreScene.unity
+    guid: 77fce18f52932334a842862895359daa
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level1.unity
+    guid: 477dcf6af4831884c8dd01607a3c0e64
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level2.unity
+    guid: baa23024feb0b10449be34f9b80522f9
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level3.unity
+    guid: 78a3e81cdf382704a853f820a4bd84ec
   m_configObjects: {}

@@ -82,6 +82,16 @@ public class PlayerMovement : MonoBehaviour
     [Header("Player Data")]
     public PlayerData playerData;
 
+    /// <summary>
+    /// Scene Transition and endgame
+    /// 
+    /// </summary>
+    private GameObject teleporterTracker;//Assign before load, set to private if unneeded
+   // public string nextScene; //Target Level
+    public Animator transition; //Transition animator
+    public float transitionTime = 1;
+
+
     //awake
     private void Awake()
     {
@@ -95,6 +105,8 @@ public class PlayerMovement : MonoBehaviour
     {
 
         SetPlayerStats();
+
+        teleporterTracker = GameObject.FindGameObjectWithTag("GoalCheck"); //assumes we check on construction of the player, with a new player every level
     }
 
     // Used for physics 
@@ -316,6 +328,19 @@ public class PlayerMovement : MonoBehaviour
             //checkToCalculate = true;
         }
 
+        //end game
+        if (other.tag == "Goal")
+        {
+            //Debug.Log("hit");
+            other.GetComponent<TeleBool>().active = true;
+            if (teleporterTracker.GetComponent<TeleporterScript>().GoalCheck(teleporterTracker.GetComponent<TeleporterScript>().teleporters))
+            {
+                StartCoroutine(LoadTargetLevel());
+            }
+            Destroy(other.gameObject);
+        }
+
+
     }
 
     private void OnTriggerExit(Collider other)
@@ -382,5 +407,16 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
+
+    //Scene Transitions
+    IEnumerator LoadTargetLevel()
+    {
+        transition.SetTrigger("Start"); //start animation
+
+        yield return new WaitForSeconds(transitionTime); //Time given for transition animation to play
+
+        //SceneManager.LoadScene(nextScene); //Loads target scene
+        playerData.BeatLevel();
+    }
 
 }

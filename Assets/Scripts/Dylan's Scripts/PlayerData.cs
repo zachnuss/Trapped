@@ -27,14 +27,20 @@ public class PlayerData : ScriptableObject
     public int currency;
 
     [Header("Player Currency")]
-    public Scene[] levels;
+   // public Scene[] levels;
+    public string[] levelsS;
 
-    public Scene nextLevel;
-    public Scene prevLevel;
+    [Header("Prev and Next")]
+    //public Scene nextLevel;
+    //public Scene prevLevel;
+    public string nextLevelStr;
+    public string prevLevelStr;
 
-    public Scene endScreenScene;
-    public Scene storeScene;
+   // [Header("End and Store")]
+   // public Scene endScreenScene;
+    //public Scene storeScene;
 
+    //initial setup for playerdata on lvl 1
     public void OnLevel1Load()
     {
         ResetUpgrades();
@@ -43,27 +49,47 @@ public class PlayerData : ScriptableObject
     //called when level beat
     public void BeatLevel()
     {
-        if (OnLevel <= levels.Length - 1)
+        if (OnLevel <= levelsS.Length - 1)
         {
-            prevLevel = levels[OnLevel];
-            OnLevel++;
-            nextLevel = levels[OnLevel];
+            Debug.Log("Beat level");
+            if (OnLevel > 0)
+            {
+                prevLevelStr = levelsS[OnLevel];        
+            }
+            
+            //Debug.Log(OnLevel);
+         //   if (OnLevel <= levelsS.Length - 1)
+         //   {
+                OnLevel++;
+                if(OnLevel != levelsS.Length)
+                    nextLevelStr = levelsS[OnLevel];
 
-            //load store scene?
+                //load store scene?
+                SceneManager.LoadScene("StoreScene");
+          //  }
+          //  else
+         //   {
+         //       SceneManager.LoadScene("StoreScene");
+         //       Debug.Log("You did it you won. Congradulations.");
+
+           // }
 
         }
-        else
-        {
-            Debug.Log("You did it you won. Congradulations.");
-
-        }
+       
     }
+
+    
 
     //load next level
     public void LoadNextLevel()
     {
-        Debug.Log("Loading Next Level: " + levels[OnLevel].name);
-        SceneManager.LoadScene(nextLevel.name);
+        if (OnLevel != levelsS.Length)
+        {
+            Debug.Log("Loading Next Level: " + levelsS[OnLevel]);
+            SceneManager.LoadScene(nextLevelStr);
+        }
+        else
+            Debug.Log("LOAD END SCREEN HERE UWU");
     }
 
     //adds score

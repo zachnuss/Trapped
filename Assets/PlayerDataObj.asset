@@ -17,15 +17,12 @@ MonoBehaviour:
   speedUpgrade: 0
   totalHealthBase: 100
   totalDamageBase: 20
-  OnLevel: 1
+  OnLevel: 0
   score: 0
   currency: 0
-  levels: []
-  nextLevel:
-    m_Handle: 0
-  prevLevel:
-    m_Handle: 0
-  endScreenScene:
-    m_Handle: 0
-  storeScene:
-    m_Handle: 0
+  levelsS:
+  - Level1
+  - Level2
+  - Level3
+  nextLevelStr: Level2
+  prevLevelStr: Level3
