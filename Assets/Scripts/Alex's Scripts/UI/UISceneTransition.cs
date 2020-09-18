@@ -5,10 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class UISceneTransition : MonoBehaviour
 {
+    public PlayerData playerData;
+
     //Change scene to the main game scene
     public void playGame()
     {
-        SceneManager.LoadScene(1); 
+        //SceneManager.LoadScene(1); 
+        playerData.StartGame();
     }
     
     //Changes scene to the options scene

@@ -114,6 +114,12 @@ public class PlayerData : ScriptableObject
         speedUpgrade = 0;
     }
 
+    public void StartGame()
+    {
+        ResetUpgrades();
+        OnLevel = 0;
+    }
+
     /// <summary>
     /// Upgrades are bought in the store scene, they call these 
     /// 
