@@ -57,28 +57,15 @@ public class PlayerData : ScriptableObject
                 prevLevelStr = levelsS[OnLevel];        
             }
             
-            //Debug.Log(OnLevel);
-         //   if (OnLevel <= levelsS.Length - 1)
-         //   {
-                OnLevel++;
-                if(OnLevel != levelsS.Length)
-                    nextLevelStr = levelsS[OnLevel];
+            OnLevel++;
+            if(OnLevel != levelsS.Length)
+                nextLevelStr = levelsS[OnLevel];
 
-                //load store scene?
-                SceneManager.LoadScene("StoreScene");
-          //  }
-          //  else
-         //   {
-         //       SceneManager.LoadScene("StoreScene");
-         //       Debug.Log("You did it you won. Congradulations.");
-
-           // }
+            //load store scene?
+            SceneManager.LoadScene("StoreScene");
 
         }
-       
     }
-
-    
 
     //load next level
     public void LoadNextLevel()
@@ -116,8 +103,10 @@ public class PlayerData : ScriptableObject
 
     public void StartGame()
     {
+        Debug.Log("Starting Game");
         ResetUpgrades();
         OnLevel = 0;
+        SceneManager.LoadScene("Level1");
     }
 
     /// <summary>
