@@ -112,9 +112,15 @@ public class PlayerMovement : MonoBehaviour
     // Used for physics 
     void FixedUpdate()
     {
+        this.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+        this.GetComponent<Rigidbody>().velocity = Vector3.zero;
+
         //cant move if we are rotating
-        if(!overTheEdge && !moving)
+        if (!overTheEdge && !moving)
+        {
+
             Movement();
+        }
     }
 
     // used for updating values and variables
@@ -282,7 +288,7 @@ public class PlayerMovement : MonoBehaviour
         //everything but 8
         layerMask = ~layerMask;
 
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down) * 6, out hit, Mathf.Infinity, layerMask))
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down) * 6, out hit, 1, layerMask))
         {
             //if we dont hit anything, char is hanging over edge
             //if(hit.collider.tag != "Cube")
