@@ -339,6 +339,7 @@ public class PlayerMovement : MonoBehaviour
         {
             //Debug.Log("hit");
             other.GetComponent<TeleBool>().active = true;
+            //instead of destroying io made the game object change color so we dont get an error when we have multiple keys
             other.GetComponent<TeleBool>().onPress();
             if (teleporterTracker.GetComponent<TeleporterScript>().GoalCheck(teleporterTracker.GetComponent<TeleporterScript>().teleporters))
             {
@@ -347,6 +348,15 @@ public class PlayerMovement : MonoBehaviour
             //Destroy(other.gameObject);
         }
 
+        //addding christans damage code
+        if (other.gameObject.tag == "Bullet")
+        {
+            //destroy object
+            Destroy(other.transform.gameObject);
+            //decrement health
+            takeDamage(25);
+            Debug.Log("Current health: " + health);
+        }
 
     }
 
@@ -413,6 +423,22 @@ public class PlayerMovement : MonoBehaviour
         
     }
 
+
+    public void takeDamage(int damageTaken)
+    {
+        //damage player
+        health -= damageTaken;
+        if (health < 1)
+        {
+            health = 0; //because negative health looks bad
+            //send to GameOver Screen
+            Debug.Log("GAME OVER");
+            //call SceneManager to get the GameOverScene
+            int gameOverInt = UnityEngine.SceneManagement.SceneManager.sceneCountInBuildSettings - 1;
+            UnityEngine.SceneManagement.SceneManager.LoadScene(6);
+            DontDestroyOnLoad(GameObject.Find("ScriptManager"));
+        }
+    }
 
 
     //Scene Transitions
