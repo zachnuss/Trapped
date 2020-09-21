@@ -339,11 +339,12 @@ public class PlayerMovement : MonoBehaviour
         {
             //Debug.Log("hit");
             other.GetComponent<TeleBool>().active = true;
+            other.GetComponent<TeleBool>().onPress();
             if (teleporterTracker.GetComponent<TeleporterScript>().GoalCheck(teleporterTracker.GetComponent<TeleporterScript>().teleporters))
             {
                 StartCoroutine(LoadTargetLevel());
             }
-            Destroy(other.gameObject);
+            //Destroy(other.gameObject);
         }
 
 
