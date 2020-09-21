@@ -17,13 +17,15 @@ public class UISceneTransition : MonoBehaviour
     //Changes scene to the options scene
     public void options()
     {
-        SceneManager.LoadScene(1);
+        //SceneManager.LoadScene(1);
+        Debug.Log("You have options.");
     }
 
     //Changes scene to the credits scene
     public void credits()
     {
-        SceneManager.LoadScene(1);
+        //SceneManager.LoadScene(1);
+        Debug.Log("We have the best team ever.");
     }
 
     //Ends the game
@@ -53,5 +55,6 @@ public class UISceneTransition : MonoBehaviour
  * Options - #
  * Credits - #
  * End Scene for Playtest - 5
+ * Game Over Scene - 6
  * 
  */
