@@ -10,6 +10,7 @@ TagManager:
   - Bullet
   - Collectable
   - Enemy
+  - Enemy
   - GoalCheck
   - Goal
   layers:
