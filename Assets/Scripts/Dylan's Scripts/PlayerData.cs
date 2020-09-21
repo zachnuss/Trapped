@@ -76,7 +76,8 @@ public class PlayerData : ScriptableObject
             SceneManager.LoadScene(nextLevelStr);
         }
         else
-            Debug.Log("LOAD END SCREEN HERE UWU");
+            SceneManager.LoadScene(5);    
+        //Debug.Log("LOAD END SCREEN HERE UWU");
     }
 
     //adds score

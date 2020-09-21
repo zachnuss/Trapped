@@ -38,6 +38,12 @@ public class UISceneTransition : MonoBehaviour
         //Code to end the game itself below
         //Application.Quit();
     }
+
+    //goes back to main menu
+    public void mainMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
 }
 
 /* Scene Lists and their associated numbers
@@ -46,5 +52,6 @@ public class UISceneTransition : MonoBehaviour
  * Game = 1 - Empty scene to show the movement of stuff
  * Options - #
  * Credits - #
+ * End Scene for Playtest - 5
  * 
  */
