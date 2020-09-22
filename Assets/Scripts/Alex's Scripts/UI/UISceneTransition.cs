@@ -6,7 +6,11 @@ using UnityEngine.SceneManagement;
 public class UISceneTransition : MonoBehaviour
 {
     public PlayerData playerData;
+    private void Awake()
+    {
+       // DontDestroyOnLoad(this);
 
+    }
     //Change scene to the main game scene
     public void playGame()
     {
@@ -44,6 +48,7 @@ public class UISceneTransition : MonoBehaviour
     //goes back to main menu
     public void mainMenu()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene(0);
     }
 }
