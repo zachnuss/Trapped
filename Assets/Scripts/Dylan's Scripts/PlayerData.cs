@@ -149,16 +149,7 @@ public class PlayerData : ScriptableObject
     }
 
     public void UpdateTime()
-    {
-        //playerData.AddScore(1);
-        // _gameTimer = time;
-
-        //Debug.Log(Mathf.RoundToInt(gameTimer));
-       // timerSec = time;
-
-        //playerData.AddTime();
-
-         
+    {      
 
             if (timerMin >= 60)
             {
@@ -172,6 +163,5 @@ public class PlayerData : ScriptableObject
             Debug.Log("you loose");
         }
 
-       // DisplayTime();
     }
 }
