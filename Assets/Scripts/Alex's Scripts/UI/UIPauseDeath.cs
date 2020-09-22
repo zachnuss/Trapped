@@ -14,7 +14,7 @@ public class UIPauseDeath : MonoBehaviour
     public GameObject pauseFirstButton; //Creates a gameobject to help track what button should be selected first on the pause screen
     public GameObject deathFirstButton; //Creates a gameobject to help track what button should be selected first on the death screen
     //Will add the optionsFirstButton, optionsClosedButton later
-    
+
     public bool isPaused = false; //Creates a boolean to track if the pause menu should be on or off / displayed or not
     public bool hasDied = false; //Creates a boolean to track if the death menu should be on or off / displayed or not
 
