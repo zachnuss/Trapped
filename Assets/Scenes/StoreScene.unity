@@ -1928,6 +1928,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1740089739}
   - component: {fileID: 1740089738}
+  - component: {fileID: 1740089740}
   m_Layer: 0
   m_Name: StoreEmpty
   m_TagString: Untagged
@@ -1962,6 +1963,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1740089740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1740089737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77a3d009629d58d49b7085f74124c989, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerData: {fileID: 11400000, guid: f9b9357e87ed29948b25c9a1d8db1dcf, type: 2}
+  storeData: {fileID: 11400000, guid: efd7658ce45b81440a813408182400dd, type: 2}
+  damagePriceText: {fileID: 1864650160}
+  healthPriceText: {fileID: 1661267930}
+  speedPriceText: {fileID: 53471690}
+  currentMoneyText: {fileID: 408706524}
 --- !u!1 &1864650158
 GameObject:
   m_ObjectHideFlags: 0
