@@ -12,7 +12,7 @@ public class PlayerLogic : MonoBehaviour
     public int currentHealth; //Maybe change to private and use public functions to change instead?
     public float speed; //Float for fine tuning
     public int damage; //Player damage value -> 10% chance to crit should be implemented in the function that applies damage
-    public int points = 0; //Should change to private, make only accessable through functions
+    public static int points = 0; //Should change to private, make only accessable through functions
     public int gold = 0; //Should change to private, make only accessable through functions
 
     // Start is called before the first frame update
