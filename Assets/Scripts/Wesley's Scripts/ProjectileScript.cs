@@ -17,7 +17,7 @@ public class ProjectileScript : MonoBehaviour
         playerRef = GameObject.FindGameObjectWithTag("Player");
         damage = playerRef.GetComponent<PlayerMovement>().damage;
         Physics.IgnoreCollision(this.GetComponent<Collider>(), playerRef.GetComponent<Collider>());
-        StartCoroutine(destroyProjectile());
+        //StartCoroutine(destroyProjectile());
     }
 
     // Update is called once per frame
