@@ -24,7 +24,7 @@ public class UISceneTransition : MonoBehaviour
     //Changes scene to the credits scene
     public void credits()
     {
-        //SceneManager.LoadScene(1);
+        SceneManager.LoadScene(7);
         Debug.Log("We have the best team ever.");
     }
 
@@ -53,7 +53,7 @@ public class UISceneTransition : MonoBehaviour
  * Main Menu = 0
  * Game = 1 - Empty scene to show the movement of stuff
  * Options - #
- * Credits - #
+ * Credits - 7
  * End Scene for Playtest - 5
  * Game Over Scene - 6
  * 
