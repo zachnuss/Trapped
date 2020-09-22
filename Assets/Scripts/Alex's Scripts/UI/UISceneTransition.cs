@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class UISceneTransition : MonoBehaviour
 {
     public PlayerData playerData;
+    public GameObject pauseScript;
     private void Awake()
     {
        // DontDestroyOnLoad(this);
@@ -48,7 +49,11 @@ public class UISceneTransition : MonoBehaviour
     //goes back to main menu
     public void mainMenu()
     {
-        
+<<<<<<< Updated upstream
+        Time.timeScale = 1f;
+=======
+        pauseScript.GetComponent<UIPauseDeath>().ResumeGame();
+>>>>>>> Stashed changes
         SceneManager.LoadScene(0);
     }
 }
