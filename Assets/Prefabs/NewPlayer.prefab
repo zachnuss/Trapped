@@ -239,7 +239,7 @@ GameObject:
   - component: {fileID: 4485997279661063714}
   - component: {fileID: 5278235416291994959}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Pause Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1351,7 +1351,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 25.399902, y: -12.199951}
+  m_AnchoredPosition: {x: 25.399902, y: -7.8}
   m_SizeDelta: {x: 108, y: 36.3}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &6060987349882096189
@@ -2074,7 +2074,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: PRESS SELECT AGAIN TO CONTINUE GAME
+  m_Text: PRESS START AGAIN TO CONTINUE GAME
 --- !u!1 &8270143393524346014
 GameObject:
   m_ObjectHideFlags: 0

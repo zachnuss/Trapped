@@ -119,16 +119,28 @@ public class PlayerData : ScriptableObject
     public void UpgradeHealth()
     {
         healthUpgrade++;
+
+        //Alexander Update - 9/22
+        //Prints out as a way to show the upgrade is bought
+        Debug.Log("Health Upgrade Purchased!");
     }
 
     public void UpgradeDamage()
     {
         damageUpgrade++;
+
+        //Alexander Update - 9/22
+        //Prints out as a way to show the upgrade is bought
+        Debug.Log("Damage Upgrade Purchased!");
     }
 
     public void UpgradeSpeed()
     {
         speedUpgrade++;
+
+        //Alexander Update - 9/22
+        //Prints out as a way to show the upgrade is bought
+        Debug.Log("Speed Upgrade Purchased!");
     }
 
     
