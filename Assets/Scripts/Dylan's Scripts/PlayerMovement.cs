@@ -249,7 +249,8 @@ public class PlayerMovement : MonoBehaviour
         _angle = Mathf.Rad2Deg * _angle;
 
         //local angles are used since its a child, the player parent is set to keep track of the global rotation
-        transform.localRotation = Quaternion.Euler( transform.localEulerAngles.x , _angle, transform.localEulerAngles.z );
+        transform.localRotation = Quaternion.Euler(0 , _angle, 0 ); //transform.localEulerAngles.x 
+
 
         //base movement is just 1.0
         movementSpeed = movementSpeed + (movementSpeed * speedMultiplier);
@@ -272,7 +273,6 @@ public class PlayerMovement : MonoBehaviour
         //runs when player moves to next cube (runs only once)
         //camera rotation
         Transform newCameraTrans = _rotationTrans;
-        
         
 
     }
