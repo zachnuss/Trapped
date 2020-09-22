@@ -9,13 +9,15 @@ public class ProjectileScript : MonoBehaviour
 {
     public float speed; //speed modifiable by level designer
     private int damage; //How much damage the projectile does, modifiable by power ups, get from player logic
-    private GameObject Controller; //Reference to GameController
+    private GameObject playerRef; //reference to player
 
     // Start is called before the first frame update
     void Start()
     {
-        Controller = GameObject.FindGameObjectWithTag("GameController");
-        damage = Controller.GetComponent<PlayerLogic>().damage;
+        playerRef = GameObject.FindGameObjectWithTag("Player");
+        damage = playerRef.GetComponent<PlayerMovement>().damage;
+        Physics.IgnoreCollision(this.GetComponent<Collider>(), playerRef.GetComponent<Collider>());
+        StartCoroutine(destroyProjectile());
     }
 
     // Update is called once per frame
@@ -40,11 +42,15 @@ public class ProjectileScript : MonoBehaviour
                 Debug.Log("I hit a crit!");
                 other.GetComponent<BaseEnemy>().health -= damage;
             }
-            Destroy(this.gameObject);
+            gameObject.SetActive(false);
         }
-        if(other.tag == "Wall")
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Wall")
         {
-            Destroy(this.gameObject);
+            gameObject.SetActive(false);
         }
     }
 
@@ -55,6 +61,5 @@ public class ProjectileScript : MonoBehaviour
         yield return new WaitForSeconds(5f);
         Destroy(this.gameObject);
     }
-
 
 }

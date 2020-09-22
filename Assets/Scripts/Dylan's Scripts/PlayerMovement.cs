@@ -306,7 +306,7 @@ public class PlayerMovement : MonoBehaviour
         //Wesley-Code
         GameObject bullet = Object.Instantiate(Player_Bullet, transform.position, transform.rotation);
         //ZACHARY ADDED THIS
-        StartCoroutine(bullet.GetComponent<ProjectileScript>().destroyProjectile());
+        /*StartCoroutine(bullet.GetComponent<ProjectileScript>().destroyProjectile());*/
         //just to destroy stray bullets if they escape the walls
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
         rb.AddForce(bullet.transform.forward * 1000);

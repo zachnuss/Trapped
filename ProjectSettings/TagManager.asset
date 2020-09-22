@@ -13,6 +13,7 @@ TagManager:
   - Enemy
   - GoalCheck
   - Goal
+  - Wall
   layers:
   - Default
   - TransparentFX
