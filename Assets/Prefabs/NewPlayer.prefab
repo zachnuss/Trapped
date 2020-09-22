@@ -298,12 +298,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1024, y: 768}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.75
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -713,7 +713,7 @@ RectTransform:
   m_GameObject: {fileID: 4496381109524611065}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.9342259, y: 1.9342259, z: 1.9342259}
+  m_LocalScale: {x: 1.2314361, y: 1.2314361, z: 1.2314361}
   m_Children:
   - {fileID: 743925128563904059}
   - {fileID: 6240048728093410924}
@@ -727,7 +727,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 960, y: 540}
+  m_AnchoredPosition: {x: 642, y: 358}
   m_SizeDelta: {x: 992.64514, y: 558.3629}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &1747362966267205589
@@ -1871,7 +1871,9 @@ MonoBehaviour:
   damage: 0
   speedMultiplier: 0
   overTheEdge: 0
+  checkToCalculate: 0
   easingTypeC: 1
+  moving: 0
   Player_Bullet: {fileID: 4863383300861185225, guid: 6b6051a2accefa44580d0c03760a3626,
     type: 3}
   playerData: {fileID: 11400000, guid: f9b9357e87ed29948b25c9a1d8db1dcf, type: 2}
