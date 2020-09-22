@@ -39,16 +39,16 @@ public class UISceneTransition : MonoBehaviour
         Debug.Log("The Game is Quiting");
 
         //Code to exit out of the editor and simulate the game closing
-        //UnityEditor.EditorApplication.isPlaying = false;
+        UnityEditor.EditorApplication.isPlaying = false;
 
         //Code to end the game itself below
-        Application.Quit();
+        //Application.Quit();
     }
 
     //goes back to main menu
     public void mainMenu()
     {
-        Time.timeScale = 1f;
+        
         SceneManager.LoadScene(0);
     }
 }
