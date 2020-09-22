@@ -12,6 +12,7 @@ public class TurretBullet : MonoBehaviour
     private float _speed;
     private float _maxBulletDistance;
 
+
     /*
      * Start must be used instead of Awake to properly initialize
      * variables and maintain scaling on instantiation.
