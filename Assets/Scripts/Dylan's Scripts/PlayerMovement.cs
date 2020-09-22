@@ -146,7 +146,8 @@ public class PlayerMovement : MonoBehaviour
             checkToCalculate = true;
         }
 
-
+        //Added by wesley
+        playerData.AddScore(1);
     }
 
     //moves player based on equation
