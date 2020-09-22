@@ -434,9 +434,9 @@ public class PlayerMovement : MonoBehaviour
             //send to GameOver Screen
             Debug.Log("GAME OVER");
             //call SceneManager to get the GameOverScene
-            int gameOverInt = UnityEngine.SceneManagement.SceneManager.sceneCountInBuildSettings - 1;
+            //int gameOverInt = UnityEngine.SceneManagement.SceneManager.sceneCountInBuildSettings - 1;
             UnityEngine.SceneManagement.SceneManager.LoadScene(6);
-            DontDestroyOnLoad(GameObject.Find("ScriptManager"));
+            //DontDestroyOnLoad(GameObject.Find("ScriptManager"));
         }
     }
 
