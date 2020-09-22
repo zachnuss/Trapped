@@ -66,7 +66,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: aca1307374c97404fa4db42bc7f1ca92, type: 3}
-    m_FontSize: 26
+    m_FontSize: 28
     m_FontStyle: 0
     m_BestFit: 1
     m_MinSize: 0
@@ -1849,6 +1849,7 @@ MonoBehaviour:
   playerData: {fileID: 11400000, guid: f9b9357e87ed29948b25c9a1d8db1dcf, type: 2}
   transition: {fileID: 0}
   transitionTime: 1
+  _timer: 0
   timerText: {fileID: 0}
 --- !u!54 &7571365785918509568
 Rigidbody:

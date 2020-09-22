@@ -139,28 +139,24 @@ public class PlayerData : ScriptableObject
         speedUpgrade++;
     }
 
-    public void UpdateTime(float time)
+    public void UpdateTime()
     {
         //playerData.AddScore(1);
         // _gameTimer = time;
 
         //Debug.Log(Mathf.RoundToInt(gameTimer));
-        timerSec = time + _timerBetweenLevels;
+       // timerSec = time;
 
         //playerData.AddTime();
 
-         if(timerSec >= 60)
-        {
-            timerMin++;
-            timerSec = 0;
-            
-        }
-        if (timerMin >= 60)
-        {
-            timerHour++;
-            timerMin = 0;
-        }
+         
 
+            if (timerMin >= 60)
+            {
+                timerHour++;
+                timerMin = 0;
+            }
+        
 
         if (timerHour >= 99 && timerMin > 60 && timerSec > 60)
         {

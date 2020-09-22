@@ -92,7 +92,7 @@ public class PlayerMovement : MonoBehaviour
     public Animator transition; //Transition animator
     public float transitionTime = 1;
 
-    private float _timer;
+    public float localTimer;
 
     //displays timer per level (resets at level start and ends at level end
     [Header("UI")]
@@ -113,7 +113,7 @@ public class PlayerMovement : MonoBehaviour
         SetPlayerStats();
 
         teleporterTracker = GameObject.FindGameObjectWithTag("GoalCheck"); //assumes we check on construction of the player, with a new player every level
-        _timer = 0;
+        localTimer = playerData._timerBetweenLevels;
        // StartCoroutine(timerCount());
     }
 
@@ -460,11 +460,19 @@ public class PlayerMovement : MonoBehaviour
     //UI and TIMER
     void Timer()
     {
-        _timer += Time.deltaTime;
-        Debug.Log("click");
+        localTimer += Time.deltaTime;
+        // Debug.Log("click");
+        playerData.timerSec = Mathf.RoundToInt(localTimer);
+        if (playerData.timerSec >= 60)
+        {
+            playerData.timerMin++;
+            playerData.timerSec = 0;
+            localTimer = 0;
+           
+        }
 
-        playerData.UpdateTime(Mathf.RoundToInt(_timer));
-
+        playerData.UpdateTime();
+      //  Debug.Log(_timer);
         DisplayTime();
         //StartCoroutine(timerCount());
     }
@@ -480,10 +488,10 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator timerCount()
     {
         yield return new WaitForSeconds(1.0f);
-        _timer++; //= Time.deltaTime;
+        localTimer++; //= Time.deltaTime;
         Debug.Log("click");
 
-        playerData.UpdateTime(_timer);
+        playerData.UpdateTime();
 
         DisplayTime();
         StartCoroutine(timerCount());
