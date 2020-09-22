@@ -127,16 +127,25 @@ public class PlayerData : ScriptableObject
     public void UpgradeHealth()
     {
         healthUpgrade++;
+
+        Debug.Log("Health Upgrade Purchased!");
+        //UPDATE UI HERE
     }
 
     public void UpgradeDamage()
     {
         damageUpgrade++;
+
+        Debug.Log("Damage Upgrade Purchased!");
+        //UPDATE UI HERE
     }
 
     public void UpgradeSpeed()
     {
         speedUpgrade++;
+
+        Debug.Log("SPEED Upgrade Purchased!");
+        //UPDATE UI HERE
     }
 
     public void UpdateTime()
