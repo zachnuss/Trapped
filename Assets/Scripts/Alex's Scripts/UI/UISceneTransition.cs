@@ -48,6 +48,7 @@ public class UISceneTransition : MonoBehaviour
     //goes back to main menu
     public void mainMenu()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene(0);
     }
 }
