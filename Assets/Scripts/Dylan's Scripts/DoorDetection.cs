@@ -6,6 +6,12 @@ public class DoorDetection : MonoBehaviour
 {
     public DoorTrigger parent;
 
+    /// <summary>
+    /// FUTURE IMPLEMENTATION
+    /// 
+    /// HAVE THESE DETECTIONS SET WHICH AXIS IS LOCKED
+    /// </summary>
+
     //trans1 = true, etc
     public bool trans = true;
 
