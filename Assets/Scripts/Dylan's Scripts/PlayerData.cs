@@ -6,6 +6,12 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Data", menuName = "ScritableObjects/PlayerData", order = 1)]
 public class PlayerData : ScriptableObject
 {
+    [Header("Total Time")]
+    public float timerSec;
+    public float timerMin;
+    public float timerHour;
+    public float _timerBetweenLevels;
+
     [Header("Player Upgrade Stats")]
     public int healthUpgrade;
     public int damageUpgrade;
@@ -51,6 +57,7 @@ public class PlayerData : ScriptableObject
     {
         if (OnLevel <= levelsS.Length - 1)
         {
+            _timerBetweenLevels = timerSec;
             Debug.Log("Beat level");
             if (OnLevel > 0)
             {
@@ -73,6 +80,7 @@ public class PlayerData : ScriptableObject
         if (OnLevel != levelsS.Length)
         {
             Debug.Log("Loading Next Level: " + levelsS[OnLevel]);
+            timerSec += _timerBetweenLevels;
             SceneManager.LoadScene(nextLevelStr);
         }
         else
@@ -131,5 +139,34 @@ public class PlayerData : ScriptableObject
         speedUpgrade++;
     }
 
-    
+    public void UpdateTime(float time)
+    {
+        //playerData.AddScore(1);
+        // _gameTimer = time;
+
+        //Debug.Log(Mathf.RoundToInt(gameTimer));
+        timerSec = time + _timerBetweenLevels;
+
+        //playerData.AddTime();
+
+         if(timerSec >= 60)
+        {
+            timerMin++;
+            timerSec = 0;
+            
+        }
+        if (timerMin >= 60)
+        {
+            timerHour++;
+            timerMin = 0;
+        }
+
+
+        if (timerHour >= 99 && timerMin > 60 && timerSec > 60)
+        {
+            Debug.Log("you loose");
+        }
+
+       // DisplayTime();
+    }
 }

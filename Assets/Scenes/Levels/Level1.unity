@@ -1142,6 +1142,11 @@ PrefabInstance:
       propertyPath: transition
       value: 
       objectReference: {fileID: 708334707}
+    - target: {fileID: 7571365785918509578, guid: 716f5c8b413961442a5458bad0fa68db,
+        type: 3}
+      propertyPath: timerText
+      value: 
+      objectReference: {fileID: 2046125359}
     - target: {fileID: 7571365786826290780, guid: 716f5c8b413961442a5458bad0fa68db,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -3404,6 +3409,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 240075666}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2046125359 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5599595034058128049, guid: 716f5c8b413961442a5458bad0fa68db,
+    type: 3}
+  m_PrefabInstance: {fileID: 361803916}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &2049165592 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8804797799290729539, guid: 050ebea7dddf54e40bfdaa2a1d878100,
