@@ -38,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Current Player Stats - Set on Scene Start")]
     public int health;
     public int damage;
-    public int speedMultiplier;
+    public float speedMultiplier;
 
     //Camera
    // public CamLookAt playerCam;
@@ -131,6 +131,13 @@ public class PlayerMovement : MonoBehaviour
         }
 
         Timer();
+
+        //moves player to next side of cube
+        if (_rotationTrans != null)
+        {
+            Interpolation();
+            //Bezier();
+        }
     }
 
     // used for updating values and variables
@@ -142,12 +149,7 @@ public class PlayerMovement : MonoBehaviour
         {
             overTheEdge = true;
         }
-        //moves player to next side of cube
-        if(_rotationTrans != null)
-        {
-            Interpolation();
-            //Bezier();
-        }
+        
         //Interpolation stuff, for rotation onto next side
         if (overTheEdge && onDoor && !checkToCalculate && !moving)
         {
@@ -262,10 +264,11 @@ public class PlayerMovement : MonoBehaviour
         transform.localRotation = Quaternion.Euler(0 , _angle, 0 ); //transform.localEulerAngles.x 
 
         //base movement is just 1.0
-        movementSpeed = movementSpeed + (movementSpeed * speedMultiplier);
+        float boost = movementSpeed * speedMultiplier;
+        float newSpeed = movementSpeed + boost;
 
         //player is always moving forward, player is just adjsuting which way they move forward (always local forward so we can have player move consistentaly forward on each side)
-        transform.position += transform.forward * movementSpeed * Time.deltaTime;
+        transform.position += transform.forward * newSpeed * Time.deltaTime;
     }
 
     void Movement()
@@ -374,6 +377,15 @@ public class PlayerMovement : MonoBehaviour
             Debug.Log("Current health: " + health);
         }
 
+        if(other.gameObject.tag == "PowerUp")
+        {
+            //Debug.Log("Hit powerup");
+            PickedPowerUp(other.gameObject.GetComponent<PowerUpDrop>().type, other.gameObject.GetComponent<PowerUpDrop>().timer, other.gameObject.GetComponent<PowerUpDrop>().powerUpDuration);
+            //run animation on powerup (if any)
+
+            Destroy(other.gameObject);
+        }
+           
     }
 
     private void OnTriggerExit(Collider other)
@@ -434,7 +446,7 @@ public class PlayerMovement : MonoBehaviour
         damage = playerData.totalDamageBase + playerData.damageUpgrade;
 
         speedMultiplier = (playerData.speedUpgrade)/10;
-
+        //Debug.Log(speedMultiplier);
         
     }
 
@@ -504,4 +516,51 @@ public class PlayerMovement : MonoBehaviour
         DisplayTime();
         StartCoroutine(timerCount());
     }
+
+    //powerup
+    void PickedPowerUp(powerUpType type, bool timer, int duration)
+    {
+        if(timer)
+        {
+            StartCoroutine(PowerUpDuration(type, duration));
+        }
+    }
+    IEnumerator PowerUpDuration(powerUpType type, int duration)
+    {
+        //turn on
+        switch (type)
+        {
+            case powerUpType.damage:
+                damage += 5;
+                break;
+            case powerUpType.speed:
+                speedMultiplier += 0.5f;
+               // Debug.Log(speedMultiplier);
+                break;
+            case powerUpType.health:
+                if(health < playerData.totalHealthBase)
+                    health += 20;
+                if (health > playerData.totalHealthBase)
+                    health = playerData.totalHealthBase;
+                break;
+            default:
+                break;
+        }
+        yield return new WaitForSeconds(duration);
+        //turn off
+        switch (type)
+        {
+            case powerUpType.damage:
+                damage -= 5;
+                break;
+            case powerUpType.speed:
+                speedMultiplier -= 0.5f;
+                break;
+            default:
+                break;
+        }
+        //Debug.Log("off");
+        //Debug.Log(speedMultiplier);
+    }
+
 }
