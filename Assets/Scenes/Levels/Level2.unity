@@ -851,11 +851,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7571365785918509568, guid: 716f5c8b413961442a5458bad0fa68db,
-        type: 3}
-      propertyPath: m_Constraints
-      value: 84
-      objectReference: {fileID: 0}
     - target: {fileID: 7571365785918509578, guid: 716f5c8b413961442a5458bad0fa68db,
         type: 3}
       propertyPath: transition
@@ -1688,7 +1683,7 @@ PrefabInstance:
     - target: {fileID: 7449378696332688610, guid: 5c93997a62315e040a889e7d28ed1b48,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5c93997a62315e040a889e7d28ed1b48, type: 3}
