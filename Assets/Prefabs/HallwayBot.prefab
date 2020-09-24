@@ -105,9 +105,9 @@ GameObject:
   - component: {fileID: 3147948300417047865}
   - component: {fileID: 3147948300417047862}
   - component: {fileID: 3147948300417047863}
-  - component: {fileID: 1274649408881576636}
+  - component: {fileID: 1130153949382036047}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: HallwayBot
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -188,7 +188,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1274649408881576636
+--- !u!114 &1130153949382036047
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -197,11 +197,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3147948300417047861}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11e1be04043b8c54d84e861b79761d47, type: 3}
+  m_Script: {fileID: 11500000, guid: 0ffb7abdee2371640b0e12180628a5e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
-  damage: 20
-  speed: 3
-  pointValue: 100
-  rateOfBehaviorChange: 2.83
+  damage: 10
+  speed: 5
+  pointValue: 0
+  rateOfBehaviorChange: 2
