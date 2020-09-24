@@ -1207,31 +1207,6 @@ PrefabInstance:
       propertyPath: transition
       value: 
       objectReference: {fileID: 816961572}
-    - target: {fileID: 7571365786826290780, guid: 716f5c8b413961442a5458bad0fa68db,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 7.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 7571365786826290780, guid: 716f5c8b413961442a5458bad0fa68db,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -4.83
-      objectReference: {fileID: 0}
-    - target: {fileID: 7571365786826290780, guid: 716f5c8b413961442a5458bad0fa68db,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.40014923
-      objectReference: {fileID: 0}
-    - target: {fileID: 7571365786826290780, guid: 716f5c8b413961442a5458bad0fa68db,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.9164501
-      objectReference: {fileID: 0}
-    - target: {fileID: 7571365786826290780, guid: 716f5c8b413961442a5458bad0fa68db,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 47.175003
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 716f5c8b413961442a5458bad0fa68db, type: 3}
 --- !u!20 &361803917 stripped
@@ -2163,6 +2138,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: LevelLoader
+      objectReference: {fileID: 0}
+    - target: {fileID: 7449378696332688610, guid: 5c93997a62315e040a889e7d28ed1b48,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5c93997a62315e040a889e7d28ed1b48, type: 3}
