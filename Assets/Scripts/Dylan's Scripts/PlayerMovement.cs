@@ -349,13 +349,21 @@ public class PlayerMovement : MonoBehaviour
             //Destroy(other.gameObject);
         }
 
-        //addding christans damage code
+        //adding christans damage code
         if (other.gameObject.tag == "Bullet")
         {
             //destroy object
             Destroy(other.transform.gameObject);
             //decrement health
             takeDamage(25);
+            Debug.Log("Current health: " + health);
+        }
+
+        ///added by Christian to take damage when colliding with an enemy
+        if (other.gameObject.tag == "Enemy")
+        {
+            //in the future damage will need to be derived specifically from the enemy type
+            takeDamage(other.GetComponent<BaseEnemy>().damage);
             Debug.Log("Current health: " + health);
         }
 
