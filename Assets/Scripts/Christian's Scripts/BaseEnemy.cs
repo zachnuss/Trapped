@@ -36,7 +36,7 @@ public class BaseEnemy : MonoBehaviour
     public int damage;
     public float speed;
     public int pointValue;
-    [Range(2f, 6f)] public float rateOfBehaviorChange;
+    [Range(1f, 5f)] public float rateOfBehaviorChange = 2f;
 
     ///protected
     protected int _maxHealth;
@@ -148,6 +148,7 @@ public class BaseEnemy : MonoBehaviour
 
                 //no break, still track player
             case Behavior.TrackPlayer:
+                //this bool will override instructions for _move()
                 _isTrackingPlayer = true;
                 //outPutMoveDir should move towards the player
 
@@ -169,7 +170,7 @@ public class BaseEnemy : MonoBehaviour
     }
 
     //default attack and tracker for inheritters of BaseEnemy
-    protected Vector3 _trackPlayer()
+    protected Transform _trackPlayer()
     {
         //get players location and location to move
         Vector3 playerPos = _playerGO.transform.position;
@@ -210,7 +211,12 @@ public class BaseEnemy : MonoBehaviour
         }
         ///         apply movement
         ///         apply relative rotation???
-        return dirToMove;
+        //get rotational stuff and pack into Transform for return
+        Transform output = transform;
+        //output.position = dirToMove;
+        output.LookAt(_playerGO.transform, Vector3.up);
+        output.position = dirToMove;
+        return output;
     }
 
     //move the player in the direction specified
@@ -232,14 +238,27 @@ public class BaseEnemy : MonoBehaviour
             _hasHitWall = (_hasHitWall) ? false : true;
         }
         //finally move
-        transform.position += moveDir * speed * Time.deltaTime;
-        if (_isTrackingPlayer) { }
+        //transform.position += moveDir * speed * Time.deltaTime;
+        if (_isTrackingPlayer)
+        {
+            //store and unpack Transform
+            Transform outputTrans = _trackPlayer();
+//            transform.localRotation.eulerAngles.y += outputTrans.localEulerAngles.y * Time.deltaTime;
+            //transform.position += outputTrans.position * speed * Time.deltaTime;
+        }
+        //else
+        //{
+            transform.position += moveDir * speed * Time.deltaTime;
+        //}
             //apply rotational value
             //transform.rotation.eulerAngles += rotVal;
     }
 
     protected virtual void Update()
     {
+        //for bug testing
+        //if (Input.GetKeyDown(KeyCode.Space))
+          //  _myBehavior = Behavior.TrackPlayer;
         /**
          *  TO DO
          *  1. Check if I'm trackig/attacking the player
@@ -284,19 +303,9 @@ public class BaseEnemy : MonoBehaviour
         Vector3 initialDir = childDir - transform.position;
         _moveDir = initialDir.normalized;
 
-        /*
-         * Determine which face I'm on
-         */
-        //transform.parent = null;
-        
-        //assume we're on +Y
-        _myFace = CubemapFace.NegativeZ;
-        ///positiveY - done
-        ///negativeY
-        ///positiveX - done
-        ///negativeX - done
-        ///positiveZ
-        ///negativeZ
+        ///for debugging shit
+        _playerGO = GameObject.Find("NewPlayer");
+
         //Raycast to center (assuming map is placed on (0f, 0f, 0f))
         RaycastHit myFloor;
         if (Physics.Raycast(transform.position, - transform.position, 
@@ -322,9 +331,10 @@ public class BaseEnemy : MonoBehaviour
     //get random int to cast to Direction enum
     private Direction _goLeftOrRightDirection()
     {
-        int randInt = Random.Range(1, 3);//0, 5); //left or right only
+        int randInt = Random.Range(1, 3);//left or right only
         return (Direction)randInt;
     }
+
     //take a direction, based on 
     private void _turnThisDirection(Direction dir)
     {
@@ -401,15 +411,34 @@ public class BaseEnemy : MonoBehaviour
     //and calculate the rotation to keep the enemy facing the player
     private Vector3 _getTrackingRotation()
     {
-        Vector3 outputRot = Vector3.zero;
-        Vector3 playerPos = _playerGO.transform.position;
+        float rotationVal = 0f;
+        float enemyToPlayerDist = Vector3.Distance(transform.position,
+                                                   _playerGO.transform.position);
+        //float h = 
         //get rotational difference between rotation to look at
+        /*
+         * ENTER MATH STUFF:
+         *      CALULATE ISCOSCELES TRIANGLE sides
+         * 
+         * 
+         */
         ///values to use
         ///_rotValue
         //get my move direction
 
         //translate and turn
         ///Vector3 _getTurningAxis(float axisVal)
-        return outputRot;
+        return new Vector3(0f, rotationVal, 0f);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        //if the enemy is going to collide with a door, turn around
+        //this should solve potential bugs in the future
+        if (other.transform.tag == "Door")
+        {
+            //turn around if the enemy's about to hit the door
+            _turnThisDirection(Direction.Backwards);
+        }
     }
 }
