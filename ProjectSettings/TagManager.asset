@@ -14,7 +14,6 @@ TagManager:
   - GoalCheck
   - Goal
   - Wall
-  - PowerUp
   layers:
   - Default
   - TransparentFX
