@@ -115,6 +115,9 @@ public class PlayerData : ScriptableObject
         Debug.Log("Starting Game");
         ResetUpgrades();
         OnLevel = 0;
+        timerHour = 0;
+        timerSec = 0;
+        timerMin = 0;
         SceneManager.LoadScene("Level1");
     }
 
