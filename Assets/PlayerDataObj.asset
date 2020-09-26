@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1ac9e01fa250f2469fa52ba507acdd1, type: 3}
   m_Name: PlayerDataObj
   m_EditorClassIdentifier: 
-  timerSec: 1
+  timerSec: 0
   timerMin: 0
   timerHour: 0
   _timerBetweenLevels: 0
