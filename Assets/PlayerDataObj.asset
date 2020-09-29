@@ -11,14 +11,10 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f1ac9e01fa250f2469fa52ba507acdd1, type: 3}
   m_Name: PlayerDataObj
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> parent of 37e7037... second check for timer
 =======
 >>>>>>> parent of 37e7037... second check for timer
 =======
