@@ -148,9 +148,12 @@ public class PlayerData : ScriptableObject
         }
 
     }
+<<<<<<< HEAD
 
     //gaming
 =======
     
 >>>>>>> parent of 98fc6c5... Merge files?
+=======
+>>>>>>> parent of 489f4b7... test update
 }
