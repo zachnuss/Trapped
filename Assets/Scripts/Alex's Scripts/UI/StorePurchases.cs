@@ -22,9 +22,9 @@ public class StorePurchases : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        damagePriceText.text = "$ " + storeData.damageStartPrice;
-        healthPriceText.text = "$ " + storeData.healthStartPrice;
-        speedPriceText.text = "$ " + storeData.speedStartPrice;
-        currentMoneyText.text = "$ " + playerData.currency;
+        damagePriceText.text = "" + storeData.damagePrice;
+        healthPriceText.text = "" + storeData.healthPrice;
+        speedPriceText.text = "" + storeData.speedPrice;
+        currentMoneyText.text = "" + playerData.currency;
     }
 }

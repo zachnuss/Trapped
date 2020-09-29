@@ -50,9 +50,9 @@ public class UISceneTransition : MonoBehaviour
     public void mainMenu()
     {
 
+      
 
-
-        //pauseScript.GetComponent<UIPauseDeath>().ResumeGame();
+       
         Time.timeScale = 1f;
         SceneManager.LoadScene(0);
     }
