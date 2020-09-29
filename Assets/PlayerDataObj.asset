@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: PlayerDataObj
   m_EditorClassIdentifier: 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> parent of 37e7037... second check for timer
   timerSec: 1
   timerMin: 0
   timerHour: 0
