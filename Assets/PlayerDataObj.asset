@@ -11,23 +11,18 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f1ac9e01fa250f2469fa52ba507acdd1, type: 3}
   m_Name: PlayerDataObj
-  m_EditorClassIdentifier:
-  timerSec: 23
-  timerMin: 1
->>>>>>> parent of da5848e... prefab set to 1:06
-  timerHour: 0
-  _timerBetweenLevels: 0
+  m_EditorClassIdentifier: 
   healthUpgrade: 0
   damageUpgrade: 0
   speedUpgrade: 0
   totalHealthBase: 100
   totalDamageBase: 20
-  OnLevel: 1
+  OnLevel: 3
   score: 325855
   currency: 0
   levelsS:
   - Level1
   - Level2
   - Level3
-  nextLevelStr: Level2
-  prevLevelStr: Level2
+  nextLevelStr: Level3
+  prevLevelStr: Level3
