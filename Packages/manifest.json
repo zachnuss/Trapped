@@ -1,15 +1,21 @@
 {
   "dependencies": {
 <<<<<<< HEAD
+<<<<<<< HEAD
     "com.unity.collab-proxy": "1.2.16",
     "com.unity.ide.rider": "1.1.4",
     "com.unity.ide.vscode": "1.2.1",
 =======
+=======
+>>>>>>> parent of 489f4b7... test update
     "com.unity.cinemachine": "2.3.4",
     "com.unity.collab-proxy": "1.2.16",
     "com.unity.ide.rider": "1.1.4",
     "com.unity.ide.vscode": "1.2.1",
     "com.unity.inputsystem": "1.0.0",
+<<<<<<< HEAD
+>>>>>>> parent of 489f4b7... test update
+=======
 >>>>>>> parent of 489f4b7... test update
     "com.unity.test-framework": "1.1.14",
     "com.unity.textmeshpro": "2.1.1",
