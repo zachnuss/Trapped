@@ -2,11 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
-//WE ARE ALL GONNA DIE
-//DEATH IS UPON US
+
 [CreateAssetMenu(fileName = "Data", menuName = "ScritableObjects/PlayerData", order = 1)]
 public class PlayerData : ScriptableObject
 {
+    [Header("Total Time")]
+    public float timerSec;
+    public float timerMin;
+    public float timerHour;
+    public float _timerBetweenLevels;
+
     [Header("Player Upgrade Stats")]
     public int healthUpgrade;
     public int damageUpgrade;
@@ -52,6 +57,7 @@ public class PlayerData : ScriptableObject
     {
         if (OnLevel <= levelsS.Length - 1)
         {
+            _timerBetweenLevels = timerSec;
             Debug.Log("Beat level");
             if (OnLevel > 0)
             {
@@ -74,6 +80,7 @@ public class PlayerData : ScriptableObject
         if (OnLevel != levelsS.Length)
         {
             Debug.Log("Loading Next Level: " + levelsS[OnLevel]);
+            timerSec += _timerBetweenLevels;
             SceneManager.LoadScene(nextLevelStr);
         }
         else
@@ -108,6 +115,9 @@ public class PlayerData : ScriptableObject
         Debug.Log("Starting Game");
         ResetUpgrades();
         OnLevel = 0;
+        timerHour = 0;
+        timerSec = 0;
+        timerMin = 0;
         SceneManager.LoadScene("Level1");
     }
 
@@ -120,17 +130,43 @@ public class PlayerData : ScriptableObject
     public void UpgradeHealth()
     {
         healthUpgrade++;
+
+        Debug.Log("Health Upgrade Purchased!");
+        //UPDATE UI HERE
     }
 
     public void UpgradeDamage()
     {
         damageUpgrade++;
+
+        Debug.Log("Damage Upgrade Purchased!");
+        //UPDATE UI HERE
     }
 
     public void UpgradeSpeed()
     {
         speedUpgrade++;
+
+        Debug.Log("SPEED Upgrade Purchased!");
+        //UPDATE UI HERE
     }
 
-    
+    public void UpdateTime()
+    {      
+
+            if (timerMin >= 60)
+            {
+                timerHour++;
+                timerMin = 0;
+            }
+        
+
+        if (timerHour >= 99 && timerMin > 60 && timerSec > 60)
+        {
+            Debug.Log("you loose");
+        }
+
+    }
+
+    //gaming
 }
