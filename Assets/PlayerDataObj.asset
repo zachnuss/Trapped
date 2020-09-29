@@ -11,14 +11,11 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f1ac9e01fa250f2469fa52ba507acdd1, type: 3}
   m_Name: PlayerDataObj
-  m_EditorClassIdentifier: 
-<<<<<<< HEAD
-=======
-  timerSec: 23
-  timerMin: 1
+  m_EditorClassIdentifier:
+  timerSec: 1
+  timerMin: 0
   timerHour: 0
   _timerBetweenLevels: 0
->>>>>>> parent of da5848e... prefab set to 1:06
   healthUpgrade: 0
   damageUpgrade: 0
   speedUpgrade: 0
