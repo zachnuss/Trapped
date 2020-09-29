@@ -12,31 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1ac9e01fa250f2469fa52ba507acdd1, type: 3}
   m_Name: PlayerDataObj
   m_EditorClassIdentifier: 
-<<<<<<< HEAD
-<<<<<<< HEAD
-  timerSec: 23
-  timerMin: 1
-=======
-  timerSec: 1
-  timerMin: 0
->>>>>>> parent of 37e7037... second check for timer
-=======
-  timerSec: 23
-  timerMin: 1
->>>>>>> parent of 1268471... Merge branch 'develop' into Trevor-Ranch
-  timerHour: 0
-  _timerBetweenLevels: 0
   healthUpgrade: 0
   damageUpgrade: 0
   speedUpgrade: 0
   totalHealthBase: 100
   totalDamageBase: 20
-  OnLevel: 0
-  score: 0
+  OnLevel: 3
+  score: 325855
   currency: 0
   levelsS:
   - Level1
   - Level2
   - Level3
-  nextLevelStr: Level2
+  nextLevelStr: Level3
   prevLevelStr: Level3
