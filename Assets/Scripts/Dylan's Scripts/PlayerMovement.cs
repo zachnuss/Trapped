@@ -88,8 +88,9 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     private GameObject teleporterTracker;//Assign before load, set to private if unneeded
    // public string nextScene; //Target Level
-    public Animator transition; //Transition animator
+    public Animator[] transition; //Transition animator
     public float transitionTime = 1;
+    private int rng;
 
 
     //awake
@@ -107,6 +108,7 @@ public class PlayerMovement : MonoBehaviour
         SetPlayerStats();
 
         teleporterTracker = GameObject.FindGameObjectWithTag("GoalCheck"); //assumes we check on construction of the player, with a new player every level
+        rng = Random.Range(0, transition.Length);
     }
 
     // Used for physics 
@@ -146,8 +148,6 @@ public class PlayerMovement : MonoBehaviour
             checkToCalculate = true;
         }
 
-        //Added by wesley
-        playerData.AddScore(1);
     }
 
     //moves player based on equation
@@ -334,6 +334,7 @@ public class PlayerMovement : MonoBehaviour
 
             //checkToCalculate = true;
         }
+        
 
         //end game
         if (other.tag == "Goal")
@@ -445,7 +446,7 @@ public class PlayerMovement : MonoBehaviour
     //Scene Transitions
     IEnumerator LoadTargetLevel()
     {
-        transition.SetTrigger("Start"); //start animation
+        transition[rng].SetTrigger("Start");
 
         yield return new WaitForSeconds(transitionTime); //Time given for transition animation to play
 

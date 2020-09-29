@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 514141935712784125}
   - component: {fileID: 3336518483230197366}
   - component: {fileID: 1156755725338580718}
-  - component: {fileID: 6284200691678514717}
   - component: {fileID: 1786760883917569951}
   m_Layer: 5
   m_Name: CircleWipeRight
@@ -76,18 +75,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!225 &6284200691678514717
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1300940820747218169}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!95 &1786760883917569951
 Animator:
   serializedVersion: 3
@@ -98,7 +85,7 @@ Animator:
   m_GameObject: {fileID: 1300940820747218169}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f0cbe0b2d4524e34b92e048fcefea6f2, type: 2}
+  m_Controller: {fileID: 22100000, guid: 2aa80ce5eeb390840a5858f47fc1eafd, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -118,7 +105,6 @@ GameObject:
   - component: {fileID: 4989295997735499332}
   - component: {fileID: 8019043097973473655}
   - component: {fileID: 6090849269074077857}
-  - component: {fileID: 1341768755078224591}
   - component: {fileID: 978701533126419560}
   m_Layer: 5
   m_Name: CircleWipeLeft
@@ -183,18 +169,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!225 &1341768755078224591
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3885006830916803376}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!95 &978701533126419560
 Animator:
   serializedVersion: 3
@@ -205,7 +179,7 @@ Animator:
   m_GameObject: {fileID: 3885006830916803376}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f0cbe0b2d4524e34b92e048fcefea6f2, type: 2}
+  m_Controller: {fileID: 22100000, guid: 3bdd5dbf015818e4f96a04dc8c48fe6d, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -225,7 +199,6 @@ GameObject:
   - component: {fileID: 6738586016678461364}
   - component: {fileID: 7620268905618074220}
   - component: {fileID: 7136010634699490583}
-  - component: {fileID: 6814403917808415606}
   - component: {fileID: 8013161375454991324}
   m_Layer: 5
   m_Name: Fade
@@ -290,18 +263,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!225 &6814403917808415606
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6891723685178018135}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!95 &8013161375454991324
 Animator:
   serializedVersion: 3
@@ -436,10 +397,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 132dda81ed7bed642bcb811402e9b245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerData: {fileID: 0}
+  playerData: {fileID: 11400000, guid: f9b9357e87ed29948b25c9a1d8db1dcf, type: 2}
   teleporterTracker: {fileID: 0}
-  nextScene: 
-  transition: {fileID: 8013161375454991324}
+  transition:
+  - {fileID: 8013161375454991324}
+  - {fileID: 3644103570217046503}
+  - {fileID: 978701533126419560}
+  - {fileID: 1786760883917569951}
+  levelTransitions:
+  - {fileID: 6891723685178018135}
+  - {fileID: 8710668147196175651}
+  - {fileID: 3885006830916803376}
+  - {fileID: 1300940820747218169}
   transitionTime: 1
 --- !u!1 &8710668147196175651
 GameObject:
@@ -452,7 +421,6 @@ GameObject:
   - component: {fileID: 1505391276788271848}
   - component: {fileID: 69132106540810056}
   - component: {fileID: 7596000909616764379}
-  - component: {fileID: 6324107346550620591}
   - component: {fileID: 3644103570217046503}
   m_Layer: 5
   m_Name: CircleExpand
@@ -517,18 +485,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!225 &6324107346550620591
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8710668147196175651}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!95 &3644103570217046503
 Animator:
   serializedVersion: 3
@@ -539,7 +495,7 @@ Animator:
   m_GameObject: {fileID: 8710668147196175651}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f0cbe0b2d4524e34b92e048fcefea6f2, type: 2}
+  m_Controller: {fileID: 22100000, guid: a6ba60c0221f05f46a200cf9e4b58a21, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

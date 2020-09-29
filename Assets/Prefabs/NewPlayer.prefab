@@ -1338,7 +1338,11 @@ MonoBehaviour:
   Player_Bullet: {fileID: 4863383300861185225, guid: 6b6051a2accefa44580d0c03760a3626,
     type: 3}
   playerData: {fileID: 11400000, guid: f9b9357e87ed29948b25c9a1d8db1dcf, type: 2}
-  transition: {fileID: 0}
+  transition:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   transitionTime: 1
 --- !u!54 &7571365785918509568
 Rigidbody:
