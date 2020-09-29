@@ -5,12 +5,12 @@ using UnityEngine;
 public class DoorTrigger : MonoBehaviour
 {
     public Transform moveLocation;
-   // public Transform moveMid;
+    public Transform moveMid;
 
     public bool direction = true;
 
-    public GameObject pos1;
-    public GameObject pos2;
+    public Transform pos1;
+    public Transform pos2;
 
     //public Transform mid1;
     //public Transform mid2;
@@ -21,21 +21,21 @@ public class DoorTrigger : MonoBehaviour
     {
         if (direction)
         {
-            moveLocation = pos1.transform;
+            moveLocation = pos1;
             //moveMid = mid1;
         }
         else
         {
-            moveLocation = pos2.transform;
+            moveLocation = pos2;
             //moveMid = mid2;
         }
     }
 
     public void SwitchDirection()
     {
-      //  if (direction)
-     //       direction = false;
-       // else
-         //   direction = true;
+        if (direction)
+            direction = false;
+        else
+            direction = true;
     }
 }
