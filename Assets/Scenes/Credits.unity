@@ -1195,14 +1195,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MoveRepeatDelay: 0.5
   m_MoveRepeatRate: 0.1
-  m_ActionsAsset: {fileID: -944628639613478452, guid: 72a0b41bc20552e4caf45be435fb949b,
+  m_ActionsAsset: {fileID: -944628639613478452, guid: 6fad2fb9178c9a2448bf901578fd2149,
     type: 3}
   m_PointAction: {fileID: 0}
-  m_MoveAction: {fileID: 2559116655499274079, guid: 72a0b41bc20552e4caf45be435fb949b,
+  m_MoveAction: {fileID: -7153097655987452777, guid: 6fad2fb9178c9a2448bf901578fd2149,
     type: 3}
-  m_SubmitAction: {fileID: -7176508791770457611, guid: 72a0b41bc20552e4caf45be435fb949b,
+  m_SubmitAction: {fileID: -1041763822346430947, guid: 6fad2fb9178c9a2448bf901578fd2149,
     type: 3}
-  m_CancelAction: {fileID: -2409624011181962898, guid: 72a0b41bc20552e4caf45be435fb949b,
+  m_CancelAction: {fileID: 5940721810375216976, guid: 6fad2fb9178c9a2448bf901578fd2149,
     type: 3}
   m_LeftClickAction: {fileID: 0}
   m_MiddleClickAction: {fileID: 0}
@@ -2142,7 +2142,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerData: {fileID: 11400000, guid: f9b9357e87ed29948b25c9a1d8db1dcf, type: 2}
-  pauseScript: {fileID: 0}
 --- !u!4 &1870030895
 Transform:
   m_ObjectHideFlags: 0
