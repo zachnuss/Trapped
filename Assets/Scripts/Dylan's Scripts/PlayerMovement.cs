@@ -61,7 +61,7 @@ public class PlayerMovement : MonoBehaviour
     private Quaternion r01;
     private float timeDuration = 1.2f;
     float timeDurationCamera = 1.5f;
-    private bool checkToCalculate = false;
+    public bool checkToCalculate = false; //Changed to public for door detection
     private Vector3 p01;
 
     //for smooth parent rotation
@@ -69,7 +69,7 @@ public class PlayerMovement : MonoBehaviour
     private Transform pc1, pc0;
 
     public EasingType easingTypeC = EasingType.linear;
-    private bool moving = false;
+    public bool moving = false; //Changed to public for door detection
     private float timeStart;
     private float u, u2;
     float easingMod = 2f;
@@ -329,7 +329,7 @@ public class PlayerMovement : MonoBehaviour
         {
             onDoor = true;
             _rotationTrans = other.gameObject.GetComponent<DoorTrigger>().moveLocation;
-            c2 = other.gameObject.GetComponent<DoorTrigger>().moveMid;
+            c2 = other.gameObject.GetComponent<DoorTrigger>().moveLocation; //Changed to make things work
             other.gameObject.GetComponent<DoorTrigger>().SwitchDirection();
 
             //checkToCalculate = true;
