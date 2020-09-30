@@ -29,5 +29,22 @@ public class StoreData : ScriptableObject
 
     //Functions to keep track of the storeData
 
-    //Sets up the initial 
+
+    //Functions to add the additions to the price when an upgrade is purchased
+    public void addDamagePrice()
+    {
+            damagePrice += damageAddition;
+    }
+
+    //Functions to add the additions to the price when an upgrade is purchased
+    public void addHealthPrice()
+    {
+        healthPrice += healthAddition;
+    }
+
+    //Functions to add the additions to the price when an upgrade is purchased
+    public void addSpeedPrice()
+    {
+        speedPrice += speedAddition;
+    }
 }

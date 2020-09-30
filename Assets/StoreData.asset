@@ -15,9 +15,9 @@ MonoBehaviour:
   damageStartPrice: 100
   healthStartPrice: 150
   speedStartPrice: 200
-  damagePrice: 0
-  healthPrice: 0
-  speedPrice: 0
+  damagePrice: 100
+  healthPrice: 150
+  speedPrice: 200
   damageAddition: 50
   healthAddition: 50
   speedAddition: 50
