@@ -92,10 +92,9 @@ public class PlayerMovement : MonoBehaviour
     public Animator[] transition; //Transition animator
     public float transitionTime = 1;
     private int rng;
-    public float localTimer;
 
     public float localTimer;
-
+    
     //displays timer per level (resets at level start and ends at level end
     [Header("UI")]
     public Text timerText;
@@ -121,9 +120,6 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-        localTimer = playerData._timerBetweenLevels;
-        // StartCoroutine(timerCount());
-    }
     // Used for physics 
     private void FixedUpdate()
     {
@@ -164,9 +160,6 @@ public class PlayerMovement : MonoBehaviour
             //if we hit the door and are off the cube
             checkToCalculate = true;
         }
-
-        //Added by wesley
-        
     }
 
     //moves player based on equation
@@ -532,6 +525,7 @@ public class PlayerMovement : MonoBehaviour
             StartCoroutine(PowerUpDuration(type, duration));
         }
     }
+
     IEnumerator PowerUpDuration(powerUpType type, int duration)
     {
         //turn on
@@ -569,5 +563,4 @@ public class PlayerMovement : MonoBehaviour
         //Debug.Log("off");
         //Debug.Log(speedMultiplier);
     }
-
 }
