@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 using UnityEngine;
 
 
@@ -115,10 +116,10 @@ public class PlayerMovement : MonoBehaviour
         rng = Random.Range(0, transition.Length);
 
         localTimer = playerData._timerBetweenLevels;
-       // StartCoroutine(timerCount());
-
+        // StartCoroutine(timerCount());
+    }
     // Used for physics 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         this.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
         this.GetComponent<Rigidbody>().velocity = Vector3.zero;
