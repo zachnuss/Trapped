@@ -87,11 +87,12 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     private GameObject teleporterTracker;//Assign before load, set to private if unneeded
    // public string nextScene; //Target Level
-    public Animator transition; //Transition animator
+    public Animator[] transition; //Transition animator
     public float transitionTime = 1;
+    private int rng;
 
     public float localTimer;
-
+    
     //displays timer per level (resets at level start and ends at level end
     [Header("UI")]
     public Text timerText;
@@ -111,12 +112,14 @@ public class PlayerMovement : MonoBehaviour
         SetPlayerStats();
 
         teleporterTracker = GameObject.FindGameObjectWithTag("GoalCheck"); //assumes we check on construction of the player, with a new player every level
+        rng = Random.Range(0, transition.Length);
         localTimer = playerData._timerBetweenLevels;
        // StartCoroutine(timerCount());
     }
 
+
     // Used for physics 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         this.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
         this.GetComponent<Rigidbody>().velocity = Vector3.zero;
@@ -155,9 +158,6 @@ public class PlayerMovement : MonoBehaviour
             //if we hit the door and are off the cube
             checkToCalculate = true;
         }
-
-        //Added by wesley
-        
     }
 
     //moves player based on equation
@@ -475,7 +475,7 @@ public class PlayerMovement : MonoBehaviour
     //Scene Transitions
     IEnumerator LoadTargetLevel()
     {
-        transition.SetTrigger("Start"); //start animation
+        transition[rng].SetTrigger("Start"); //start animation
 
         yield return new WaitForSeconds(transitionTime); //Time given for transition animation to play
 
@@ -531,6 +531,7 @@ public class PlayerMovement : MonoBehaviour
             StartCoroutine(PowerUpDuration(type, duration));
         }
     }
+
     IEnumerator PowerUpDuration(powerUpType type, int duration)
     {
         //turn on
@@ -568,5 +569,4 @@ public class PlayerMovement : MonoBehaviour
         //Debug.Log("off");
         //Debug.Log(speedMultiplier);
     }
-
 }

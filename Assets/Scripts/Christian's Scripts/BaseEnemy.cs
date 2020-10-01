@@ -4,6 +4,7 @@
  */
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum Behavior
 {
@@ -32,6 +33,7 @@ public class BaseEnemy : MonoBehaviour
      * CLASS VARIABLES
      */
     ///public
+    //public variables below will be set in the inspector
     public int health;
     public int damage;
     public float speed;
@@ -41,13 +43,12 @@ public class BaseEnemy : MonoBehaviour
     ///protected
     protected int _maxHealth;
     protected Behavior _myBehavior;
-    protected CubemapFace myFace { get { return _myFace; } }
     protected bool _isTrackingPlayer = false;
+    protected float _trackingSpeed;
 
     ///private
     private Vector3 _moveDir; //movement
     private Vector3 _rotVal; //rotation
-    private CubemapFace _myFace; //getter
     private float _wallDetectRay = 1.0f;
     private bool _hasHitWall = false;
     private GameObject _playerGO; //initialize in start
@@ -64,53 +65,26 @@ public class BaseEnemy : MonoBehaviour
         if (health < 1)
         {
             health = 0;
-            //destroy
             Destroy(gameObject);
-            //set game over screen
+            //give score to player
+            _playerGO.GetComponent<PlayerMovement>().playerData.AddScore(pointValue);
+            Debug.Log("Enemy killed, " + pointValue + " points added to PlayerData.");
         }
     }
-    public void levelUp()
+    
+    //level entered for parameter must be index (i.e. level 1 = 0)
+    public void levelUp(int level)
     {
-        //raise stats
-        health = Mathf.FloorToInt(health * 1.1f);
-        damage = Mathf.FloorToInt(damage * 1.1f);
-        speed = Mathf.FloorToInt(speed * 1.1f);
-        pointValue = Mathf.FloorToInt(pointValue * 1.1f);
-    }
+        float multiplier = 1.1f;
+        float speedMultipler = 1.025f; //set lower so keep better flow
 
-    //takes a float value and puts it into a vector3 for appropriate
-    //turning based on which CubeFace the enemy is on
-    protected Vector3 _getTurningAxis(float axisVal)
-    {
-        //zero out your output vector3
-        Vector3 outputVector = Vector3.zero;
-            
-        switch (myFace)
-        {
-            case CubemapFace.PositiveX:
-                outputVector = new Vector3(axisVal, 0f, 0f);
-                break;
-            case CubemapFace.NegativeX:
-                outputVector = new Vector3(-axisVal, 0f, 0f);
-                break;
-            case CubemapFace.PositiveY:
-                outputVector = new Vector3(0f, axisVal, 0f);
-                break;
-            case CubemapFace.NegativeY:
-                outputVector = new Vector3(0f, -axisVal, 0f);
-                break;
-            case CubemapFace.PositiveZ:
-                outputVector = new Vector3(axisVal, 0f, 0f);
-                break;
-            case CubemapFace.NegativeZ:
-                outputVector = new Vector3(0f, 0f, -axisVal);
-                break;
-            //Unknown and default returns zeroed Vector3
-            case CubemapFace.Unknown:
-            default:
-                break;
-        }
-        return outputVector;
+        multiplier = Mathf.Pow(multiplier, level);
+        speedMultipler = Mathf.Pow(speedMultipler, level);
+        //raise stats
+        health = Mathf.FloorToInt(health * multiplier);
+        damage = Mathf.FloorToInt(damage * multiplier);
+        speed = Mathf.FloorToInt(speed * speedMultipler);
+        pointValue = Mathf.FloorToInt(pointValue * multiplier);
     }
 
     ///protected
@@ -130,8 +104,7 @@ public class BaseEnemy : MonoBehaviour
                 _isTrackingPlayer = false;
                 break;
             case Behavior.ChangeDirection:
-                //get random direction to 
-                Debug.Log("ChangeDirection hit");
+                //get random direction to move
                 Direction randDir = _goLeftOrRightDirection();
                 _turnThisDirection(randDir);
                 _isTrackingPlayer = false;
@@ -143,7 +116,6 @@ public class BaseEnemy : MonoBehaviour
                 break;
             case Behavior.AttackPlayer:
                 //call attack() function
-
                 //outputMoveDir may need to be slowed down to attack player
 
                 //no break, still track player
@@ -169,58 +141,8 @@ public class BaseEnemy : MonoBehaviour
         //left blank for inheritted children
     }
 
-    //default attack and tracker for inheritters of BaseEnemy
-    protected Transform _trackPlayer()
-    {
-        //get players location and location to move
-        Vector3 playerPos = _playerGO.transform.position;
-        Vector3 dirToMove = Vector3.MoveTowards(transform.position,
-                                                playerPos,
-                                                Time.maximumDeltaTime);
-        dirToMove = Vector3.Normalize(dirToMove); // normalize for movement
-        //check if there's a wall between us
-        if (_isEnemyFacingWall())
-        {
-            //create local vars
-            Vector3 longestAxis = Vector3.zero;
-            Vector3 side1 = Vector3.zero;
-            Vector3 side2 = Vector3.zero;
-            //find longest axis
-            for (int i = 0; i < 3; i++)
-            {
-                //assign axis to appropriate variables
-                if (Mathf.Abs(dirToMove[i]) == 1f) { longestAxis[i] = 1f; }
-                else if (side1 == Vector3.zero) { side1[i] = dirToMove[i]; }
-                else if (side2 == Vector3.zero) { side2[i] = 1f; }
-            }
-
-            //check which direction will bring me closest to the player
-            side1 += transform.position;
-            side2 += transform.position;
-            if (Vector3.Distance(side1, playerPos) < Vector3.Distance(side2, playerPos))
-            {
-                //side 1 is closer
-                dirToMove = side1;
-            }
-            else if (Vector3.Distance(side1, playerPos) > Vector3.Distance(side2, playerPos))
-            {
-                //side 2 is closer
-                dirToMove = side2;
-            }
-                //if other, swap values
-        }
-        ///         apply movement
-        ///         apply relative rotation???
-        //get rotational stuff and pack into Transform for return
-        Transform output = transform;
-        //output.position = dirToMove;
-        output.LookAt(_playerGO.transform, Vector3.up);
-        output.position = dirToMove;
-        return output;
-    }
-
     //move the player in the direction specified
-    protected void _move(Vector3 moveDir, Vector3 rotVal)
+    protected void _move(Vector3 moveDir)
     {
         //immediately return if zeroed values
         if (moveDir == Vector3.zero) return;
@@ -229,49 +151,27 @@ public class BaseEnemy : MonoBehaviour
         {
             Direction outputDir = Direction.Backwards;
             //get rand dir if I've already hit a wall
-            if (_hasHitWall) { outputDir = _goLeftOrRightDirection();
-                //Debug.Log("feeeeeerrrrrrppp");
-            }
+            if (_hasHitWall) { outputDir = _goLeftOrRightDirection(); }
 
             _turnThisDirection(outputDir);
             //swap bool
             _hasHitWall = (_hasHitWall) ? false : true;
         }
+
         //finally move
-        //transform.position += moveDir * speed * Time.deltaTime;
-        if (_isTrackingPlayer)
-        {
-            //store and unpack Transform
-            Transform outputTrans = _trackPlayer();
-//            transform.localRotation.eulerAngles.y += outputTrans.localEulerAngles.y * Time.deltaTime;
-            //transform.position += outputTrans.position * speed * Time.deltaTime;
-        }
-        //else
-        //{
-            transform.position += moveDir * speed * Time.deltaTime;
-        //}
-            //apply rotational value
-            //transform.rotation.eulerAngles += rotVal;
+        transform.position += moveDir * speed * Time.deltaTime;
     }
 
     protected virtual void Update()
     {
-        //for bug testing
-        //if (Input.GetKeyDown(KeyCode.Space))
-          //  _myBehavior = Behavior.TrackPlayer;
-        /**
-         *  TO DO
-         *  1. Check if I'm trackig/attacking the player
-         *          -get new direction and apply to "_moveDir"
-         *          -get my new rotation and apply
-         * 
-         */ 
-        //if (_myBehavior == Behavior.TrackPlayer || _myBehavior == Behavior.AttackPlayer)
-        //{
-            
-        //}
+        if (_isTrackingPlayer)
+        {
+            //temporarily increase speed of the game
+
+        }
+
         //move enemy
-        _move(_moveDir, Vector3.zero);
+        _move(_moveDir);
     }
     //this function will act like onDeath (doesn't need to be called manually)
     protected virtual void OnDestroy()
@@ -294,36 +194,21 @@ public class BaseEnemy : MonoBehaviour
     /*
      *  AWAKE() RESERVED FOR CHILDREN
      */
+
     private void Start()
     {
         //initialize variables
-
-        //get where I'm facing
+        _playerGO = GameObject.FindWithTag("Player");
+        //get where I'm facing for initial variables
         Vector3 childDir = transform.GetChild(0).position;
         Vector3 initialDir = childDir - transform.position;
         _moveDir = initialDir.normalized;
 
-        ///for debugging shit
-        _playerGO = GameObject.Find("NewPlayer");
+        //get my level based on index (i.e. level 1 = 0)
+        int curLevelIndex = _playerGO.GetComponent<PlayerMovement>().playerData.OnLevel;
+        //level up based on level index
+        levelUp(curLevelIndex);
 
-        //Raycast to center (assuming map is placed on (0f, 0f, 0f))
-        RaycastHit myFloor;
-        if (Physics.Raycast(transform.position, - transform.position, 
-                out myFloor, 3f))
-        {
-            //raycast will shoot directly to floor
-            string floorName = myFloor.transform.name;
-            //parse name to get face
-            /**
-             * Stand in code before we have a level with
-             * actually named objects in-scene
-             */ 
-            Debug.LogWarning("BaseEnemy::Start(): Default enemy face " +
-                                "set to PositiveY");
-            //set default
-            //_myFace = CubemapFace.PositiveX;
-
-        }
         //loop to change behavior sporatically
         InvokeRepeating("_changeBehavior", 0.5f, rateOfBehaviorChange);
     }
@@ -338,8 +223,6 @@ public class BaseEnemy : MonoBehaviour
     //take a direction, based on 
     private void _turnThisDirection(Direction dir)
     {
-        Debug.Log("_turnThisDirection hit: turning " + dir);
-
         //the type of axis turn will be determined by CubemapFace
         float axisTurn = 0f;
         //using myFace for CubemapFace, alter stuff
@@ -397,19 +280,12 @@ public class BaseEnemy : MonoBehaviour
                 { Debug.LogWarning("BaseEnemy: hitting child for raycast"); }
             }
         }
-        //else
-        //{
-            //attack and track behavior
-
-            
-        //}
-
         return isFacingWall;
     }
 
     //takes the direction the enemy is moving at the player
     //and calculate the rotation to keep the enemy facing the player
-    private Vector3 _getTrackingRotation()
+    private Vector3 _checkForPlayerTracking()
     {
         float rotationVal = 0f;
         float enemyToPlayerDist = Vector3.Distance(transform.position,
@@ -440,5 +316,7 @@ public class BaseEnemy : MonoBehaviour
             //turn around if the enemy's about to hit the door
             _turnThisDirection(Direction.Backwards);
         }
+
+        //enemy will take damage form the player through the ProjectileScript
     }
 }
