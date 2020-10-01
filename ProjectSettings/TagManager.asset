@@ -15,7 +15,6 @@ TagManager:
   - Goal
   - Wall
   - PowerUp
-  - Currency
   layers:
   - Default
   - TransparentFX
