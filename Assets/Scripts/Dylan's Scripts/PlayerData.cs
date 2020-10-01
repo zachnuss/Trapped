@@ -167,6 +167,4 @@ public class PlayerData : ScriptableObject
         }
 
     }
-
-    //gaming
 }
