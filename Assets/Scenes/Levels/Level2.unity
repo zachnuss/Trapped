@@ -707,11 +707,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5931873455978766917, guid: 716f5c8b413961442a5458bad0fa68db,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -7.799988
-      objectReference: {fileID: 0}
     - target: {fileID: 7571365785621622437, guid: 716f5c8b413961442a5458bad0fa68db,
         type: 3}
       propertyPath: m_Name
@@ -782,6 +777,21 @@ PrefabInstance:
       propertyPath: transition.Array.data[0]
       value: 
       objectReference: {fileID: 566558570}
+    - target: {fileID: 7571365785918509578, guid: 716f5c8b413961442a5458bad0fa68db,
+        type: 3}
+      propertyPath: transition.Array.data[1]
+      value: 
+      objectReference: {fileID: 658153040}
+    - target: {fileID: 7571365785918509578, guid: 716f5c8b413961442a5458bad0fa68db,
+        type: 3}
+      propertyPath: transition.Array.data[2]
+      value: 
+      objectReference: {fileID: 658153039}
+    - target: {fileID: 7571365785918509578, guid: 716f5c8b413961442a5458bad0fa68db,
+        type: 3}
+      propertyPath: transition.Array.data[3]
+      value: 
+      objectReference: {fileID: 658153038}
     - target: {fileID: 7571365785918509578, guid: 716f5c8b413961442a5458bad0fa68db,
         type: 3}
       propertyPath: transition.Array.data[1]

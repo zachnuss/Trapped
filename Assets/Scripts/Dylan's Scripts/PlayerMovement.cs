@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 using UnityEngine;
 
 
@@ -92,11 +91,15 @@ public class PlayerMovement : MonoBehaviour
     public Animator[] transition; //Transition animator
     public float transitionTime = 1;
     private int rng;
+<<<<<<< HEAD
     public float localTimer;
 
     //displays timer per level (resets at level start and ends at level end
     [Header("UI")]
     public Text timerText;
+=======
+
+>>>>>>> parent of c7e037d... Update from dev branch
 
     //awake
     private void Awake()
@@ -114,10 +117,13 @@ public class PlayerMovement : MonoBehaviour
 
         teleporterTracker = GameObject.FindGameObjectWithTag("GoalCheck"); //assumes we check on construction of the player, with a new player every level
         rng = Random.Range(0, transition.Length);
+<<<<<<< HEAD
 
 
         localTimer = playerData._timerBetweenLevels;
         // StartCoroutine(timerCount());
+=======
+>>>>>>> parent of c7e037d... Update from dev branch
     }
     // Used for physics 
     private void FixedUpdate()
