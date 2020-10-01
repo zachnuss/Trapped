@@ -1084,6 +1084,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7571365785918509578, guid: 716f5c8b413961442a5458bad0fa68db,
         type: 3}
+      propertyPath: transition.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7571365785918509578, guid: 716f5c8b413961442a5458bad0fa68db,
+        type: 3}
       propertyPath: transition
       value: 
       objectReference: {fileID: 708334707}
@@ -1096,17 +1101,17 @@ PrefabInstance:
         type: 3}
       propertyPath: transition.Array.data[1]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 925736567}
     - target: {fileID: 7571365785918509578, guid: 716f5c8b413961442a5458bad0fa68db,
         type: 3}
       propertyPath: transition.Array.data[2]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 924399960}
     - target: {fileID: 7571365785918509578, guid: 716f5c8b413961442a5458bad0fa68db,
         type: 3}
       propertyPath: transition.Array.data[3]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1526832835}
     - target: {fileID: 7571365785918509578, guid: 716f5c8b413961442a5458bad0fa68db,
         type: 3}
       propertyPath: timerText
@@ -1809,11 +1814,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8eb4ea104082d0241ad5c00acf2ae18d, type: 3}
+--- !u!95 &924399960 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 978701533126419560, guid: 5c93997a62315e040a889e7d28ed1b48,
+    type: 3}
+  m_PrefabInstance: {fileID: 2093567429}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &925286133 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8804797799290729539, guid: 050ebea7dddf54e40bfdaa2a1d878100,
     type: 3}
   m_PrefabInstance: {fileID: 1963664334}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &925736567 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 3644103570217046503, guid: 5c93997a62315e040a889e7d28ed1b48,
+    type: 3}
+  m_PrefabInstance: {fileID: 2093567429}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1059556846
 PrefabInstance:
@@ -2855,6 +2872,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1454459924}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &1526832835 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 1786760883917569951, guid: 5c93997a62315e040a889e7d28ed1b48,
+    type: 3}
+  m_PrefabInstance: {fileID: 2093567429}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1548810943
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3436,17 +3459,17 @@ PrefabInstance:
         type: 3}
       propertyPath: transition.Array.data[1]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 925736567}
     - target: {fileID: 2138350873238029134, guid: 5c93997a62315e040a889e7d28ed1b48,
         type: 3}
       propertyPath: transition.Array.data[2]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 924399960}
     - target: {fileID: 2138350873238029134, guid: 5c93997a62315e040a889e7d28ed1b48,
         type: 3}
       propertyPath: transition.Array.data[3]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1526832835}
     - target: {fileID: 2999739793293038446, guid: 5c93997a62315e040a889e7d28ed1b48,
         type: 3}
       propertyPath: m_LocalPosition.x
