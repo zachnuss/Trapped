@@ -907,6 +907,21 @@ PrefabInstance:
       propertyPath: transition.Array.data[3]
       value: 
       objectReference: {fileID: 816961573}
+    - target: {fileID: 7571365785918509578, guid: 716f5c8b413961442a5458bad0fa68db,
+        type: 3}
+      propertyPath: transition.Array.data[1]
+      value: 
+      objectReference: {fileID: 816961575}
+    - target: {fileID: 7571365785918509578, guid: 716f5c8b413961442a5458bad0fa68db,
+        type: 3}
+      propertyPath: transition.Array.data[2]
+      value: 
+      objectReference: {fileID: 816961574}
+    - target: {fileID: 7571365785918509578, guid: 716f5c8b413961442a5458bad0fa68db,
+        type: 3}
+      propertyPath: transition.Array.data[3]
+      value: 
+      objectReference: {fileID: 816961573}
     - target: {fileID: 7571365786826290780, guid: 716f5c8b413961442a5458bad0fa68db,
         type: 3}
       propertyPath: m_LocalPosition.y

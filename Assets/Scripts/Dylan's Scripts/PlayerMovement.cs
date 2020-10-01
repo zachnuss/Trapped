@@ -93,11 +93,15 @@ public class PlayerMovement : MonoBehaviour
     private int rng;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     public float localTimer;
 
     //displays timer per level (resets at level start and ends at level end
     [Header("UI")]
     public Text timerText;
+=======
+
+>>>>>>> parent of c7e037d... Update from dev branch
 =======
 
 >>>>>>> parent of c7e037d... Update from dev branch
@@ -123,10 +127,13 @@ public class PlayerMovement : MonoBehaviour
         rng = Random.Range(0, transition.Length);
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
         localTimer = playerData._timerBetweenLevels;
         // StartCoroutine(timerCount());
+=======
+>>>>>>> parent of c7e037d... Update from dev branch
 =======
 >>>>>>> parent of c7e037d... Update from dev branch
 =======
