@@ -113,9 +113,12 @@ public class PlayerMovement : MonoBehaviour
         SetPlayerStats();
 
         teleporterTracker = GameObject.FindGameObjectWithTag("GoalCheck"); //assumes we check on construction of the player, with a new player every level
+<<<<<<< HEAD
 
         rng = Random.Range(0, transition.Length);
 
+=======
+>>>>>>> parent of 0bc80da... Working Fades
         localTimer = playerData._timerBetweenLevels;
        // StartCoroutine(timerCount());
     }
