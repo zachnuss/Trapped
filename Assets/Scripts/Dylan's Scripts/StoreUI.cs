@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Manage store UI
+/// Manage store UI Buttons
 /// </summary>
 
 public class StoreUI : MonoBehaviour
