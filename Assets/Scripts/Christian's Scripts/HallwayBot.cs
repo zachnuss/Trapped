@@ -1,14 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+﻿/*
+ * [Author: Christian Mullins ]
+ * 
+ */ 
 public class HallwayBot : BaseEnemy
 {
 
-
     void Awake()
     {
-        //set initial values
+        //initialize tracking speed
+        _trackingSpeed = speed * 1.3f;
 
     }
 
