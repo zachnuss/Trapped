@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 using UnityEngine;
 
 
@@ -37,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Current Player Stats - Set on Scene Start")]
     public int health;
     public int damage;
-    public int speedMultiplier;
+    public float speedMultiplier;
 
     //Camera
    // public CamLookAt playerCam;
@@ -61,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
     private Quaternion r01;
     private float timeDuration = 1.2f;
     float timeDurationCamera = 1.5f;
-    public bool checkToCalculate = false; //Changed to public for door detection
+    public bool checkToCalculate = false;
     private Vector3 p01;
 
     //for smooth parent rotation
@@ -69,7 +70,7 @@ public class PlayerMovement : MonoBehaviour
     private Transform pc1, pc0;
 
     public EasingType easingTypeC = EasingType.linear;
-    public bool moving = false; //Changed to public for door detection
+    public bool moving = false;
     private float timeStart;
     private float u, u2;
     float easingMod = 2f;
@@ -92,6 +93,11 @@ public class PlayerMovement : MonoBehaviour
     public float transitionTime = 1;
     private int rng;
 
+    public float localTimer;
+
+    //displays timer per level (resets at level start and ends at level end
+    [Header("UI")]
+    public Text timerText;
 
     //awake
     private void Awake()
@@ -109,6 +115,8 @@ public class PlayerMovement : MonoBehaviour
 
         teleporterTracker = GameObject.FindGameObjectWithTag("GoalCheck"); //assumes we check on construction of the player, with a new player every level
         rng = Random.Range(0, transition.Length);
+        localTimer = playerData._timerBetweenLevels;
+       // StartCoroutine(timerCount());
     }
 
     // Used for physics 
@@ -123,6 +131,15 @@ public class PlayerMovement : MonoBehaviour
 
             Movement();
         }
+
+        Timer();
+
+        //moves player to next side of cube
+        if (_rotationTrans != null)
+        {
+            Interpolation();
+            //Bezier();
+        }
     }
 
     // used for updating values and variables
@@ -134,12 +151,7 @@ public class PlayerMovement : MonoBehaviour
         {
             overTheEdge = true;
         }
-        //moves player to next side of cube
-        if(_rotationTrans != null)
-        {
-            Interpolation();
-            //Bezier();
-        }
+        
         //Interpolation stuff, for rotation onto next side
         if (overTheEdge && onDoor && !checkToCalculate && !moving)
         {
@@ -148,6 +160,8 @@ public class PlayerMovement : MonoBehaviour
             checkToCalculate = true;
         }
 
+        //Added by wesley
+        
     }
 
     //moves player based on equation
@@ -249,13 +263,14 @@ public class PlayerMovement : MonoBehaviour
         _angle = Mathf.Rad2Deg * _angle;
 
         //local angles are used since its a child, the player parent is set to keep track of the global rotation
-        transform.localRotation = Quaternion.Euler( transform.localEulerAngles.x , _angle, transform.localEulerAngles.z );
+        transform.localRotation = Quaternion.Euler(0 , _angle, 0 ); //transform.localEulerAngles.x 
 
         //base movement is just 1.0
-        movementSpeed = movementSpeed + (movementSpeed * speedMultiplier);
+        float boost = movementSpeed * speedMultiplier;
+        float newSpeed = movementSpeed + boost;
 
         //player is always moving forward, player is just adjsuting which way they move forward (always local forward so we can have player move consistentaly forward on each side)
-        transform.position += transform.forward * movementSpeed * Time.deltaTime;
+        transform.position += transform.forward * newSpeed * Time.deltaTime;
     }
 
     void Movement()
@@ -272,7 +287,6 @@ public class PlayerMovement : MonoBehaviour
         //runs when player moves to next cube (runs only once)
         //camera rotation
         Transform newCameraTrans = _rotationTrans;
-        
         
 
     }
@@ -321,20 +335,17 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     /// <param name="other"></param>
     
-
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Door")
         {
             onDoor = true;
             _rotationTrans = other.gameObject.GetComponent<DoorTrigger>().moveLocation;
-            c2 = other.gameObject.GetComponent<DoorTrigger>().moveLocation; //Changed to make things work
-            other.gameObject.GetComponent<DoorTrigger>().SwitchDirection();
+            //c2 = other.gameObject.GetComponent<DoorTrigger>().moveMid;
+            //other.gameObject.GetComponent<DoorTrigger>().SwitchDirection();
 
             //checkToCalculate = true;
         }
-        
 
         //end game
         if (other.tag == "Goal")
@@ -350,7 +361,7 @@ public class PlayerMovement : MonoBehaviour
             //Destroy(other.gameObject);
         }
 
-        //addding christans damage code
+        //adding christans damage code
         if (other.gameObject.tag == "Bullet")
         {
             //destroy object
@@ -360,6 +371,23 @@ public class PlayerMovement : MonoBehaviour
             Debug.Log("Current health: " + health);
         }
 
+        ///added by Christian to take damage when colliding with an enemy
+        if (other.gameObject.tag == "Enemy")
+        {
+            //in the future damage will need to be derived specifically from the enemy type
+            takeDamage(other.GetComponent<BaseEnemy>().damage);
+            Debug.Log("Current health: " + health);
+        }
+
+        if(other.gameObject.tag == "PowerUp")
+        {
+            //Debug.Log("Hit powerup");
+            PickedPowerUp(other.gameObject.GetComponent<PowerUpDrop>().type, other.gameObject.GetComponent<PowerUpDrop>().timer, other.gameObject.GetComponent<PowerUpDrop>().powerUpDuration);
+            //run animation on powerup (if any)
+
+            Destroy(other.gameObject);
+        }
+           
     }
 
     private void OnTriggerExit(Collider other)
@@ -369,7 +397,6 @@ public class PlayerMovement : MonoBehaviour
             onDoor = false;
         }
     }
-
 
     //easing types
     public float EaseU(float u, EasingType eType, float eMod)
@@ -421,10 +448,9 @@ public class PlayerMovement : MonoBehaviour
         damage = playerData.totalDamageBase + playerData.damageUpgrade;
 
         speedMultiplier = (playerData.speedUpgrade)/10;
-
+        //Debug.Log(speedMultiplier);
         
     }
-
 
     public void takeDamage(int damageTaken)
     {
@@ -442,7 +468,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-
     //Scene Transitions
     IEnumerator LoadTargetLevel()
     {
@@ -452,6 +477,92 @@ public class PlayerMovement : MonoBehaviour
 
         //SceneManager.LoadScene(nextScene); //Loads target scene
         playerData.BeatLevel();
+    }
+
+    //UI and TIMER
+    void Timer()
+    {
+        localTimer += Time.deltaTime;
+        // Debug.Log("click");
+        playerData.timerSec = Mathf.RoundToInt(localTimer);
+        if (playerData.timerSec >= 60)
+        {
+            playerData.timerMin++;
+            playerData.timerSec = 0;
+            localTimer = 0;
+           
+        }
+
+        playerData.UpdateTime();
+      //  Debug.Log(_timer);
+        DisplayTime();
+        //StartCoroutine(timerCount());
+    }
+
+    void DisplayTime()
+    {
+        //update text here with info from playerdata
+       // const string Format = "{22:11:00}";
+        timerText.text = string.Format("{0:00}:{1:00}:{2:00}", playerData.timerHour, playerData.timerMin, playerData.timerSec);
+
+    }
+
+    IEnumerator timerCount()
+    {
+        yield return new WaitForSeconds(1.0f);
+        localTimer++; //= Time.deltaTime;
+        Debug.Log("click");
+
+        playerData.UpdateTime();
+
+        DisplayTime();
+        StartCoroutine(timerCount());
+    }
+
+    //powerup
+    void PickedPowerUp(powerUpType type, bool timer, int duration)
+    {
+        if(timer)
+        {
+            StartCoroutine(PowerUpDuration(type, duration));
+        }
+    }
+    IEnumerator PowerUpDuration(powerUpType type, int duration)
+    {
+        //turn on
+        switch (type)
+        {
+            case powerUpType.damage:
+                damage += 5;
+                break;
+            case powerUpType.speed:
+                speedMultiplier += 0.5f;
+               // Debug.Log(speedMultiplier);
+                break;
+            case powerUpType.health:
+                if(health < playerData.totalHealthBase)
+                    health += 20;
+                if (health > playerData.totalHealthBase)
+                    health = playerData.totalHealthBase;
+                break;
+            default:
+                break;
+        }
+        yield return new WaitForSeconds(duration);
+        //turn off
+        switch (type)
+        {
+            case powerUpType.damage:
+                damage -= 5;
+                break;
+            case powerUpType.speed:
+                speedMultiplier -= 0.5f;
+                break;
+            default:
+                break;
+        }
+        //Debug.Log("off");
+        //Debug.Log(speedMultiplier);
     }
 
 }
