@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 217024602a1aff84d8705ad3248c463b, type: 3}
+  m_Name: StoreData
+  m_EditorClassIdentifier: 
+  damageStartPrice: 100
+  healthStartPrice: 150
+  speedStartPrice: 200
+  damagePrice: 100
+  healthPrice: 150
+  speedPrice: 200
+  damageAddition: 50
+  healthAddition: 50
+  speedAddition: 50
