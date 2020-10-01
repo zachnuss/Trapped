@@ -317,11 +317,6 @@ public class BaseEnemy : MonoBehaviour
             _turnThisDirection(Direction.Backwards);
         }
 
-<<<<<<< Updated upstream
-        //did the enemy get hit form the player
-        //if (other.transform.tag == )
-=======
         //enemy will take damage form the player through the ProjectileScript
->>>>>>> Stashed changes
     }
 }
