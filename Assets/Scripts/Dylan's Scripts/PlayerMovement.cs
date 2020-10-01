@@ -109,6 +109,8 @@ public class PlayerMovement : MonoBehaviour
 
         teleporterTracker = GameObject.FindGameObjectWithTag("GoalCheck"); //assumes we check on construction of the player, with a new player every level
         rng = Random.Range(0, transition.Length);
+        localTimer = playerData._timerBetweenLevels;
+       // StartCoroutine(timerCount());
     }
 
     // Used for physics 
