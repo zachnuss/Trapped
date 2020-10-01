@@ -62,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
     private Quaternion r01;
     private float timeDuration = 1.2f;
     float timeDurationCamera = 1.5f;
-    public bool checkToCalculate = false;
+    public bool checkToCalculate = false; //Changed to public for door detection
     private Vector3 p01;
 
     //for smooth parent rotation
@@ -70,7 +70,7 @@ public class PlayerMovement : MonoBehaviour
     private Transform pc1, pc0;
 
     public EasingType easingTypeC = EasingType.linear;
-    public bool moving = false;
+    public bool moving = false; //Changed to public for door detection
     private float timeStart;
     private float u, u2;
     float easingMod = 2f;
@@ -113,15 +113,10 @@ public class PlayerMovement : MonoBehaviour
         SetPlayerStats();
 
         teleporterTracker = GameObject.FindGameObjectWithTag("GoalCheck"); //assumes we check on construction of the player, with a new player every level
-<<<<<<< HEAD
-
         rng = Random.Range(0, transition.Length);
 
-=======
->>>>>>> parent of 0bc80da... Working Fades
         localTimer = playerData._timerBetweenLevels;
        // StartCoroutine(timerCount());
-    }
 
     // Used for physics 
     void FixedUpdate()
@@ -164,8 +159,6 @@ public class PlayerMovement : MonoBehaviour
             checkToCalculate = true;
         }
 
-        //Added by wesley
-        
     }
 
     //moves player based on equation
@@ -292,6 +285,7 @@ public class PlayerMovement : MonoBehaviour
         //camera rotation
         Transform newCameraTrans = _rotationTrans;
         
+        
 
     }
 
@@ -339,6 +333,8 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     /// <param name="other"></param>
     
+
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Door")
@@ -350,6 +346,7 @@ public class PlayerMovement : MonoBehaviour
 
             //checkToCalculate = true;
         }
+        
 
         //end game
         if (other.tag == "Goal")
@@ -402,6 +399,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+
     //easing types
     public float EaseU(float u, EasingType eType, float eMod)
     {
@@ -453,8 +451,10 @@ public class PlayerMovement : MonoBehaviour
 
         speedMultiplier = (playerData.speedUpgrade)/10;
         //Debug.Log(speedMultiplier);
+
         
     }
+
 
     public void takeDamage(int damageTaken)
     {
@@ -471,6 +471,7 @@ public class PlayerMovement : MonoBehaviour
             //DontDestroyOnLoad(GameObject.Find("ScriptManager"));
         }
     }
+
 
     //Scene Transitions
     IEnumerator LoadTargetLevel()
