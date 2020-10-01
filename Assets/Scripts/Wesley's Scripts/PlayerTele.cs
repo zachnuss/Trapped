@@ -22,7 +22,7 @@ public class PlayerTele : MonoBehaviour
     {
         teleporterTracker = GameObject.FindGameObjectWithTag("GoalCheck"); //assumes we check on construction of the player, with a new player every level
         rng = Random.Range(0, levelTransitions.Length);
-        for(int i = 0; i < levelTransitions.Length; i++)
+        for (int i = 0; i < levelTransitions.Length; i++)
         {
             if (i != rng)
             {
@@ -37,7 +37,7 @@ public class PlayerTele : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) //Goals need to be triggers, have a trigger tag
     {
-        if(other.tag == "Goal")
+        if (other.tag == "Goal")
         {
             other.GetComponent<TeleBool>().active = true;
             if (teleporterTracker.GetComponent<TeleporterScript>().GoalCheck(teleporterTracker.GetComponent<TeleporterScript>().teleporters))
@@ -49,7 +49,6 @@ public class PlayerTele : MonoBehaviour
 
     /*public void LoadTargetLevel()
     {
-
         SceneManager.LoadScene(nextScene);
     }*/
 
