@@ -1081,22 +1081,17 @@ PrefabInstance:
         type: 3}
       propertyPath: transition.Array.data[1]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1360158710}
     - target: {fileID: 7571365785918509578, guid: 716f5c8b413961442a5458bad0fa68db,
         type: 3}
       propertyPath: transition.Array.data[2]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2093567432}
     - target: {fileID: 7571365785918509578, guid: 716f5c8b413961442a5458bad0fa68db,
         type: 3}
       propertyPath: transition.Array.data[3]
       value: 
       objectReference: {fileID: 2093567432}
-    - target: {fileID: 7571365785918509578, guid: 716f5c8b413961442a5458bad0fa68db,
-        type: 3}
-      propertyPath: _turnSpeed
-      value: 7
-      objectReference: {fileID: 0}
     - target: {fileID: 7571365786826290780, guid: 716f5c8b413961442a5458bad0fa68db,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -1978,12 +1973,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6501822059088933065, guid: 1f5b8b346f37c2f4b9b580260d025976,
     type: 3}
   m_PrefabInstance: {fileID: 1088428117}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &1115337865 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 3644103570217046503, guid: 5c93997a62315e040a889e7d28ed1b48,
-    type: 3}
-  m_PrefabInstance: {fileID: 2093567429}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1120687582
 GameObject:
@@ -3406,42 +3395,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2138350873238029134, guid: 5c93997a62315e040a889e7d28ed1b48,
         type: 3}
-      propertyPath: transition.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 2138350873238029134, guid: 5c93997a62315e040a889e7d28ed1b48,
-        type: 3}
-      propertyPath: playerData
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2138350873238029134, guid: 5c93997a62315e040a889e7d28ed1b48,
-        type: 3}
-      propertyPath: teleporterTracker
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2138350873238029134, guid: 5c93997a62315e040a889e7d28ed1b48,
-        type: 3}
       propertyPath: transition
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2138350873238029134, guid: 5c93997a62315e040a889e7d28ed1b48,
-        type: 3}
-      propertyPath: transition.Array.data[0]
-      value: 
-      objectReference: {fileID: 708334707}
-    - target: {fileID: 2138350873238029134, guid: 5c93997a62315e040a889e7d28ed1b48,
-        type: 3}
-      propertyPath: transition.Array.data[1]
-      value: 
-      objectReference: {fileID: 1115337865}
-    - target: {fileID: 2138350873238029134, guid: 5c93997a62315e040a889e7d28ed1b48,
-        type: 3}
-      propertyPath: transition.Array.data[2]
-      value: 
-      objectReference: {fileID: 1360158710}
-    - target: {fileID: 2138350873238029134, guid: 5c93997a62315e040a889e7d28ed1b48,
-        type: 3}
-      propertyPath: transition.Array.data[3]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2999739793293038446, guid: 5c93997a62315e040a889e7d28ed1b48,
