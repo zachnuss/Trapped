@@ -117,11 +117,10 @@ public class PlayerMovement : MonoBehaviour
 
 
         localTimer = playerData._timerBetweenLevels;
-       // StartCoroutine(timerCount());
+        // StartCoroutine(timerCount());
     }
-
     // Used for physics 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         this.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
         this.GetComponent<Rigidbody>().velocity = Vector3.zero;
