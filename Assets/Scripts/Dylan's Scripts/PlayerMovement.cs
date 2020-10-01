@@ -89,9 +89,8 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     private GameObject teleporterTracker;//Assign before load, set to private if unneeded
    // public string nextScene; //Target Level
-    public Animator[] transition; //Transition animator
+    public Animator transition; //Transition animator
     public float transitionTime = 1;
-    private int rng;
 
     public float localTimer;
 
@@ -114,7 +113,10 @@ public class PlayerMovement : MonoBehaviour
         SetPlayerStats();
 
         teleporterTracker = GameObject.FindGameObjectWithTag("GoalCheck"); //assumes we check on construction of the player, with a new player every level
+<<<<<<< HEAD
+=======
         rng = Random.Range(0, transition.Length);
+>>>>>>> wesley-branch
         localTimer = playerData._timerBetweenLevels;
        // StartCoroutine(timerCount());
     }
@@ -471,7 +473,7 @@ public class PlayerMovement : MonoBehaviour
     //Scene Transitions
     IEnumerator LoadTargetLevel()
     {
-        transition[rng].SetTrigger("Start");
+        transition.SetTrigger("Start"); //start animation
 
         yield return new WaitForSeconds(transitionTime); //Time given for transition animation to play
 
