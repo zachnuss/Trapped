@@ -19,7 +19,7 @@ MonoBehaviour:
   totalDamageBase: 20
   OnLevel: 3
   score: 325855
-  currency: 0
+  currency: 1000
   levelsS:
   - Level1
   - Level2
