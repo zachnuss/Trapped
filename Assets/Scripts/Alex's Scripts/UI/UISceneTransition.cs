@@ -18,7 +18,14 @@ public class UISceneTransition : MonoBehaviour
         //SceneManager.LoadScene(1); 
         playerData.StartGame();
     }
-    
+
+    //Changes scene to the Character Select scene
+    public void charSelect()
+    {
+        //SceneManager.LoadScene(8);
+        Debug.Log("Time to pick a character!");
+    }
+
     //Changes scene to the options scene
     public void options()
     {
