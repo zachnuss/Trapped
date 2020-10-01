@@ -33,11 +33,11 @@ public class PowerUpDrop : MonoBehaviour
       //  if (arrowOn)
        // {
             if (yDir)
-                transform.position += new Vector3(0, 0.25f * Time.deltaTime, 0);
+                transform.localPosition += new Vector3(0, 0.25f * Time.deltaTime, 0);
             else
-                transform.position += new Vector3(0, -0.25f * Time.deltaTime, 0);
+                transform.localPosition += new Vector3(0, -0.25f * Time.deltaTime, 0);
 
-            transform.Rotate(0, 0.25f, 0, Space.World);
+            transform.Rotate(0, 0.25f, 0, Space.Self);
        // }
     }
 

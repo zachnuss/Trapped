@@ -22,7 +22,7 @@ MonoBehaviour:
   totalHealthBase: 100
   totalDamageBase: 20
   OnLevel: 1
-  score: 0
+  score: 325855
   currency: 0
   levelsS:
   - Level1

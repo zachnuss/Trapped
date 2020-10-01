@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
-//WE ARE ALL GONNA DIE
-//DEATH IS UPON US
+
 [CreateAssetMenu(fileName = "Data", menuName = "ScritableObjects/PlayerData", order = 1)]
 public class PlayerData : ScriptableObject
 {
@@ -116,6 +115,9 @@ public class PlayerData : ScriptableObject
         Debug.Log("Starting Game");
         ResetUpgrades();
         OnLevel = 0;
+        timerHour = 0;
+        timerSec = 0;
+        timerMin = 0;
         SceneManager.LoadScene("Level1");
     }
 
