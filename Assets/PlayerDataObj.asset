@@ -15,15 +15,15 @@ MonoBehaviour:
   timerSec: 0
   timerMin: 0
   timerHour: 0
-  _timerBetweenLevels: 0
+  _timerBetweenLevels: 40
   healthUpgrade: 0
   damageUpgrade: 0
   speedUpgrade: 0
   totalHealthBase: 100
   totalDamageBase: 20
-  OnLevel: 1
+  OnLevel: 0
   score: 325855
-  currency: 0
+  currency: 200
   levelsS:
   - Level1
   - Level2

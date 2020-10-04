@@ -1351,7 +1351,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 25.399902, y: -7.800049}
+  m_AnchoredPosition: {x: 25.399902, y: -7.799988}
   m_SizeDelta: {x: 108, y: 36.3}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &6060987349882096189
@@ -1838,7 +1838,7 @@ MonoBehaviour:
   parent: {fileID: 7571365785621622437}
   follower: {fileID: 7571365785915738542}
   movementSpeed: 10
-  _turnSpeed: 8
+  _turnSpeed: 2
   health: 0
   damage: 0
   speedMultiplier: 0
@@ -1962,13 +1962,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7571365786826290777}
-  m_LocalRotation: {x: 0.4726463, y: -0, z: -0, w: 0.8812522}
-  m_LocalPosition: {x: 0, y: 4.8899994, z: -3.61}
+  m_LocalRotation: {x: 0.37680575, y: 0.3022178, z: -0.14810403, w: 0.8629872}
+  m_LocalPosition: {x: -14.77, y: 17.4, z: -15.49}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7571365785915738543}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 56.412003, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 47.175003, y: 45, z: 0}
 --- !u!20 &7571365786826290779
 Camera:
   m_ObjectHideFlags: 0
