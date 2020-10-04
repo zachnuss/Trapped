@@ -114,10 +114,14 @@ public class PlayerData : ScriptableObject
     {
         Debug.Log("Starting Game");
         ResetUpgrades();
+        //currently level 1 = scene 0
         OnLevel = 0;
+        //timer starts at 0
         timerHour = 0;
         timerSec = 0;
         timerMin = 0;
+        //currency starts at 0
+        currency = 0;
         SceneManager.LoadScene("Level1");
     }
 
