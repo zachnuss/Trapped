@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Alex's Test Scenes/Main Menu.unity
-    guid: f713ffc67db6db94b86bc06135f1882e
+    path: Assets/Scenes/Main Menu V3.unity
+    guid: a56b6d2057ed5024db6fbb656e331d34
   - enabled: 1
     path: Assets/Scenes/StoreScene.unity
     guid: 77fce18f52932334a842862895359daa
@@ -29,4 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Credits.unity
     guid: 882e4993ea11288438644879b0cc0317
+  - enabled: 1
+    path: Assets/Scenes/Char Selection.unity
+    guid: 347abd60a76aab84ba12ca2466a017af
   m_configObjects: {}
