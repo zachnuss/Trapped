@@ -105,6 +105,9 @@ public class PlayerMovement : MonoBehaviour
  
     }
 
+    //Olivia did this...if everything breaks I'm so sorry so just delete this.
+    public int bulletDamage;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -371,7 +374,7 @@ public class PlayerMovement : MonoBehaviour
             //destroy object
             Destroy(other.transform.gameObject);
             //decrement health
-            takeDamage(25);
+            takeDamage(bulletDamage); //Olivia changed this
             Debug.Log("Current health: " + health);
         }
 

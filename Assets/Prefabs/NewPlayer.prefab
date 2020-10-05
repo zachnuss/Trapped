@@ -1858,6 +1858,7 @@ MonoBehaviour:
   transitionTime: 1
   localTimer: 0
   timerText: {fileID: 5599595034058128049}
+  bulletDamage: 15
 --- !u!54 &7571365785918509568
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1938,6 +1939,9 @@ MonoBehaviour:
   playerData: {fileID: 11400000, guid: f9b9357e87ed29948b25c9a1d8db1dcf, type: 2}
   currencyText: {fileID: 1887456377428669018}
   healthText: {fileID: 7435268475625032681}
+  healthBar: {fileID: 0}
+  currHealth: 0
+  hpBarX: 0
 --- !u!1 &7571365786826290777
 GameObject:
   m_ObjectHideFlags: 0
