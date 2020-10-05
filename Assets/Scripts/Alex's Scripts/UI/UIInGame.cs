@@ -31,7 +31,7 @@ public class UIInGame : MonoBehaviour
         if(other.gameObject.tag == "Currency")
         {
             Debug.Log("Got Currency!");
-            playerData.currency += 100; //VARIABLE LOCATION TO CHANGE THE AMOUNT THAT CURRENCY IS WORTH *TEMP*
+            playerData.currency += 1; //VARIABLE LOCATION TO CHANGE THE AMOUNT THAT CURRENCY IS WORTH *TEMP*
             Destroy(other.gameObject); //Destroys the currency obj
             currencyText.text = "" + playerData.currency; //Updates currency UI
         }
