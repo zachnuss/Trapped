@@ -277,7 +277,7 @@ public class PlayerMovement : MonoBehaviour
         //if(transform.localEulerAngles.y == _angle)
 
         //player is always moving forward, player is just adjsuting which way they move forward (always local forward so we can have player move consistentaly forward on each side)
-        transform.position += transform.forward * newSpeed * Time.deltaTime;
+        transform.position += transform.forward * newSpeed *speedAdjustment()* Time.deltaTime;
     }
 
     void Movement()
@@ -287,6 +287,14 @@ public class PlayerMovement : MonoBehaviour
         //only move if player gives input
         if (movement != Vector3.zero)
             RotateMovement(movement);
+    }
+    //make movement not constant
+    public float speedAdjustment()
+    {
+        float speedMod = Mathf.Sqrt((movementInput.x * movementInput.x) + (movementInput.y * movementInput.y));
+
+
+        return speedMod;
     }
 
     void OnPlayerRotation()
