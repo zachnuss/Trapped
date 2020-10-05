@@ -55,8 +55,8 @@ public class StorePurchases : MonoBehaviour
         //If statement to see if the upgrade can be purchased
         if (playerData.currency >= storeData.damagePrice)
         {
-            Debug.Log("Bought Damage Upgrade!");
-            
+            playerData.UpgradeDamage(); //Calls the damage upgrade from the player data script
+
             playerData.currency -= storeData.damagePrice; //Subtracts the damage price from currency total
             currentMoneyText.text = "" + playerData.currency; //Sets the money to the current money total
 
@@ -75,7 +75,7 @@ public class StorePurchases : MonoBehaviour
         //If statement to see if the upgrade can be purchased
         if (playerData.currency >= storeData.healthPrice)
         {
-            Debug.Log("Bought Health Upgrade!");
+            playerData.UpgradeHealth(); //Calls the health upgrade from the player data script
 
             playerData.currency -= storeData.healthPrice; //Subtracts the damage price from currency total
             currentMoneyText.text = "" + playerData.currency; //Sets the money to the current money total
@@ -96,7 +96,7 @@ public class StorePurchases : MonoBehaviour
         //If statement to see if the upgrade can be purchased
         if (playerData.currency >= storeData.speedPrice)
         {
-            Debug.Log("Bought Speed Upgrade!");
+            playerData.UpgradeSpeed(); //Calls the speed upgrade from the player data script
 
             playerData.currency -= storeData.speedPrice; //Subtracts the damage price from currency total
             currentMoneyText.text = "" + playerData.currency; //Sets the money to the current money total

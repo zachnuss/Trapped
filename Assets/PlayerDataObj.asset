@@ -21,7 +21,7 @@ MonoBehaviour:
   speedUpgrade: 0
   totalHealthBase: 100
   totalDamageBase: 20
-  OnLevel: 1
+  OnLevel: 0
   score: 325855
   currency: 0
   levelsS:

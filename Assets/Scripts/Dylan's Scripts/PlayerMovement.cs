@@ -32,7 +32,8 @@ public class PlayerMovement : MonoBehaviour
     public float movementSpeed = 1.0f;
     Vector2 movementInput;
     //rotation
-    float _turnSpeed = 20f;
+    [Header("Rotation Speed")]
+    public float _turnSpeed = 2f;
     float _angle;
 
     [Header("Current Player Stats - Set on Scene Start")]
@@ -45,8 +46,6 @@ public class PlayerMovement : MonoBehaviour
     //level setup script
 
     //when we have successfully rotated
-    bool _rotating = false;
-    bool _first = true;
     [Header("Shows if player is off the edge")]
     public bool overTheEdge = false;
     bool onDoor = false;
@@ -58,10 +57,9 @@ public class PlayerMovement : MonoBehaviour
     /// Interpolation with sin easing, most of these will be private
     /// may use c2 and c3 for bezier or multiple interpolation points in future
     /// </summary>
-    private Transform c0, c1, c2;
+    private Transform c0, c1;
     private Quaternion r01;
     private float timeDuration = 1.2f;
-    float timeDurationCamera = 1.5f;
     public bool checkToCalculate = false;
     private Vector3 p01;
 
@@ -89,11 +87,12 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     private GameObject teleporterTracker;//Assign before load, set to private if unneeded
    // public string nextScene; //Target Level
-    public Animator transition; //Transition animator
+    public Animator[] transition; //Transition animator
     public float transitionTime = 1;
+    private int rng;
 
     public float localTimer;
-
+    
     //displays timer per level (resets at level start and ends at level end
     [Header("UI")]
     public Text timerText;
@@ -113,12 +112,14 @@ public class PlayerMovement : MonoBehaviour
         SetPlayerStats();
 
         teleporterTracker = GameObject.FindGameObjectWithTag("GoalCheck"); //assumes we check on construction of the player, with a new player every level
+        rng = Random.Range(0, transition.Length);
         localTimer = playerData._timerBetweenLevels;
        // StartCoroutine(timerCount());
     }
 
+
     // Used for physics 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         this.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
         this.GetComponent<Rigidbody>().velocity = Vector3.zero;
@@ -157,9 +158,6 @@ public class PlayerMovement : MonoBehaviour
             //if we hit the door and are off the cube
             checkToCalculate = true;
         }
-
-        //Added by wesley
-        
     }
 
     //moves player based on equation
@@ -261,11 +259,19 @@ public class PlayerMovement : MonoBehaviour
         _angle = Mathf.Rad2Deg * _angle;
 
         //local angles are used since its a child, the player parent is set to keep track of the global rotation
-        transform.localRotation = Quaternion.Euler(0 , _angle, 0 ); //transform.localEulerAngles.x 
+        transform.localRotation = Quaternion.Euler(0 , Mathf.LerpAngle(transform.localEulerAngles.y, _angle, Time.deltaTime * _turnSpeed), 0 ); //transform.localEulerAngles.x 
+
+        //improved rotation movement
+        //Vector3 desiredRot = new Vector3(0, _angle, 0);//Quaternion.Euler(0, _angle, 0);
+        //transform.localEulerAngles = Vector3.Slerp(this.transform.localEulerAngles, desiredRot, Time.deltaTime * _turnSpeed);
 
         //base movement is just 1.0
         float boost = movementSpeed * speedMultiplier;
         float newSpeed = movementSpeed + boost;
+
+
+        //in order to avoid unwanted forward movement while player rotates, speed will be reduced if the localY is a certain amount away from _angle
+        //if(transform.localEulerAngles.y == _angle)
 
         //player is always moving forward, player is just adjsuting which way they move forward (always local forward so we can have player move consistentaly forward on each side)
         transform.position += transform.forward * newSpeed *speedAdjustment()* Time.deltaTime;
@@ -477,7 +483,7 @@ public class PlayerMovement : MonoBehaviour
     //Scene Transitions
     IEnumerator LoadTargetLevel()
     {
-        transition.SetTrigger("Start"); //start animation
+        transition[rng].SetTrigger("Start"); //start animation
 
         yield return new WaitForSeconds(transitionTime); //Time given for transition animation to play
 
@@ -533,6 +539,7 @@ public class PlayerMovement : MonoBehaviour
             StartCoroutine(PowerUpDuration(type, duration));
         }
     }
+
     IEnumerator PowerUpDuration(powerUpType type, int duration)
     {
         //turn on
@@ -570,5 +577,4 @@ public class PlayerMovement : MonoBehaviour
         //Debug.Log("off");
         //Debug.Log(speedMultiplier);
     }
-
 }
