@@ -23,7 +23,11 @@ public class SpinningItems : MonoBehaviour
         else
             transform.localPosition += new Vector3(0, -0.25f * Time.deltaTime, 0);
 
+<<<<<<< HEAD
         transform.Rotate(0, 0, 0.25f, Space.Self);
+=======
+        transform.Rotate(0, 0.25f, 0, Space.Self);
+>>>>>>> cdddba93d7dc29d8a05f0fd9e0dc8304a011d6e6
         // }
     }
 
