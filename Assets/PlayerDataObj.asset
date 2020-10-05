@@ -21,7 +21,11 @@ MonoBehaviour:
   speedUpgrade: 0
   totalHealthBase: 100
   totalDamageBase: 20
+<<<<<<< Updated upstream
   OnLevel: 0
+=======
+  OnLevel: 1
+>>>>>>> Stashed changes
   score: 325855
   currency: 0
   levelsS:

@@ -12,6 +12,7 @@ public class UIInGame : MonoBehaviour
     public Text currencyText;
     public Text healthText;
 
+<<<<<<< Updated upstream
     //Image Variable to change the health bar to match the missing health percentage
     public Image healthBar; //Links to hp bar Image
     public int currHealth = 0; //Current health of the player
@@ -27,6 +28,8 @@ public class UIInGame : MonoBehaviour
         healthBar.rectTransform.localScale= new Vector3 ((result * hpBarX),0.38f,0.38f); //Scales the hpBar image
         Debug.Log(healthBar.rectTransform.localScale.x);
     }
+=======
+>>>>>>> Stashed changes
 
     // Start is called before the first frame update
     void Start()
@@ -36,8 +39,11 @@ public class UIInGame : MonoBehaviour
 
         //When the scene starts it will display the current health total that is stored in the player data
         healthText.text = "" + playerData.totalHealthBase;
+<<<<<<< Updated upstream
 
         hpBarX = healthBar.rectTransform.localScale.x;    
+=======
+>>>>>>> Stashed changes
     }
 
 
@@ -52,6 +58,7 @@ public class UIInGame : MonoBehaviour
             Destroy(other.gameObject); //Destroys the currency obj
             currencyText.text = "" + playerData.currency; //Updates currency UI
         }
+<<<<<<< Updated upstream
 
         //Checks if it was a bullet or enemy to adjust HP UI
         if(other.gameObject.tag == "Bullet" || other.gameObject.tag == "Enemy")
@@ -60,6 +67,8 @@ public class UIInGame : MonoBehaviour
             currHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().health;   //("NewPlayer").GetComponent<PlayerMovement>().health;
             healthBarStatus(currHealth);
         }
+=======
+>>>>>>> Stashed changes
     }
 
 }

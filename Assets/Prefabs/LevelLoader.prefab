@@ -503,4 +503,8 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+<<<<<<< Updated upstream
   m_KeepAnimatorControllerStateOnDisable: 0
+=======
+  m_KeepAnimatorControllerStateOnDisable: 0
+>>>>>>> Stashed changes
