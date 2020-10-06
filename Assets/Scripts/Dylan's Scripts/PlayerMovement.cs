@@ -372,6 +372,7 @@ public class PlayerMovement : MonoBehaviour
             other.GetComponent<TeleBool>().onPress();
             if (teleporterTracker.GetComponent<TeleporterScript>().GoalCheck(teleporterTracker.GetComponent<TeleporterScript>().teleporters))
             {
+                playerData.localHealth = health;
                 StartCoroutine(LoadTargetLevel());
             }
             //Destroy(other.gameObject);
@@ -459,7 +460,7 @@ public class PlayerMovement : MonoBehaviour
     void SetPlayerStats()
     {
         
-        health = playerData.totalHealthBase + playerData.healthUpgrade;
+        health = playerData.localHealth;
 
         damage = playerData.totalDamageBase + playerData.damageUpgrade;
 
@@ -472,6 +473,7 @@ public class PlayerMovement : MonoBehaviour
     {
         //damage player
         health -= damageTaken;
+        //playerData.localHealth -= damageTaken;
         if (health < 1)
         {
             health = 0; //because negative health looks bad
@@ -566,10 +568,10 @@ public class PlayerMovement : MonoBehaviour
                // Debug.Log(speedMultiplier);
                 break;
             case powerUpType.health:
-                if(health < playerData.totalHealthBase)
+                if (health < playerData.totalHealthBase)
                     health += 20;
                 if (health > playerData.totalHealthBase)
-                    health = playerData.totalHealthBase;
+                    health = playerData.localHealth;
                 break;
             default:
                 break;
