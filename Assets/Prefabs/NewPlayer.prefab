@@ -1839,7 +1839,7 @@ MonoBehaviour:
   parent: {fileID: 7571365785621622437}
   follower: {fileID: 7571365785915738542}
   movementSpeed: 10
-  _turnSpeed: 2
+  _turnSpeed: 20
   health: 0
   damage: 0
   speedMultiplier: 0
