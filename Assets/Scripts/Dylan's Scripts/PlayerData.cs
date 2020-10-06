@@ -28,6 +28,9 @@ public class PlayerData : ScriptableObject
 
     [Header("Player score")]
     public int score = 0;
+    private int highScore1 = 0;
+    private int highScore2 = 0;
+    private int highScore3 = 0;
 
     [Header("Player Currency")]
     public int currency;
@@ -122,6 +125,8 @@ public class PlayerData : ScriptableObject
         timerMin = 0;
         //currency starts at 0
         currency = 0;
+        //score starts at 0
+        score = 0; //added by wesley
         SceneManager.LoadScene("Level1");
     }
 
@@ -169,6 +174,11 @@ public class PlayerData : ScriptableObject
         {
             Debug.Log("you loose");
         }
+
+    }
+
+    public void SaveHighscore() //Wesley
+    {
 
     }
 }
