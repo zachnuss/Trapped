@@ -1941,7 +1941,7 @@ MonoBehaviour:
   currentPlayer: {fileID: 7571365785918509578}
   currencyText: {fileID: 1887456377428669018}
   healthText: {fileID: 7435268475625032681}
-  healthBar: {fileID: 0}
+  healthBar: {fileID: 6880328679262762600}
   currHealth: 0
   hpBarX: 0
 --- !u!1 &7571365786826290777
