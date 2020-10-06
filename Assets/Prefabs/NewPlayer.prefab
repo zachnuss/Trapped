@@ -1639,7 +1639,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '- Find all the yellow buttons in the level and turn them green.
+  m_Text: '-Find and press all the Yellow Buttons(0/5).
 
 '
 --- !u!1 &7571365785621622437
@@ -1837,6 +1837,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c577c5be8c302924d833f1f22e520ca1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gamerUI: {fileID: 5124650228125128711}
   parent: {fileID: 7571365785621622437}
   follower: {fileID: 7571365785915738542}
   movementSpeed: 10
@@ -1944,6 +1945,8 @@ MonoBehaviour:
   healthBar: {fileID: 6880328679262762600}
   currHealth: 0
   hpBarX: 0
+  objectiveText: {fileID: 1767476939777226961}
+  objectiveTracker: 0
 --- !u!1 &7571365786826290777
 GameObject:
   m_ObjectHideFlags: 0
