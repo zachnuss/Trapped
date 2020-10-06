@@ -118,6 +118,7 @@ public class PlayerData : ScriptableObject
     {
         Debug.Log("Starting Game");
         ResetUpgrades();
+        totalHealthBase = 100;
         //currently level 1 = scene 0
         OnLevel = 0;
         //timer starts at 0
