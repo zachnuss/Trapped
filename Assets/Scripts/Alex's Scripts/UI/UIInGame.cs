@@ -11,7 +11,8 @@ public class UIInGame : MonoBehaviour
     //Text Variables to change the text of the On-Screen Items
     public Text currencyText;
     public Text healthText;
-
+    public Text ObjectiveText;
+    private int objectiveTracker;
     //Image Variable to change the health bar to match the missing health percentage
     public Image healthBar; //Links to hp bar Image
     public int currHealth = 0; //Current health of the player
@@ -60,5 +61,15 @@ public class UIInGame : MonoBehaviour
             healthBarStatus(currHealth);
         }
     }
+    public void UpdateObjText()
+    {
+        objectiveTracker += 1;
+        ObjectiveText.text = "-Find and press all the Yellow Buttons("+objectiveTracker.ToString()+"/5)."; 
+
+
+    }
+
+
+
 
 }
