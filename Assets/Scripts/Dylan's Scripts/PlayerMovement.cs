@@ -20,6 +20,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public UIInGame gamerUI;
     //set up for rotation and new rotation orientation
     [Header("Parent object of this player obj")]
     public GameObject parent;
@@ -366,6 +367,7 @@ public class PlayerMovement : MonoBehaviour
         //end game
         if (other.tag == "Goal")
         {
+            gamerUI.UpdateObjText();
             //Debug.Log("hit");
             other.GetComponent<TeleBool>().active = true;
             //instead of destroying io made the game object change color so we dont get an error when we have multiple keys

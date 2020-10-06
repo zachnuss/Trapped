@@ -18,6 +18,8 @@ public class UIInGame : MonoBehaviour
     public int currHealth = 0; //Current health of the player
     public float hpBarX = 0f; //X Scale of the image bar to be set later
 
+    public Text objectiveText;
+    public int objectiveTracker;
 
     //Function to keep track of the health bar removal
     public void healthBarStatus(int health)
@@ -26,7 +28,7 @@ public class UIInGame : MonoBehaviour
         float totalHealth = playerData.localHealth; //sets a total health variable to the health base for fractioning
         float result = health / totalHealth; //Sets the fraction for the scaling 
         healthBar.rectTransform.localScale = new Vector3 ((result * hpBarX),0.38f,0.38f); //Scales the hpBar image
-        Debug.Log(healthBar.rectTransform.localScale.x);
+       // Debug.Log(healthBar.rectTransform.localScale.x);
     }
 
     // Start is called before the first frame update
@@ -61,6 +63,12 @@ public class UIInGame : MonoBehaviour
             currHealth = currentPlayer.health;   //("NewPlayer").GetComponent<PlayerMovement>().health;
             healthBarStatus(currHealth);
         }
+    }
+
+    public void UpdateObjText()
+    {
+        objectiveTracker += 1;
+        objectiveText.text = "-Find and press all the Yellow Buttons(" + objectiveTracker.ToString() + "/5).";
     }
 
 }
