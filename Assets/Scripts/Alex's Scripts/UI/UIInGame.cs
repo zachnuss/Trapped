@@ -9,12 +9,10 @@ public class UIInGame : MonoBehaviour
     public PlayerData playerData;
     public PlayerMovement currentPlayer;
 
-
     //Text Variables to change the text of the On-Screen Items
     public Text currencyText;
     public Text healthText;
-    public Text ObjectiveText;
-    private int objectiveTracker;
+
     //Image Variable to change the health bar to match the missing health percentage
     public Image healthBar; //Links to hp bar Image
     public int currHealth = 0; //Current health of the player
@@ -28,7 +26,7 @@ public class UIInGame : MonoBehaviour
         float totalHealth = playerData.localHealth; //sets a total health variable to the health base for fractioning
         float result = health / totalHealth; //Sets the fraction for the scaling 
         healthBar.rectTransform.localScale = new Vector3 ((result * hpBarX),0.38f,0.38f); //Scales the hpBar image
-       // Debug.Log(healthBar.rectTransform.localScale.x);
+        Debug.Log(healthBar.rectTransform.localScale.x);
     }
 
     // Start is called before the first frame update
@@ -64,15 +62,5 @@ public class UIInGame : MonoBehaviour
             healthBarStatus(currHealth);
         }
     }
-    public void UpdateObjText()
-    {
-        objectiveTracker += 1;
-        ObjectiveText.text = "-Find and press all the Yellow Buttons("+objectiveTracker.ToString()+"/5)."; 
-
-
-    }
-
-
-
 
 }
