@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 217024602a1aff84d8705ad3248c463b, type: 3}
   m_Name: StoreData
   m_EditorClassIdentifier: 
-  damageStartPrice: 100
-  healthStartPrice: 150
-  speedStartPrice: 200
-  damagePrice: 100
-  healthPrice: 150
-  speedPrice: 200
-  damageAddition: 50
-  healthAddition: 50
-  speedAddition: 50
+  damageStartPrice: 1
+  healthStartPrice: 1
+  speedStartPrice: 1
+  damagePrice: 1
+  healthPrice: 2
+  speedPrice: 2
+  damageAddition: 1
+  healthAddition: 1
+  speedAddition: 1
