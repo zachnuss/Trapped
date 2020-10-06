@@ -111,10 +111,11 @@ public class PlayerMovement : MonoBehaviour
 
         SetPlayerStats();
 
-        teleporterTracker = GameObject.FindGameObjectWithTag("GoalCheck"); //assumes we check on construction of the player, with a new player every level
+        teleporterTracker = GameObject.FindGameObjectWithTag("GoalCheck"); //assumes we check on construction of the player, with a new player every level - Wesley
         rng = Random.Range(0, transition.Length);
         localTimer = playerData._timerBetweenLevels;
-       // StartCoroutine(timerCount());
+        // StartCoroutine(timerCount());
+        InvokeRepeating("ScorePerSecond", 0f, 1f); //Every second, give score equal to 1*the level count. - Wesley
     }
 
 
@@ -467,6 +468,9 @@ public class PlayerMovement : MonoBehaviour
             Debug.Log("GAME OVER");
             //call SceneManager to get the GameOverScene
             //int gameOverInt = UnityEngine.SceneManagement.SceneManager.sceneCountInBuildSettings - 1;
+
+            //Set Highscore
+
             UnityEngine.SceneManagement.SceneManager.LoadScene(6);
             //DontDestroyOnLoad(GameObject.Find("ScriptManager"));
         }
@@ -481,6 +485,12 @@ public class PlayerMovement : MonoBehaviour
 
         //SceneManager.LoadScene(nextScene); //Loads target scene
         playerData.BeatLevel();
+    }
+
+    //Score - Wesley
+    void ScorePerSecond()
+    {
+        playerData.AddScore(1 * (playerData.OnLevel + 1)); //because onlevel is 0 indexed, add 1.
     }
 
     //UI and TIMER
