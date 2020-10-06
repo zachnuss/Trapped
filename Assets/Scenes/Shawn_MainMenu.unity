@@ -184,7 +184,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 84128904}
         m_MethodName: options
         m_Mode: 1
         m_Arguments:
@@ -5814,7 +5814,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 84128904}
         m_MethodName: credits
         m_Mode: 1
         m_Arguments:
@@ -10380,7 +10380,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 84128904}
         m_MethodName: endGame
         m_Mode: 1
         m_Arguments:
@@ -11179,7 +11179,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 84128904}
         m_MethodName: charSelect
         m_Mode: 1
         m_Arguments:
