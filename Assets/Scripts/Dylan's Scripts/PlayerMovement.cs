@@ -20,6 +20,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public UIInGame gamerUI;
     //set up for rotation and new rotation orientation
     [Header("Parent object of this player obj")]
     public GameObject parent;
@@ -32,7 +33,8 @@ public class PlayerMovement : MonoBehaviour
     public float movementSpeed = 1.0f;
     Vector2 movementInput;
     //rotation
-    float _turnSpeed = 20f;
+    [Header("Rotation Speed")]
+    public float _turnSpeed = 2f;
     float _angle;
 
     [Header("Current Player Stats - Set on Scene Start")]
@@ -45,8 +47,6 @@ public class PlayerMovement : MonoBehaviour
     //level setup script
 
     //when we have successfully rotated
-    bool _rotating = false;
-    bool _first = true;
     [Header("Shows if player is off the edge")]
     public bool overTheEdge = false;
     bool onDoor = false;
@@ -58,10 +58,9 @@ public class PlayerMovement : MonoBehaviour
     /// Interpolation with sin easing, most of these will be private
     /// may use c2 and c3 for bezier or multiple interpolation points in future
     /// </summary>
-    private Transform c0, c1, c2;
+    private Transform c0, c1;
     private Quaternion r01;
     private float timeDuration = 1.2f;
-    float timeDurationCamera = 1.5f;
     public bool checkToCalculate = false;
     private Vector3 p01;
 
@@ -107,16 +106,20 @@ public class PlayerMovement : MonoBehaviour
  
     }
 
+    //Olivia did this...if everything breaks I'm so sorry so just delete this.
+    public int bulletDamage;
+
     // Start is called before the first frame update
     void Start()
     {
 
         SetPlayerStats();
 
-        teleporterTracker = GameObject.FindGameObjectWithTag("GoalCheck"); //assumes we check on construction of the player, with a new player every level
+        teleporterTracker = GameObject.FindGameObjectWithTag("GoalCheck"); //assumes we check on construction of the player, with a new player every level - Wesley
         rng = Random.Range(0, transition.Length);
         localTimer = playerData._timerBetweenLevels;
-       // StartCoroutine(timerCount());
+        // StartCoroutine(timerCount());
+        InvokeRepeating("ScorePerSecond", 0f, 1f); //Every second, give score equal to 1*the level count. - Wesley
     }
 
 
@@ -261,14 +264,22 @@ public class PlayerMovement : MonoBehaviour
         _angle = Mathf.Rad2Deg * _angle;
 
         //local angles are used since its a child, the player parent is set to keep track of the global rotation
-        transform.localRotation = Quaternion.Euler(0 , _angle, 0 ); //transform.localEulerAngles.x 
+        transform.localRotation = Quaternion.Euler(0 , Mathf.LerpAngle(transform.localEulerAngles.y, _angle, Time.deltaTime * _turnSpeed), 0 ); //transform.localEulerAngles.x 
+
+        //improved rotation movement
+        //Vector3 desiredRot = new Vector3(0, _angle, 0);//Quaternion.Euler(0, _angle, 0);
+        //transform.localEulerAngles = Vector3.Slerp(this.transform.localEulerAngles, desiredRot, Time.deltaTime * _turnSpeed);
 
         //base movement is just 1.0
         float boost = movementSpeed * speedMultiplier;
         float newSpeed = movementSpeed + boost;
 
+
+        //in order to avoid unwanted forward movement while player rotates, speed will be reduced if the localY is a certain amount away from _angle
+        //if(transform.localEulerAngles.y == _angle)
+
         //player is always moving forward, player is just adjsuting which way they move forward (always local forward so we can have player move consistentaly forward on each side)
-        transform.position += transform.forward * newSpeed * Time.deltaTime;
+        transform.position += transform.forward * newSpeed *speedAdjustment()* Time.deltaTime;
     }
 
     void Movement()
@@ -278,6 +289,14 @@ public class PlayerMovement : MonoBehaviour
         //only move if player gives input
         if (movement != Vector3.zero)
             RotateMovement(movement);
+    }
+    //make movement not constant
+    public float speedAdjustment()
+    {
+        float speedMod = Mathf.Sqrt((movementInput.x * movementInput.x) + (movementInput.y * movementInput.y));
+
+
+        return speedMod;
     }
 
     void OnPlayerRotation()
@@ -348,12 +367,15 @@ public class PlayerMovement : MonoBehaviour
         //end game
         if (other.tag == "Goal")
         {
+            //Debug.Log("goal");
+            gamerUI.UpdateObjText();
             //Debug.Log("hit");
             other.GetComponent<TeleBool>().active = true;
             //instead of destroying io made the game object change color so we dont get an error when we have multiple keys
             other.GetComponent<TeleBool>().onPress();
             if (teleporterTracker.GetComponent<TeleporterScript>().GoalCheck(teleporterTracker.GetComponent<TeleporterScript>().teleporters))
             {
+                playerData.localHealth = health;
                 StartCoroutine(LoadTargetLevel());
             }
             //Destroy(other.gameObject);
@@ -365,7 +387,7 @@ public class PlayerMovement : MonoBehaviour
             //destroy object
             Destroy(other.transform.gameObject);
             //decrement health
-            takeDamage(25);
+            takeDamage(bulletDamage); //Olivia changed this
             Debug.Log("Current health: " + health);
         }
 
@@ -441,7 +463,7 @@ public class PlayerMovement : MonoBehaviour
     void SetPlayerStats()
     {
         
-        health = playerData.totalHealthBase + playerData.healthUpgrade;
+        health = playerData.localHealth;
 
         damage = playerData.totalDamageBase + playerData.damageUpgrade;
 
@@ -454,6 +476,7 @@ public class PlayerMovement : MonoBehaviour
     {
         //damage player
         health -= damageTaken;
+        //playerData.localHealth -= damageTaken;
         if (health < 1)
         {
             health = 0; //because negative health looks bad
@@ -461,6 +484,9 @@ public class PlayerMovement : MonoBehaviour
             Debug.Log("GAME OVER");
             //call SceneManager to get the GameOverScene
             //int gameOverInt = UnityEngine.SceneManagement.SceneManager.sceneCountInBuildSettings - 1;
+
+            //Set Highscore
+
             UnityEngine.SceneManagement.SceneManager.LoadScene(6);
             //DontDestroyOnLoad(GameObject.Find("ScriptManager"));
         }
@@ -475,6 +501,12 @@ public class PlayerMovement : MonoBehaviour
 
         //SceneManager.LoadScene(nextScene); //Loads target scene
         playerData.BeatLevel();
+    }
+
+    //Score - Wesley
+    void ScorePerSecond()
+    {
+        playerData.AddScore(1 * (playerData.OnLevel + 1)); //because onlevel is 0 indexed, add 1.
     }
 
     //UI and TIMER
@@ -539,10 +571,10 @@ public class PlayerMovement : MonoBehaviour
                // Debug.Log(speedMultiplier);
                 break;
             case powerUpType.health:
-                if(health < playerData.totalHealthBase)
+                if (health < playerData.totalHealthBase)
                     health += 20;
                 if (health > playerData.totalHealthBase)
-                    health = playerData.totalHealthBase;
+                    health = playerData.localHealth;
                 break;
             default:
                 break;

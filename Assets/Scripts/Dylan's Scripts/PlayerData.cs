@@ -21,6 +21,7 @@ public class PlayerData : ScriptableObject
     public int totalHealthBase;
     // public int totalSpeedBase;
     public int totalDamageBase;
+    public int localHealth;
 
     [Header("Current level player is on: ZERO INDEXED")]
     public int OnLevel = 0;
@@ -28,6 +29,9 @@ public class PlayerData : ScriptableObject
 
     [Header("Player score")]
     public int score = 0;
+    private int highScore1 = 0;
+    private int highScore2 = 0;
+    private int highScore3 = 0;
 
     [Header("Player Currency")]
     public int currency;
@@ -114,10 +118,18 @@ public class PlayerData : ScriptableObject
     {
         Debug.Log("Starting Game");
         ResetUpgrades();
+        totalHealthBase = 100;
+        //currently level 1 = scene 0
         OnLevel = 0;
+        //timer starts at 0
         timerHour = 0;
         timerSec = 0;
         timerMin = 0;
+        //currency starts at 0
+        currency = 0;
+        //score starts at 0
+        score = 0; //added by wesley
+        localHealth = totalHealthBase;
         SceneManager.LoadScene("Level1");
     }
 
@@ -130,8 +142,9 @@ public class PlayerData : ScriptableObject
     public void UpgradeHealth()
     {
         healthUpgrade++;
-
-        Debug.Log("Health Upgrade Purchased!");
+        totalHealthBase += 10;
+        localHealth += 10;
+        Debug.Log("Health Upgrade Purchased! New Health = " + localHealth + " out of " + totalHealthBase);
         //UPDATE UI HERE
     }
 
@@ -165,6 +178,11 @@ public class PlayerData : ScriptableObject
         {
             Debug.Log("you loose");
         }
+
+    }
+
+    public void SaveHighscore() //Wesley
+    {
 
     }
 }

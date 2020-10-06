@@ -5,9 +5,12 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
+  - enabled: 0
+    path: Assets/Scenes/Alex's Test Scenes/Main Menu V3.unity
+    guid: a56b6d2057ed5024db6fbb656e331d34
   - enabled: 1
-    path: Assets/Scenes/New Main Menu.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
+    path: Assets/Scenes/Shawn_MainMenu.unity
+    guid: 1582ee73ffaa59e42861636ba74187b3
   - enabled: 1
     path: Assets/Scenes/StoreScene.unity
     guid: 77fce18f52932334a842862895359daa
@@ -29,4 +32,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Credits.unity
     guid: 882e4993ea11288438644879b0cc0317
+  - enabled: 1
+    path: Assets/Scenes/Char Selection.unity
+    guid: 347abd60a76aab84ba12ca2466a017af
   m_configObjects: {}

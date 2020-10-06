@@ -88,6 +88,58 @@ public class BaseEnemy : MonoBehaviour
     }
 
     ///protected
+    //if the player is never hit, then return Direction.NULL
+    protected Direction _isPlayerInRange()
+    {
+        Direction dirOfPlayer = Direction.NULL;
+        float castDist = 10f;
+        RaycastHit hit;
+
+        //store testable transforms
+        Transform curTrans = transform;
+        Transform lookLeft = transform;
+        Transform lookRight = transform;
+
+        //store euler rotation
+        Vector3 leftEuler = transform.eulerAngles;
+        Vector3 rightEuler = transform.eulerAngles;
+        //edit eulers
+        leftEuler.y += -90f;
+        rightEuler.y += 90f;
+        //transfer eulers to Transforms
+        lookRight.eulerAngles = rightEuler;
+        lookLeft.eulerAngles = leftEuler;
+
+        //raycast using the Transforms
+        //look forward
+        if (Physics.Raycast(transform.position, transform.eulerAngles, out hit, castDist)
+            && hit.transform.tag == "Player")
+        {
+            dirOfPlayer = Direction.Forward;
+        }
+        //look left
+        else if (Physics.Raycast(lookLeft.position, lookLeft.eulerAngles, out hit, castDist)
+            && hit.transform.tag == "Player")
+        {
+            dirOfPlayer = Direction.Left;
+        }
+        //look right
+        else if (Physics.Raycast(lookRight.position, lookRight.eulerAngles, out hit, castDist)
+            && hit.transform.tag == "Player")
+        {
+            dirOfPlayer = Direction.Right;
+        }
+        ///draw raycast in space to debug
+        //draw forward
+        Debug.DrawRay(transform.position, transform.eulerAngles, Color.white);
+        //draw left
+        Debug.DrawRay(lookLeft.position, lookLeft.eulerAngles, Color.red);
+        //draw right
+        Debug.DrawRay(lookRight.position, lookRight.eulerAngles, Color.blue);
+
+        return dirOfPlayer;
+    }
+
     protected void _changeBehavior()
     {
         //transfer rate of behavior change and get wait time
@@ -162,14 +214,45 @@ public class BaseEnemy : MonoBehaviour
         transform.position += moveDir * speed * Time.deltaTime;
     }
 
+    //take a direction, based on Direction enum
+    protected void _turnThisDirection(Direction dir)
+    {
+        //the type of axis turn will be determined by CubemapFace
+        float axisTurn = 0f;
+        //using myFace for CubemapFace, alter stuff
+        switch (dir)
+        {
+            case Direction.Right:
+                axisTurn = 90f;
+                break;
+            case Direction.Left:
+                axisTurn = -90f;
+                break;
+            case Direction.Backwards:
+                //return positive or negative 180f
+                float posOrNeg = (Random.Range(0, 2) == 0) ? 180 : -180;
+                axisTurn = posOrNeg;
+                break;
+            default: //if forward or null, don't do anything
+                break;
+        }
+        //turn only if there's a value change
+        if (axisTurn != 0f)
+        {
+            //get appropriate turning axis based on CubemapFace
+            Vector3 turningVector = Vector3.zero;// = _getTurningAxis(axisTurn);
+            //PositiveY  is
+            turningVector.y = axisTurn;
+            //transform.Rotate(turningVector); //mess with local vs world space
+            transform.localEulerAngles += turningVector;
+            //change facing dir to match rotation
+            _moveDir = (transform.GetChild(0).position
+                        - transform.position).normalized;
+        }
+    }
+
     protected virtual void Update()
     {
-        if (_isTrackingPlayer)
-        {
-            //temporarily increase speed of the game
-
-        }
-
         //move enemy
         _move(_moveDir);
     }
@@ -218,43 +301,6 @@ public class BaseEnemy : MonoBehaviour
     {
         int randInt = Random.Range(1, 3);//left or right only
         return (Direction)randInt;
-    }
-
-    //take a direction, based on 
-    private void _turnThisDirection(Direction dir)
-    {
-        //the type of axis turn will be determined by CubemapFace
-        float axisTurn = 0f;
-        //using myFace for CubemapFace, alter stuff
-        switch (dir)
-        {
-            case Direction.Right:
-                axisTurn = 90f;
-                break;
-            case Direction.Left:
-                axisTurn = -90f;
-                break;
-            case Direction.Backwards:
-                //return positive or negative 180f
-                float posOrNeg = (Random.Range(0, 2) == 0) ? 180 : -180;
-                axisTurn = posOrNeg;
-                break;
-           default: //if forward or null, don't do anything
-                break;
-        }
-        //turn only if there's a value change
-        if (axisTurn != 0f)
-        {
-            //get appropriate turning axis based on CubemapFace
-            Vector3 turningVector = Vector3.zero;// = _getTurningAxis(axisTurn);
-            //PositiveY  is
-            turningVector.y = axisTurn;
-            //transform.Rotate(turningVector); //mess with local vs world space
-            transform.localEulerAngles += turningVector;
-            //change facing dir to match rotation
-            _moveDir = (transform.GetChild(0).position 
-                        - transform.position).normalized;
-        }
     }
 
     private bool _isEnemyFacingWall()
