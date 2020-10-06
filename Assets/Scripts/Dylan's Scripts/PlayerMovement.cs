@@ -105,16 +105,20 @@ public class PlayerMovement : MonoBehaviour
  
     }
 
+    //Olivia did this...if everything breaks I'm so sorry so just delete this.
+    public int bulletDamage;
+
     // Start is called before the first frame update
     void Start()
     {
 
         SetPlayerStats();
 
-        teleporterTracker = GameObject.FindGameObjectWithTag("GoalCheck"); //assumes we check on construction of the player, with a new player every level
+        teleporterTracker = GameObject.FindGameObjectWithTag("GoalCheck"); //assumes we check on construction of the player, with a new player every level - Wesley
         rng = Random.Range(0, transition.Length);
         localTimer = playerData._timerBetweenLevels;
-       // StartCoroutine(timerCount());
+        // StartCoroutine(timerCount());
+        InvokeRepeating("ScorePerSecond", 0f, 1f); //Every second, give score equal to 1*the level count. - Wesley
     }
 
 
@@ -274,7 +278,7 @@ public class PlayerMovement : MonoBehaviour
         //if(transform.localEulerAngles.y == _angle)
 
         //player is always moving forward, player is just adjsuting which way they move forward (always local forward so we can have player move consistentaly forward on each side)
-        transform.position += transform.forward * newSpeed * Time.deltaTime;
+        transform.position += transform.forward * newSpeed *speedAdjustment()* Time.deltaTime;
     }
 
     void Movement()
@@ -284,6 +288,14 @@ public class PlayerMovement : MonoBehaviour
         //only move if player gives input
         if (movement != Vector3.zero)
             RotateMovement(movement);
+    }
+    //make movement not constant
+    public float speedAdjustment()
+    {
+        float speedMod = Mathf.Sqrt((movementInput.x * movementInput.x) + (movementInput.y * movementInput.y));
+
+
+        return speedMod;
     }
 
     void OnPlayerRotation()
@@ -360,6 +372,7 @@ public class PlayerMovement : MonoBehaviour
             other.GetComponent<TeleBool>().onPress();
             if (teleporterTracker.GetComponent<TeleporterScript>().GoalCheck(teleporterTracker.GetComponent<TeleporterScript>().teleporters))
             {
+                playerData.localHealth = health;
                 StartCoroutine(LoadTargetLevel());
             }
             //Destroy(other.gameObject);
@@ -371,7 +384,7 @@ public class PlayerMovement : MonoBehaviour
             //destroy object
             Destroy(other.transform.gameObject);
             //decrement health
-            takeDamage(25);
+            takeDamage(bulletDamage); //Olivia changed this
             Debug.Log("Current health: " + health);
         }
 
@@ -447,7 +460,7 @@ public class PlayerMovement : MonoBehaviour
     void SetPlayerStats()
     {
         
-        health = playerData.totalHealthBase + playerData.healthUpgrade;
+        health = playerData.localHealth;
 
         damage = playerData.totalDamageBase + playerData.damageUpgrade;
 
@@ -460,6 +473,7 @@ public class PlayerMovement : MonoBehaviour
     {
         //damage player
         health -= damageTaken;
+        //playerData.localHealth -= damageTaken;
         if (health < 1)
         {
             health = 0; //because negative health looks bad
@@ -467,6 +481,9 @@ public class PlayerMovement : MonoBehaviour
             Debug.Log("GAME OVER");
             //call SceneManager to get the GameOverScene
             //int gameOverInt = UnityEngine.SceneManagement.SceneManager.sceneCountInBuildSettings - 1;
+
+            //Set Highscore
+
             UnityEngine.SceneManagement.SceneManager.LoadScene(6);
             //DontDestroyOnLoad(GameObject.Find("ScriptManager"));
         }
@@ -481,6 +498,12 @@ public class PlayerMovement : MonoBehaviour
 
         //SceneManager.LoadScene(nextScene); //Loads target scene
         playerData.BeatLevel();
+    }
+
+    //Score - Wesley
+    void ScorePerSecond()
+    {
+        playerData.AddScore(1 * (playerData.OnLevel + 1)); //because onlevel is 0 indexed, add 1.
     }
 
     //UI and TIMER
@@ -545,10 +568,10 @@ public class PlayerMovement : MonoBehaviour
                // Debug.Log(speedMultiplier);
                 break;
             case powerUpType.health:
-                if(health < playerData.totalHealthBase)
+                if (health < playerData.totalHealthBase)
                     health += 20;
                 if (health > playerData.totalHealthBase)
-                    health = playerData.totalHealthBase;
+                    health = playerData.localHealth;
                 break;
             default:
                 break;
