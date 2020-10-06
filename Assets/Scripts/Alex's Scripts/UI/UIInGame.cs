@@ -23,7 +23,7 @@ public class UIInGame : MonoBehaviour
     public void healthBarStatus(int health)
     {
         healthText.text = "" + health; //Sets health to be displayed correctly on the HP bar
-        float totalHealth = playerData.totalHealthBase; //sets a total health variable to the health base for fractioning
+        float totalHealth = playerData.localHealth; //sets a total health variable to the health base for fractioning
         float result = health / totalHealth; //Sets the fraction for the scaling 
         healthBar.rectTransform.localScale= new Vector3 ((result * hpBarX),0.38f,0.38f); //Scales the hpBar image
     }
