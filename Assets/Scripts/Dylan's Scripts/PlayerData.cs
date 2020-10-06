@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 
@@ -179,6 +180,25 @@ public class PlayerData : ScriptableObject
 
     public void SaveHighscore() //Wesley
     {
+        if (score > highScore1)
+        {
+            highScore3 = highScore2;
+            highScore2 = highScore1;
+            highScore1 = score;
+        }
+        else if (score > highScore2)
+        {
+            highScore3 = highScore2;
+            highScore2 = score;
+        }
+        else if (score > highScore3)
+        {
+            highScore3 = score;
+        }
+    }
 
+    public void SaveHighscoresToFile()
+    {
+        
     }
 }

@@ -42,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
     public float speedMultiplier;
 
     //Camera
-   // public CamLookAt playerCam;
+    //public CamLookAt playerCam;
     //level setup script
 
     //when we have successfully rotated
@@ -477,7 +477,8 @@ public class PlayerMovement : MonoBehaviour
             //call SceneManager to get the GameOverScene
             //int gameOverInt = UnityEngine.SceneManagement.SceneManager.sceneCountInBuildSettings - 1;
 
-            //Set Highscore
+            //Set Highscore - Wesley
+            playerData.SaveHighscore();
 
             UnityEngine.SceneManagement.SceneManager.LoadScene(6);
             //DontDestroyOnLoad(GameObject.Find("ScriptManager"));
