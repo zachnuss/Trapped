@@ -367,6 +367,7 @@ public class PlayerMovement : MonoBehaviour
         //end game
         if (other.tag == "Goal")
         {
+            //Debug.Log("goal");
             gamerUI.UpdateObjText();
             //Debug.Log("hit");
             other.GetComponent<TeleBool>().active = true;

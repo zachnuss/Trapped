@@ -22,12 +22,12 @@ public class DoorDetection : MonoBehaviour
             //Debug.Log("hit");
             if (trans)
             {
-                Debug.Log("setting true");
+                //Debug.Log("setting true");
                 parent.direction = true;
             }
             else
             {
-                Debug.Log("Setting false");
+               // Debug.Log("Setting false");
                 parent.direction = false;
             }
         }
