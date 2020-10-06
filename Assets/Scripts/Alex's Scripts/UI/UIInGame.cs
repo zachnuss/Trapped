@@ -9,7 +9,6 @@ public class UIInGame : MonoBehaviour
     public PlayerData playerData;
     public PlayerMovement currentPlayer;
 
-
     //Text Variables to change the text of the On-Screen Items
     public Text currencyText;
     public Text healthText;
@@ -28,7 +27,7 @@ public class UIInGame : MonoBehaviour
         float totalHealth = playerData.localHealth; //sets a total health variable to the health base for fractioning
         float result = health / totalHealth; //Sets the fraction for the scaling 
         healthBar.rectTransform.localScale = new Vector3 ((result * hpBarX),0.38f,0.38f); //Scales the hpBar image
-       // Debug.Log(healthBar.rectTransform.localScale.x);
+        Debug.Log(healthBar.rectTransform.localScale.x);
     }
 
     // Start is called before the first frame update
