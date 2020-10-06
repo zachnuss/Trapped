@@ -12,14 +12,7 @@ GameObject:
   - component: {fileID: 1200073672876203461}
   - component: {fileID: 4517972368715313298}
   - component: {fileID: 1925408390372982018}
-<<<<<<< HEAD
-<<<<<<< Updated upstream
   - component: {fileID: 5801137320280376620}
-=======
->>>>>>> Stashed changes
-=======
-  - component: {fileID: 5801137320280376620}
->>>>>>> cdddba93d7dc29d8a05f0fd9e0dc8304a011d6e6
   m_Layer: 0
   m_Name: Currency_Chip
   m_TagString: Currency
@@ -101,10 +94,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 438.48703, y: 11.292222, z: 438.48697}
   m_Center: {x: -0.000022888195, y: -0.00006103516, z: 0.00003051757}
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-=======
->>>>>>> cdddba93d7dc29d8a05f0fd9e0dc8304a011d6e6
 --- !u!114 &5801137320280376620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,8 +107,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timer: 1
-<<<<<<< HEAD
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> cdddba93d7dc29d8a05f0fd9e0dc8304a011d6e6
