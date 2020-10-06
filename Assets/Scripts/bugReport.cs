@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class feedbackForm : MonoBehaviour
+public class bugReport : MonoBehaviour
 {
     public void openLink()
     {
