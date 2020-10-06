@@ -1907,6 +1907,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerData: {fileID: 11400000, guid: f9b9357e87ed29948b25c9a1d8db1dcf, type: 2}
+  currentPlayer: {fileID: 7571365785918509578}
   currencyText: {fileID: 1887456377428669018}
   healthText: {fileID: 7435268475625032681}
   ObjectiveText: {fileID: 1767476939777226961}
