@@ -45,9 +45,9 @@ public class BaseEnemy : MonoBehaviour
     protected Behavior _myBehavior;
     protected bool _isTrackingPlayer = false;
     protected float _trackingSpeed;
+    protected Vector3 _moveDir; //movement
 
     ///private
-    private Vector3 _moveDir; //movement
     private Vector3 _rotVal; //rotation
     private float _wallDetectRay = 1.0f;
     private bool _hasHitWall = false;
@@ -89,55 +89,10 @@ public class BaseEnemy : MonoBehaviour
 
     ///protected
     //if the player is never hit, then return Direction.NULL
-    protected Direction _isPlayerInRange()
+    //set as virtual to be overriden
+    protected virtual Direction _isPlayerInRange()
     {
-        Direction dirOfPlayer = Direction.NULL;
-        float castDist = 10f;
-        RaycastHit hit;
-
-        //store testable transforms
-        Transform curTrans = transform;
-        Transform lookLeft = transform;
-        Transform lookRight = transform;
-
-        //store euler rotation
-        Vector3 leftEuler = transform.eulerAngles;
-        Vector3 rightEuler = transform.eulerAngles;
-        //edit eulers
-        leftEuler.y += -90f;
-        rightEuler.y += 90f;
-        //transfer eulers to Transforms
-        lookRight.eulerAngles = rightEuler;
-        lookLeft.eulerAngles = leftEuler;
-
-        //raycast using the Transforms
-        //look forward
-        if (Physics.Raycast(transform.position, transform.eulerAngles, out hit, castDist)
-            && hit.transform.tag == "Player")
-        {
-            dirOfPlayer = Direction.Forward;
-        }
-        //look left
-        else if (Physics.Raycast(lookLeft.position, lookLeft.eulerAngles, out hit, castDist)
-            && hit.transform.tag == "Player")
-        {
-            dirOfPlayer = Direction.Left;
-        }
-        //look right
-        else if (Physics.Raycast(lookRight.position, lookRight.eulerAngles, out hit, castDist)
-            && hit.transform.tag == "Player")
-        {
-            dirOfPlayer = Direction.Right;
-        }
-        ///draw raycast in space to debug
-        //draw forward
-        Debug.DrawRay(transform.position, transform.eulerAngles, Color.white);
-        //draw left
-        Debug.DrawRay(lookLeft.position, lookLeft.eulerAngles, Color.red);
-        //draw right
-        Debug.DrawRay(lookRight.position, lookRight.eulerAngles, Color.blue);
-
-        return dirOfPlayer;
+        return Direction.NULL;
     }
 
     protected void _changeBehavior()
@@ -223,13 +178,16 @@ public class BaseEnemy : MonoBehaviour
         switch (dir)
         {
             case Direction.Right:
+                //oneEnemyPrint("CommonGuard", "turning Right");
                 axisTurn = 90f;
                 break;
             case Direction.Left:
+                //oneEnemyPrint("CommonGuard", "turning Left");
                 axisTurn = -90f;
                 break;
             case Direction.Backwards:
                 //return positive or negative 180f
+                //oneEnemyPrint("CommonGuard", "turning Backwards");
                 float posOrNeg = (Random.Range(0, 2) == 0) ? 180 : -180;
                 axisTurn = posOrNeg;
                 break;
@@ -240,12 +198,16 @@ public class BaseEnemy : MonoBehaviour
         if (axisTurn != 0f)
         {
             //get appropriate turning axis based on CubemapFace
-            Vector3 turningVector = Vector3.zero;// = _getTurningAxis(axisTurn);
+            Vector3 turningVector = Vector3.zero;
             //PositiveY  is
-            turningVector.y = axisTurn;
+            turningVector.y += axisTurn;
             //transform.Rotate(turningVector); //mess with local vs world space
             transform.localEulerAngles += turningVector;
             //change facing dir to match rotation
+            Vector3 newMoveDir = Vector3.MoveTowards(transform.GetChild(0).position,
+                                                     transform.position,
+                                                     Time.maximumDeltaTime);
+            newMoveDir.y = 0; //restrict y-axis movement
             _moveDir = (transform.GetChild(0).position
                         - transform.position).normalized;
         }
@@ -264,7 +226,7 @@ public class BaseEnemy : MonoBehaviour
         ///collectable
         ///STAND IN CODE FOR THE FUTURE
         float dropChance = 0.3f;
-        GameObject droppedCol = null; //= getCollectable();
+        GameObject droppedCol = null; //= getCollectable(); //<-- hypothetical function
         if (Random.Range(0.0f, 1.0f) <= dropChance)
         {
             //make sure this doesn't parent to the enemy on Instantiation
@@ -319,7 +281,7 @@ public class BaseEnemy : MonoBehaviour
             if (Physics.Raycast(transform.position, _moveDir, out hit, _wallDetectRay))
             {
                 //don't change direction if I'm looking at the player
-                if (hit.transform.tag != "Player")
+                if (hit.transform.tag == "Wall")
                 { isFacingWall = true; }
                 //am I hitting myself?
                 else if (hit.transform.name == transform.GetChild(0).name)
@@ -364,5 +326,15 @@ public class BaseEnemy : MonoBehaviour
         }
 
         //enemy will take damage form the player through the ProjectileScript
+    }
+
+
+    ///DEBUGGING FUNCTION TO ONLY CALL FROM A SINGLE ENEMY
+    void oneEnemyPrint(string enemyName, string printing)
+    {
+        if (name == enemyName)
+        {
+            Debug.Log(enemyName + ": " + printing);
+        }
     }
 }
